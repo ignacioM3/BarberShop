@@ -1,10 +1,12 @@
 import mongoose, { Document, Schema } from "mongoose";
+import { UserRole, userRole } from "./RoleUser";
 
 export interface IUser extends Document{
     email: string,
     password: string,
     name: string,
-    confirmed: boolean
+    confirmed: boolean,
+    role: UserRole
 }
 
 const userSchema: Schema = new Schema({
@@ -25,6 +27,11 @@ const userSchema: Schema = new Schema({
     confirmed: {
         type: Boolean,
         default: false
+    },
+    role: {
+        default: userRole.client,
+        type: String,
+        enum: Object.values(userRole)
     }
 })
 
