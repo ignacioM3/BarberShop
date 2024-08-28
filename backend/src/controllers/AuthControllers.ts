@@ -16,6 +16,9 @@ export class AuthControllers{
             const user = new User(req.body);       
             const salt = await bcrypt.genSalt(10);
             user.password = await bcrypt.hash(password, salt);
+
+            //falta enviar email
+
             await user.save();
             res.send('Cuenta creada correctamente');
             
@@ -33,8 +36,6 @@ export class AuthControllers{
                 const error = new Error('Usuario no encontrado');
                 return res.status(409).json({error: error.message});
             }
-
-            
 
             if(!user.confirmed){
                 const error = new Error("La cuenta no ha sido confirmada");
@@ -54,4 +55,5 @@ export class AuthControllers{
             res.status(500).json({error: 'Hubo un error en el servidor'})
         }
     }
+  
 }
