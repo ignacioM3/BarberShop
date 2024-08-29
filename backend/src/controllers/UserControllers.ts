@@ -24,9 +24,9 @@ export class UserControllers{
     }
 
     static getUserById = async (req: Request, res: Response)=> {
-        const {id} = req.params;
+        const {userId} = req.params;
         try {
-            const user = await User.findById(id).select('id name email');
+            const user = await User.findById(userId).select('id name email');
             if(!user){
                 const error = new Error('Usuario no encontrado');
                 return res.status(404).json({error: error.message})
@@ -66,9 +66,33 @@ export class UserControllers{
             const error = new Error('Acción no valida')
             return res.status(404).json({error: error.message})
         }
-
+        //faltan mas datos a medida que crezca la app
         findUser.name = req.body.name;
         await findUser.save();
         res.send('Usuario Actualizado')
+    }
+
+    static createUserBarber = async (req: Request, res: Response) => {
+        const {email} = req.body;
+        const findUser = User.findOne({email});
+        if(!findUser){
+            const error = new Error('Usuario ya registrado')
+            return res.status(400).json({error: error.message});
+        }
+
+        if(req.user.role !== userRole.admin && req.user.role !== userRole.barber){
+            const error = new Error('Acción no valida')
+            return res.status(404).json({error: error.message})
+        }
+
+        try {
+            const user = new User(req.body);
+            user.role = userRole.barber;
+            await user.save();
+
+            res.json({msg: 'Usuario Creado Correctamente'});
+        } catch (error) {
+            console.log(error)
+        }
     }
 }
