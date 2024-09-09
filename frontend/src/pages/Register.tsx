@@ -6,8 +6,8 @@ import { toast } from "react-toastify";
 import { UserRegistrationForm } from "../types"
 import { Link } from "react-router-dom";
 
+function Register() {
 
-export default function Register() {
   const initialValues = {
     name: '',
     email: '',
@@ -155,3 +155,5 @@ export default function Register() {
     </div>
   )
 }
+
+export default Register
