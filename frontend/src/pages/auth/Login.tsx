@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import { AppRoutes } from "../../routes/routes";
 
 
 export default function Login() {
@@ -9,17 +10,30 @@ export default function Login() {
             Bienvenido a tu Barberia{" "}
             <span className="text-gray-500 font-bold">llenando el siguiente formulario</span>
         </p>
-        <form action="">
-            <div>
-                <label htmlFor="">Email</label>
+        <form 
+          action=""
+          className="p-10 max-w-[650px] md:mx-auto  bg-gray-100 mx-4 mt-5 shadow-md rounded-sm  lg:max-w-[450px]"
+          >
+            <div className="flex flex-col gap-5 lg:gap-3 mb-3">
+                <label 
+                htmlFor="email"
+              className="font-normal text-2xl lg:text-xl"
+                >Email</label>
                 <input 
+                    id="email"
                     type="email" 
+                    className="w-full p-3 lg:p-2 lg:rounded-sm border-gray-300 border"
                     placeholder="Email de Registro"
                 />
             </div>
-            <div>
-                <label htmlFor="">Password</label>
-                <input 
+            <div className="flex flex-col gap-5 lg:gap-3 mb-3">
+                <label 
+                 className="font-normal text-2xl lg:text-xl"
+                  htmlFor="password"
+                  >Password</label>
+                <input
+                    className="w-full p-3 lg:p-2 lg:rounded-sm border-gray-300 border"
+                    id="password"
                     type="password" 
                     placeholder="Password"
                 />
@@ -27,6 +41,7 @@ export default function Login() {
 
             <input type="submit" 
                 value="Iniciar Sesión"
+                 className="bg-gray-600 rounded-md hover:bg-gray-700 w-full p-3  text-white font-black  text-xl cursor-pointer mt-8"
             />
         </form>
 
@@ -34,13 +49,13 @@ export default function Login() {
         className="mt-5 flex flex-col space-y-4"
       >
         <Link
-          to=""
+          to={AppRoutes.register.route()}
           className="text-center text-gray-500 font-normal"
         >
              ¿No tienes cuenta? Crea una
         </Link>
         <Link
-          to=""
+          to={AppRoutes.requestConfirmationCode.route()}
            className="text-center text-gray-500 font-normal"
         >
         ¿Olvidaste tu contraseña? Restablecer
