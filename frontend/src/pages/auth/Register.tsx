@@ -144,13 +144,13 @@ function Register() {
           to={AppRoutes.login.route()}
           className="text-center text-gray-500 font-normal"
         >
-            ¿Ya tienes cuenta? Iniciar Sesion
+            ¿Ya tienes cuenta? <span className="text-gray-500 font-bold">Iniciar Sesion</span>
         </Link>
         <Link
-          to={AppRoutes.requestConfirmationCode.route()}
+          to={AppRoutes.forgotPassword.route()}
            className="text-center text-gray-500 font-normal"
         >
-        ¿Olvidaste tu contraseña? Restablecer
+        ¿Olvidaste tu contraseña? <span className="text-gray-500 font-bold">Restablecer</span>
         </Link>
       </nav>
     </div>

@@ -52,13 +52,13 @@ export default function Login() {
           to={AppRoutes.register.route()}
           className="text-center text-gray-500 font-normal"
         >
-             ¿No tienes cuenta? Crea una
+             ¿No tienes cuenta? <span className="text-gray-500 font-bold">Crea una</span>
         </Link>
         <Link
-          to={AppRoutes.requestConfirmationCode.route()}
+          to={AppRoutes.forgotPassword.route()}
            className="text-center text-gray-500 font-normal"
         >
-        ¿Olvidaste tu contraseña? Restablecer
+        ¿Olvidaste tu contraseña? <span className="text-gray-500 font-bold">Restablecer</span>
         </Link>
       </nav>
     </div>

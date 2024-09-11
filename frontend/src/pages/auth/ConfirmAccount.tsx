@@ -40,9 +40,10 @@ export function ConfirmAccount() {
                     Solicitar un nuevo Código
                 </Link>
                 <Link
-                    to=""
+                    className="text-center text-gray-400 font-normal hover:text-gray-500 transition-colors"
+                    to={AppRoutes.forgotPassword.route()}
                     >
-                    ¿Olvidaste tu contraseña? Reestablecer
+                    ¿Olvidaste tu contraseña? <span className="text-gray-500 font-bold">Reestablecer</span>
                 </Link>
             </nav>
         </div>
