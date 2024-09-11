@@ -5,8 +5,9 @@ import { Outlet } from 'react-router-dom'
 import useAuth from '../hooks/useAuth'
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css'
+import { PropsWithChildren } from 'react';
 
-function AuthLayout() {
+export function AuthLayout({children}: PropsWithChildren) {
   const { user } = useAuth();
 
   return (
@@ -29,7 +30,7 @@ function AuthLayout() {
         }
       </header>
       <div className='mt-[125px]'>
-        <Outlet />
+        {children}
       </div>
 
       <ToastContainer
@@ -39,5 +40,3 @@ function AuthLayout() {
     </>
   )
 }
-
-export default AuthLayout

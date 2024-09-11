@@ -1,13 +1,14 @@
 import { useForm } from "react-hook-form"
-import ErrorMessage from "../components/ErrorMessage"
+import ErrorMessage from "../../components/ErrorMessage"
 import { useMutation } from "@tanstack/react-query"
-import { createAccountApi } from "../api/AuthApi"
+import { createAccountApi } from "../../api/AuthApi"
 import { toast } from "react-toastify";
-import { UserRegistrationForm } from "../types"
+import { UserRegistrationForm } from "../../types"
 import { Link } from "react-router-dom";
+import { AppRoutes } from "../../routes/routes";
 
+function Register() {
 
-export default function Register() {
   const initialValues = {
     name: '',
     email: '',
@@ -35,7 +36,7 @@ export default function Register() {
 
 
   return (
-    <div className="my-5">
+    <div className="my-5 mx-4 md:mx-0">
       <h1 className="text-4xl font-black text-center lg:text-2xl">Crear Cuenta</h1>
       <p className="text-2xl font-light mt-5 text-center lg:text-xl lg:mt-2">Llena el formulario para {''}
         <span className="text-gray-500 font-bold">Crear tu cuenta</span>
@@ -43,7 +44,7 @@ export default function Register() {
 
       <form action=""
       onSubmit={handleSubmit(handleRegister)}
-         className=" p-10 max-w-[650px] mx-auto  bg-white mt-5 lg:mt-0  lg:max-w-[450px]"
+         className=" p-10 max-w-[650px] mx-auto  bg-gray-100 mt-5 shadow-md rounded-sm  lg:max-w-[450px]"
          noValidate
       >
       <div className="flex flex-col gap-5 lg:gap-3 mb-3">
@@ -140,13 +141,13 @@ export default function Register() {
         className="mt-5 flex flex-col space-y-4"
       >
         <Link
-          to=""
+          to={AppRoutes.login.route()}
           className="text-center text-gray-500 font-normal"
         >
             ¿Ya tienes cuenta? Iniciar Sesion
         </Link>
         <Link
-          to=""
+          to={AppRoutes.requestConfirmationCode.route()}
            className="text-center text-gray-500 font-normal"
         >
         ¿Olvidaste tu contraseña? Restablecer
@@ -155,3 +156,5 @@ export default function Register() {
     </div>
   )
 }
+
+export default Register
