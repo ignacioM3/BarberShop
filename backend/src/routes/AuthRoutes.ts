@@ -74,5 +74,5 @@ router.post(
   handleInputErrors,
   AuthControllers.updatePasswordWithToken
 );
-router.get('/user',authenticate ,AuthControllers.user)
+router.get('/user/perfil',authenticate ,AuthControllers.user)
 export default router;

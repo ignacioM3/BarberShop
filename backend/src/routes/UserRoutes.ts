@@ -6,11 +6,11 @@ import { handleInputErrors } from '../middleware/validation';
 
 
 const router = express.Router()
+router.use(authenticate)
 
-router.get('/list-user' ,authenticate, UserControllers.getUsers)
+router.get('/list-user' , UserControllers.getUsers)
 router.delete('/:userId',
-    param('userId').isMongoId().withMessage('ID no valido'),
-    authenticate, 
+    param('userId').isMongoId().withMessage('ID no valido'), 
     handleInputErrors,
     UserControllers.deleteUser
     )
@@ -24,14 +24,12 @@ router.get('/create-barber',
         }
         return true
     }),
-    authenticate,
     handleInputErrors,
     UserControllers.createUserBarber
 )
 
 router.get('/:userId', 
     param('userId').isMongoId().withMessage('ID no valido'),
-    authenticate,
     handleInputErrors,
     UserControllers.getUserById
 )
