@@ -1,3 +1,4 @@
+import { UserRole } from '../types/use-role';
 import { RouterDefinition } from './router-definition'
 
 const appLayoutImport = async () => 
@@ -35,6 +36,14 @@ export const AppRoutes = {
     forgotPassword: {
         route: () => "/auth/forgot-password",
         page: async () => (await import('../pages/auth/ForgoPassword')).ForgoPassword,
+        layout: appLayoutImport
+    },
+    //admin pages
+    homeAdmin: {
+        route: () => "/admin/home",
+        requiresAuth: true,
+        allowedRoles: [UserRole.ADMIN],
+        page: async () => (await import('../pages/admin/HomeAdmin')).HomeAdmin,
         layout: appLayoutImport
     }
     

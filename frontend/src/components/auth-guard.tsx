@@ -1,6 +1,7 @@
 import { PropsWithChildren } from "react";
 import { UserRole } from "../types/use-role";
 import { Navigate } from "react-router-dom";
+import useAuth from "../hooks/useAuth";
 
 export interface AuthGuardProps {
     redirectPath?: string;
@@ -11,9 +12,8 @@ export function AuthGuard({
     allowedRoles,
     children,
 }: PropsWithChildren<AuthGuardProps>) {
-    const currentUser = {
-        role: UserRole.ADMIN
-    }
+    const {currentUser} = useAuth()
+    
     if (
         currentUser &&
         allowedRoles &&

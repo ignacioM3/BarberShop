@@ -1,23 +1,73 @@
-import { createContext, useState } from "react";
+import { createContext, useEffect, useState } from "react";
+import { UserLogged } from "../types";
+import api from "../lib/axios";
+import { UserRole } from "../types/use-role";
+import { useNavigate } from "react-router-dom";
+import { AppRoutes } from "../routes/routes";
 
 interface AuthContextType{
-    user: string
-    setUser: React.Dispatch<React.SetStateAction<string>>
+    currentUser?: UserLogged ;
+    setCurrentUser: React.Dispatch<React.SetStateAction<UserLogged | undefined>>
+    loading: boolean
+    setLoading: React.Dispatch<React.SetStateAction<boolean>>
+    logoutUser: () => void;
+    
 }
 
 const AuthContext = createContext<AuthContextType>({
-    user: '',
-    setUser: () => {}
+    currentUser: undefined,
+    setCurrentUser: () => {},
+    loading: true,
+    setLoading: () => {},
+    logoutUser: () => {}
 });
 
 const AuthProvider =({children}: {children: React.ReactNode}) => {
-    const [user, setUser] = useState<string>('')
-    
+    const [currentUser, setCurrentUser] = useState<UserLogged | undefined>(undefined)
+    const [loading, setLoading] = useState<boolean>(true);
+
+    const navigate = useNavigate()
+
+    useEffect(() => {
+        const authenticateUser = async () => {
+            const token = localStorage.getItem('AUTH_TOKEN')
+            if(!token){
+                setLoading(false)
+                return
+            }
+
+            const config = {
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${token}`
+                }
+            }
+            try {
+                const {data} = await api.get<UserLogged>('/auth/user/perfil', config);
+                setCurrentUser(data)
+
+            } catch (error) {
+                setCurrentUser(undefined)
+            }
+
+            setLoading(false)
+        }
+
+        authenticateUser()
+    }, [])
+
+    const logoutUser = () => {
+        setCurrentUser(undefined)
+    }
+
     return (
         <AuthContext.Provider 
             value={{
-                user,
-                setUser
+                currentUser,
+                setCurrentUser,
+                loading,
+                setLoading,
+                logoutUser
             }}
         >
 
@@ -30,4 +80,4 @@ export {
     AuthProvider
 }
 
-export default AuthContext
+export default AuthContext 
