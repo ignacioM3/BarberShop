@@ -7,7 +7,8 @@ const appLayoutImport = async () =>
 export const AppRoutes = {
     home: {
         route: () => "/",
-        redirect: "/auth/register"
+        page: async () => (await import('../pages/Home')).Home,
+        layout: appLayoutImport
     },
     error: {
         route: () => "*",

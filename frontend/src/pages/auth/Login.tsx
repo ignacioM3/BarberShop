@@ -1,4 +1,4 @@
-import { Link, useNavigate } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 import { AppRoutes } from "../../routes/routes";
 import { useForm } from "react-hook-form";
 import { UserLoginForm } from "../../types";
@@ -6,20 +6,23 @@ import { useMutation } from "@tanstack/react-query";
 import { authLogin } from "../../api/AuthApi";
 import { toast } from "react-toastify";
 import ErrorMessage from "../../components/ErrorMessage";
+import useAuth from "../../hooks/useAuth";
 
 
 
 export default function Login() {
   const navigate = useNavigate();
+  const {setCurrentUser, currentUser} = useAuth()
   const initialValues: UserLoginForm = {
     email: '',
     password: ''
   }
+  
 
   const { register, handleSubmit, formState: { errors } } = useForm({ defaultValues: initialValues });
 
   const { mutate } = useMutation({
-    mutationFn: authLogin,
+    mutationFn: (formData: UserLoginForm) => authLogin(formData, setCurrentUser),
     onError: (error) => {
       toast.error(error.message)
     },
@@ -29,9 +32,13 @@ export default function Login() {
   })
 
   const handleLogin = (FormData: UserLoginForm) => mutate(FormData);
+
+  if(currentUser){
+    return <Navigate to={AppRoutes.home.route()}/>
+  }
   return (
     <div className="my-5">
-      <h1 className="text-center text-4xl font-black lg:text-2xl">Iniciar Sesión</h1>
+      <h1 className="text-center text-4xl font-black ">Iniciar Sesión</h1>
       <p className="text-2xl font-light mt-5 text-center lg:text-xl lg:mt-2">
         Bienvenido a tu Barberia{" "}
         <span className="text-gray-500 font-bold">llenando el siguiente formulario</span>

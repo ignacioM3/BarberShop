@@ -1,9 +1,8 @@
 import { createContext, useEffect, useState } from "react";
 import { UserLogged } from "../types";
 import api from "../lib/axios";
-import { UserRole } from "../types/use-role";
 import { useNavigate } from "react-router-dom";
-import { AppRoutes } from "../routes/routes";
+
 
 interface AuthContextType{
     currentUser?: UserLogged ;

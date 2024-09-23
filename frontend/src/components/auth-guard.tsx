@@ -13,7 +13,11 @@ export function AuthGuard({
     children,
 }: PropsWithChildren<AuthGuardProps>) {
     const {currentUser} = useAuth()
-    
+
+    if(allowedRoles && !currentUser){
+        return <Navigate to="/unauthorized" />;  
+    }
+
     if (
         currentUser &&
         allowedRoles &&

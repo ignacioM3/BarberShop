@@ -4,10 +4,12 @@ import { useMutation } from "@tanstack/react-query"
 import { createAccountApi } from "../../api/AuthApi"
 import { toast } from "react-toastify";
 import { UserRegistrationForm } from "../../types"
-import { Link } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 import { AppRoutes } from "../../routes/routes";
+import useAuth from "../../hooks/useAuth";
 
 function Register() {
+  const {currentUser} = useAuth()
 
   const initialValues = {
     name: '',
@@ -33,6 +35,9 @@ function Register() {
     mutate(formData)
   }
 
+  if(currentUser){
+    return <Navigate to={AppRoutes.home.route()}/>
+  }
 
 
   return (

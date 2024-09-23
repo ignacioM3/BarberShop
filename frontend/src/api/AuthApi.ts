@@ -1,6 +1,8 @@
 import { isAxiosError } from "axios";
 import api from "../lib/axios";
-import { UserLoginForm, UserRegistrationForm } from "../types";
+import { UserLogged, UserLoginForm, UserRegistrationForm } from "../types";
+
+    
 
 export async function createAccountApi(formData: UserRegistrationForm) {
     try {
@@ -14,11 +16,24 @@ export async function createAccountApi(formData: UserRegistrationForm) {
     }
 }
 
-export async function authLogin(formData: UserLoginForm){
+export async function authLogin(
+    formData: UserLoginForm,
+    setCurrentUser: (user: UserLogged) => void
+){
     try {
         const url = '/auth/login';
         const {data} = await api.post<string>(url, formData);
         localStorage.setItem('AUTH_TOKEN', data);
+        const config = {
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${data}`,
+            },
+        };
+
+        const { data: userData } = await api.get<UserLogged>('/auth/user/perfil', config);
+        setCurrentUser(userData);
+
         return data;
     } catch (error) {
         if(isAxiosError(error) && error.response){
