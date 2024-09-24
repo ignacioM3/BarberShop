@@ -3,8 +3,11 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css'
 import { PropsWithChildren } from 'react';
 import { Header } from '../components/Header';
+import useAuth from '../hooks/useAuth';
 
 export function AuthLayout({children}: PropsWithChildren) {
+  const {currentUser} = useAuth()
+  console.log(currentUser)
 
 
   return (

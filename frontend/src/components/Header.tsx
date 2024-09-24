@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom'
 import useAuth from '../hooks/useAuth'
 import 'react-toastify/dist/ReactToastify.css'
 
-import { AppRoutes } from '../routes/routes';
+import { AppRoutes } from '../routes';
 
 
 export function Header() {

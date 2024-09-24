@@ -5,7 +5,7 @@ import { createAccountApi } from "../../api/AuthApi"
 import { toast } from "react-toastify";
 import { UserRegistrationForm } from "../../types"
 import { Link, Navigate } from "react-router-dom";
-import { AppRoutes } from "../../routes/routes";
+import { AppRoutes } from "../../routes";
 import useAuth from "../../hooks/useAuth";
 
 function Register() {

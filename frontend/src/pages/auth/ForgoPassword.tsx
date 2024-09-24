@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { AppRoutes } from "../../routes/routes";
+import { AppRoutes } from "../../routes";
 
 
 export function ForgoPassword() {

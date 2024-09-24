@@ -1,5 +1,5 @@
 import { Link, Navigate, useNavigate } from "react-router-dom";
-import { AppRoutes } from "../../routes/routes";
+import { AppRoutes } from "../../routes";
 import { useForm } from "react-hook-form";
 import { UserLoginForm } from "../../types";
 import { useMutation } from "@tanstack/react-query";

@@ -1,6 +1,6 @@
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom'
 import { AuthProvider } from './context/AuthProvider'
-import { routeList } from './routes/routes'
+import { routeList } from './routes'
 import { LazyComponentLoader } from './routes/lazy-component-loader';
 
 

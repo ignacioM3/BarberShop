@@ -2,7 +2,7 @@
 import { PinInput, PinInputField } from "@chakra-ui/react";
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { AppRoutes } from "../../routes/routes";
+import { AppRoutes } from "../../routes";
 import { toast } from "react-toastify";
 
 export function ConfirmAccount() {
