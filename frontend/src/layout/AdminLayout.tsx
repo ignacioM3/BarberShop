@@ -6,6 +6,7 @@ import { UserRole } from "../types/use-role";
 import { FaUserAlt } from "react-icons/fa";
 import { IoIosLogOut } from "react-icons/io";
 import { GiHamburgerMenu } from "react-icons/gi";
+import { Link } from "react-router-dom";
 
 export function AdminLayout({ children }: PropsWithChildren) {
     const { currentUser } = useAuth();
@@ -34,7 +35,8 @@ export function AdminLayout({ children }: PropsWithChildren) {
                                         (item) => (
                                             (!item.role || (currentUser?.role && item.role.includes(currentUser?.role)))) &&
                                             (
-                                                <button
+                                                <Link
+                                                    to={item.to}
                                                     className="px-4 w-full flex p-2 !justify-start items-center gap-2 hover:bg-gray-200 transition-colors rounded"
                                                     key={item.label}
 
@@ -43,7 +45,7 @@ export function AdminLayout({ children }: PropsWithChildren) {
                                                         {item.icon && item.icon}
                                                     </div>
                                                     <span >{item.label}</span>
-                                                </button>
+                                                </Link>
                                             ))
                                 }
                             </section>

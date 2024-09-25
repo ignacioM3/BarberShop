@@ -4,6 +4,7 @@ import { HiScissors } from "react-icons/hi2";
 import { IoCalendarNumberOutline } from "react-icons/io5";
 import { TbMoneybag } from "react-icons/tb";
 import { IoMdHome } from "react-icons/io";
+import { AppRoutes } from "./routes";
 
 export interface MenuItem {
     label: string;
@@ -36,18 +37,18 @@ export const menuSection: MenuSection[] = [
             {
                 label: "Home ",
                 icon: <IoMdHome />,
-                to: "/home"
+                to: AppRoutes.home.route()
             },
             {
                 label: "Usuarios",
                 icon: <FaUserAlt />, 
-                to: "/dashboard/users",
+                to: AppRoutes.userListAdmin.route(),
                 role: [UserRole.ADMIN]
             },
             {
                 label: "Barberos",
                 icon: <HiScissors />, 
-                to: "/dashboard/barberos",
+                to: AppRoutes.barberListAdmin.route(),
                 role: [UserRole.ADMIN]
             }
         ]

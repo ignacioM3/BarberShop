@@ -6,10 +6,12 @@ import useAuth from '../hooks/useAuth'
 import 'react-toastify/dist/ReactToastify.css'
 
 import { AppRoutes } from '../routes';
+import { UserRole } from '../types/use-role'
 
 
 export function Header() {
   const { currentUser } = useAuth()
+
   return (
     <header className='flex justify-between p-3 lg:py-0 border-b-2 bg-white shadow-sm items-center fixed w-full z-[100] top-0 rounded-b-md'>
       <GiHamburgerMenu className='text-4xl cursor-pointer md:hidden' />
@@ -25,6 +27,13 @@ export function Header() {
       {
         currentUser ?
           <div className='flex gap-1 items-center justify-center cursor-pointer'>
+            {
+             ( currentUser.role === UserRole.ADMIN) && (
+              <Link to={AppRoutes.homeAdmin.route()} className=' font-bold mr-3 bg-gray-500 py-2 px-3 text-white rounded-sm shadow-md hover:bg-gray-600 transition-colors'>
+                Admin
+              </Link>
+             )
+            }
             <span className='font-bold uppercase'>{currentUser.name}</span>
             <FaUser className='text-2xl cursor-pointer' />
           </div>
