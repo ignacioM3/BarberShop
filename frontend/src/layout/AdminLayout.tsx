@@ -1,5 +1,5 @@
 import { PropsWithChildren } from "react";
-import Logo from "../components/Loog";
+import Logo from "../components/Logo";
 import { menuSection } from "../menu-section";
 import useAuth from "../hooks/useAuth";
 import { UserRole } from "../types/use-role";
