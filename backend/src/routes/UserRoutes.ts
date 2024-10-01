@@ -14,7 +14,7 @@ router.delete('/:userId',
     handleInputErrors,
     UserControllers.deleteUser
     )
-router.get('/create-barber',
+router.post('/create-barber',
     body('name').notEmpty().withMessage('El nombre no puede estar vacio'),
     body('email').isEmail().withMessage('Email no es válido'),
     body('password').isLength({min: 8}).withMessage('El password debe tener al menos 8 caracteres'),

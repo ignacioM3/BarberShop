@@ -6,7 +6,9 @@ export interface IUser extends Document{
     password: string,
     name: string,
     confirmed: boolean,
-    role: UserRole
+    role: UserRole,
+    haircuts: number,
+    number: number
 }
 
 const userSchema: Schema = new Schema({
@@ -32,6 +34,12 @@ const userSchema: Schema = new Schema({
         default: userRole.client,
         type: String,
         enum: Object.values(userRole)
+    },
+    haircuts: {
+        Type: Number,
+    },
+    number: {
+        type: Number,
     }
 })
 

@@ -7,6 +7,7 @@ import { FaUserAlt } from "react-icons/fa";
 import { IoIosLogOut } from "react-icons/io";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { Link } from "react-router-dom";
+import { ToastContainer } from "react-toastify";
 
 export function AdminLayout({ children }: PropsWithChildren) {
     const { currentUser } = useAuth();
@@ -86,6 +87,11 @@ export function AdminLayout({ children }: PropsWithChildren) {
                     {children}
                 </div>
             </div>
+
+            <ToastContainer
+        pauseOnHover={false}
+        pauseOnFocusLoss={false}
+      />
 
         </div>
     )

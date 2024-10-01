@@ -1,43 +1,92 @@
 import { isAxiosError } from "axios";
 import api from "../lib/axios";
-import { UserLogged, UserLoginForm, UserRegistrationForm } from "../types";
-
-    
+import {
+  getUserListSchema,
+  User,
+  UserCreateForm,
+  UserLogged,
+  UserLoginForm,
+  UserRegistrationForm,
+} from "../types";
 
 export async function createAccountApi(formData: UserRegistrationForm) {
-    try {
-        const url = `/auth/create-account`;
-        const {data} = await api.post<string>(url, formData)
-        return data;
-    } catch (error) {
-        if(isAxiosError(error) && error.response){
-            throw new Error(error.response.data.error)
-        }
+  try {
+    const url = `/auth/create-account`;
+    const { data } = await api.post<string>(url, formData);
+    return data;
+  } catch (error) {
+    if (isAxiosError(error) && error.response) {
+      throw new Error(error.response.data.error);
     }
+  }
 }
 
 export async function authLogin(
-    formData: UserLoginForm,
-    setCurrentUser: (user: UserLogged) => void
-){
-    try {
-        const url = '/auth/login';
-        const {data} = await api.post<string>(url, formData);
-        localStorage.setItem('AUTH_TOKEN', data);
-        const config = {
-            headers: {
-                "Content-Type": "application/json",
-                Authorization: `Bearer ${data}`,
-            },
-        };
+  formData: UserLoginForm,
+  setCurrentUser: (user: UserLogged) => void
+) {
+  try {
+    const url = "/auth/login";
+    const { data } = await api.post<string>(url, formData);
+    localStorage.setItem("AUTH_TOKEN", data);
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${data}`,
+      },
+    };
 
-        const { data: userData } = await api.get<UserLogged>('/auth/user/perfil', config);
-        setCurrentUser(userData);
+    const { data: userData } = await api.get<UserLogged>(
+      "/auth/user/perfil",
+      config
+    );
+    setCurrentUser(userData);
 
-        return data;
-    } catch (error) {
-        if(isAxiosError(error) && error.response){
-            throw new Error(error.response.data.error)
-        }
+    return data;
+  } catch (error) {
+    if (isAxiosError(error) && error.response) {
+      throw new Error(error.response.data.error);
     }
+  }
 }
+
+export async function getUserList() {
+  try {
+    const url = "/users/list-user";
+    const { data } = await api(url);
+    const response = getUserListSchema.safeParse(data);
+    if (response.success) {
+      return response.data;
+    }
+  } catch (error) {
+    if (isAxiosError(error) && error.response) {
+      throw new Error(error.response.data.error);
+    }
+  }
+}
+
+export async function createUserApi(formData: UserCreateForm) {
+  try {
+    const url = "/users/create-barber";
+
+    const {data} = await api.post<string>(url, formData);
+    return data;
+  } catch (error) {
+    if (isAxiosError(error) && error.response) {
+      throw new Error(error.response.data.error);
+    }
+  }
+}
+
+
+export async function deleteUserApi(id: User['_id']){
+  try {
+    const url = `/users/${id}`
+    const {data} = await api.delete<string>(url)
+    return data
+  } catch (error) {
+    if(isAxiosError(error) && error.response){
+      throw new Error(error.response.data.error);
+    }
+  }
+} 

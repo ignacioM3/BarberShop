@@ -7,24 +7,34 @@ import { PageHeader } from "../../components/styles/PageHeader";
 import { PageTitle } from "../../components/styles/PageTitle";
 import { MdOutlineEdit } from "react-icons/md";
 import { RiDeleteBin6Line } from "react-icons/ri";
+import { useQuery } from "@tanstack/react-query";
+import { getUserList } from "../../api/AuthApi";
+import LoadingSpinner from "../../components/LoadingSpinner";
+import { UserListType } from "../../types";
+import DeleteUserModal from "../../components/modal/DeleteUserModal";
+import { useLocation, useNavigate } from "react-router-dom";
 
-
-type User = {
-    nombre: string;
-    numero: string;
-    cortes: number;
-}
 
 export function UserList() {
-    const [open, setOpen] = useState(false)
     const columns = ['Nombre', 'Número', 'Cortes'];
-    const data: User[] = [
-        { nombre: 'Maria Angeles', numero: '44330202', cortes: 3 },
-        { nombre: 'Ignacio Marquez', numero: '4444444', cortes: 2 },
-        { nombre: 'Thiago Silva', numero: '43029281', cortes: 1 }
-    ];
+    const [open, setOpen] = useState(false)
+    const navigate = useNavigate();
+    const location = useLocation()
 
-    return (
+
+    const { data, isLoading, isError } = useQuery({
+        queryKey: ['getUsers'],
+        queryFn: getUserList,
+        retry: false
+    })
+
+    if (isLoading) {
+        return <LoadingSpinner />
+    }
+
+
+    if (isError) return <h1>Error</h1>
+    if (data) return (
         <PageContainer>
             <PageHeader>
                 <PageTitle>
@@ -51,23 +61,28 @@ export function UserList() {
                             </tr>
                         </thead>
                         <tbody>
-                            {data.map((row, rowIndex) => (
-                                <tr key={rowIndex} className="border border-gray-400 text-center">
-                                    <td className="px-6 py-4">{row.nombre}</td>
-                                    <td className="px-6 py-4">{row.numero}</td>
-                                    <td className="px-6 py-4">{row.cortes}</td>
-                                    <td className="px-6 py-4 flex items-center gap-2 text-xl">
-                                        <button className="border border-gray-700 p-2 rounded hover:bg-gray-400 hover:text-white hover:border-none transition-colors">
-                                            <MdOutlineEdit />
-                                        </button>
-                                        <button className="border border-red-500 p-2 rounded text-red-500 hover:bg-red-500 hover:text-white transition-colors hover:border-none">
-                                            <RiDeleteBin6Line />
-                                        </button>
-                                    </td>
-                                </tr>
-
-                            ))}
-                           
+                            {
+                                data.length ? (
+                                    data.map((row: UserListType, rowIndex: number) => (
+                                        <tr key={rowIndex} className="border border-gray-400 text-center">
+                                            <td className="px-6 py-4">{row.name}</td>
+                                            <td className="px-6 py-4">{row.role}</td>
+                                            <td className="px-6 py-4">{row.confirmed ? 'si' : 'no'}</td>
+                                            <td className="px-6 py-4 flex items-center gap-2 text-xl">
+                                                <button className="border border-gray-700 p-2 rounded hover:bg-gray-400 hover:text-white hover:border-none transition-colors">
+                                                    <MdOutlineEdit />
+                                                </button>
+                                                <button 
+                                                    className="border border-red-500 p-2 rounded text-red-500 hover:bg-red-500 hover:text-white transition-colors hover:border-none"
+                                                    onClick={() => navigate(location.pathname + `?deleteProject=${row._id}`)}
+                                                    >
+                                                    <RiDeleteBin6Line />
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    ))
+                                ) : <tr><td colSpan={4} className="text-center p-3">No hay usuarios</td></tr> 
+                            }
                         </tbody>
                     </table>
                 </div>
@@ -77,6 +92,8 @@ export function UserList() {
                     setOpen={setOpen}
                 />
             </PageContent>
+
+            <DeleteUserModal />
 
         </PageContainer>
     )
