@@ -41,6 +41,11 @@ export const AppRoutes = {
         page: async () => (await import('./pages/auth/ForgoPassword')).ForgoPassword,
         layout: appLayoutImport
     },
+    newPassword: {
+        route: () => "/auth/new-password",
+        page: async () => (await import('./pages/auth/NewPassword')).NewPassword,
+        layout: appLayoutImport
+    },
     //admin pages
     homeAdmin: {
         route: () => "/admin/dashboard",

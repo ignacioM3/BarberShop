@@ -1,7 +1,11 @@
 import { isAxiosError } from "axios";
 import api from "../lib/axios";
 import {
+  ConfirmToken,
+  ForgotPasswordForm,
   getUserListSchema,
+  NewPasswordFormType,
+  RequestConfirmationCodeForm,
   User,
   UserCreateForm,
   UserLogged,
@@ -49,6 +53,71 @@ export async function authLogin(
     }
   }
 }
+
+export async function requestConfirmationCodeApi(formData: RequestConfirmationCodeForm){
+  try {
+    const url = `/auth/request-code`;
+    const {data} = await api.post<string>(url, formData)
+    return data
+
+  } catch (error) {
+    if (isAxiosError(error) && error.response) {
+      throw new Error(error.response.data.error);
+    }
+  }
+}
+
+
+export async function confirmAccountApi(formData: ConfirmToken){
+  try {
+    const url = "/auth/confirm-account"
+    const {data} = await api.post<string>(url, formData);
+    return data;
+  } catch (error) {
+    if (isAxiosError(error) && error.response) {
+      throw new Error(error.response.data.error);
+    }
+  }
+}
+
+export async function forgotPasswordApi(formData: ForgotPasswordForm){
+  try {
+    const url = '/auth/forgot-password';
+    const {data} = await api.post<string>(url, formData)
+    return data;
+  } catch (error) {
+    if (isAxiosError(error) && error.response) {
+      throw new Error(error.response.data.error);
+    }
+  }
+}
+
+export async function validateTokenApi(formData: ConfirmToken){
+  try {
+    const url = "/auth/validate-token";
+    const {data} = await api.post<string>(url, formData);
+    return data
+  } catch (error) {
+    if (isAxiosError(error) && error.response) {
+      throw new Error(error.response.data.error);
+    }
+  }
+}
+
+export async function updatePasswordWithTokenApi({formData, token} : {formData: NewPasswordFormType, token: ConfirmToken['token']}){
+  try {
+    const url = `/auth/update-password/${token}`
+    const {data} = await api.post<string>(url, formData);
+    return data;
+  } catch (error) {
+    if (isAxiosError(error) && error.response) {
+      throw new Error(error.response.data.error);
+    }
+  }
+}
+
+/* User */
+
 
 export async function getUserList() {
   try {

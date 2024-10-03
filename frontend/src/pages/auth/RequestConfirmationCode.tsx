@@ -1,8 +1,34 @@
 import { Link } from "react-router-dom";
 import { AppRoutes } from "../../routes";
+import { RequestConfirmationCodeForm } from "../../types";
+import { useForm } from "react-hook-form";
+import { useMutation } from "@tanstack/react-query";
+import { requestConfirmationCodeApi } from "../../api/AuthApi";
+import { toast } from "react-toastify";
+import ErrorMessage from "../../components/ErrorMessage";
 
 
 export function RequestConfirmationCode() {
+    const initialValues: RequestConfirmationCodeForm = {
+        email: ""
+    }
+
+    const {register, handleSubmit, formState: {errors}} = useForm({
+        defaultValues: initialValues
+    })
+
+    const {mutate} = useMutation({
+        mutationFn: requestConfirmationCodeApi,
+        onError: (error) => {
+            toast.error(error.message)
+        },
+        onSuccess:(data) => {
+            toast.success(data)
+        }
+    })
+
+    const handleRequestCode = (formData: RequestConfirmationCodeForm) => mutate(formData)
+
   return (
     <div className="my-5">
         <h1 className="text-4xl font-black text-center lg:text-2xl">Solicita Codigo de Confirmación</h1>
@@ -10,7 +36,7 @@ export function RequestConfirmationCode() {
             <span>un nuevo código</span>
         </p>
         <form 
-            action=""
+             onSubmit={handleSubmit(handleRequestCode)}
              className=" p-10 max-w-[650px] mx-auto  bg-gray-100 mt-5 shadow-md rounded-sm  lg:max-w-[450px]"
             >
             <div className="flex flex-col gap-5 lg:gap-3 mb-2">
@@ -25,7 +51,19 @@ export function RequestConfirmationCode() {
                     id="email" 
                     placeholder="Email de Registro"
                     className="w-full p-3 rounded-lg border borde-gray-300"
+                    {...register("email",{
+                        required: "El email es obligatorio",
+                        pattern: {
+                            value: /\S+@\S+\.\S+/,
+                            message: "E-mail no válido",
+                        },
+                    })}
                     />
+                    {errors.email && (
+                        <ErrorMessage>
+                            {errors.email.message}
+                        </ErrorMessage>
+                    )}
             </div>
             <input 
                 type="submit" 

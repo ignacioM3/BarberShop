@@ -81,7 +81,7 @@ export class AuthControllers {
       const { token } = req.body;
       const tokenExists = await Token.findOne({ token });
       if (!tokenExists) {
-        const error = new Error("Token no válido");
+        const error = new Error("Token no valido");
         return res.status(404).json({ error: error.message });
       }
       const user = await User.findById(tokenExists.user);

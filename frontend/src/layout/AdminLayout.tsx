@@ -10,9 +10,8 @@ import { Link } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 
 export function AdminLayout({ children }: PropsWithChildren) {
-    const { currentUser } = useAuth();
-
-
+    const { currentUser, logoutUser } = useAuth();
+    
     return (
         <div className="flex h-screen w-screen">
             <div className="bg-white hidden md:block h-screen w-[250px] p-5">
@@ -64,7 +63,10 @@ export function AdminLayout({ children }: PropsWithChildren) {
                             {currentUser?.name}({currentUser?.role})
                         </button>
                     </div>
-                    <button className="flex items-center gap-2 p-3 h-full pr-4 rounded hover:bg-gray-200 transition-colors">
+                    <button 
+                        className="flex items-center gap-2 p-3 h-full pr-4 rounded hover:bg-gray-200 transition-colors"
+                        onClick={logoutUser}
+                        >
                         Salir
                         <IoIosLogOut />
                     </button>

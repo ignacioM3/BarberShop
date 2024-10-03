@@ -2,6 +2,7 @@ import { createContext, useEffect, useState } from "react";
 import { UserLogged } from "../types";
 import api from "../lib/axios";
 import { useNavigate } from "react-router-dom";
+import { AppRoutes } from "../routes";
 
 
 interface AuthContextType{
@@ -57,6 +58,8 @@ const AuthProvider =({children}: {children: React.ReactNode}) => {
 
     const logoutUser = () => {
         setCurrentUser(undefined)
+        localStorage.removeItem("AUTH_TOKEN");
+        navigate(AppRoutes.home.route())
     }
 
     return (

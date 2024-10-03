@@ -4,14 +4,29 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import { AppRoutes } from "../../routes";
 import { toast } from "react-toastify";
+import { useMutation } from "@tanstack/react-query";
+import { confirmAccountApi } from "../../api/AuthApi";
+import { ConfirmToken } from "../../types";
 
 export function ConfirmAccount() {
-    const [token, setToken] = useState<string>('')
-    const handleChange = (token: string) => {
+    const [token, setToken] = useState<ConfirmToken['token']>('')
+    
+    const {mutate} = useMutation({
+        mutationFn: confirmAccountApi,
+        onError: (error) => {
+            toast.error(error.message)
+        },
+        onSuccess: (data) => {
+            toast.success(data)
+            setToken("")
+        }
+    })
+    const handleChange = (token: ConfirmToken['token']) => {
         setToken(token)
+        
     }
-    const handleComplete = () =>{
-        toast.success("completado")
+    const handleComplete = (token: ConfirmToken['token']) =>{
+        mutate({token})
     }
     return (
         <div className="my-5">
