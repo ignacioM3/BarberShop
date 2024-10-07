@@ -10,6 +10,7 @@ import { ConfirmToken } from "../../types";
 
 export function ConfirmAccount() {
     const [token, setToken] = useState<ConfirmToken['token']>('')
+
     
     const {mutate} = useMutation({
         mutationFn: confirmAccountApi,

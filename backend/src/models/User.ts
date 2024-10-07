@@ -26,6 +26,12 @@ const userSchema: Schema = new Schema({
         type: String,
         required: true
     },
+    dni: {
+        type: String,
+    },
+    instagram: {
+        type: String
+    },
     confirmed: {
         type: Boolean,
         default: false

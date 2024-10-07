@@ -35,7 +35,7 @@ export function UserList() {
 
     if (isError) return <h1>Error</h1>
     if (data) return (
-        <PageContainer>
+        <PageContainer className="h-full">
             <PageHeader>
                 <PageTitle>
                     Usuarios
@@ -46,7 +46,7 @@ export function UserList() {
                     Agregar Usuario
                 </ListAddButton>
             </PageHeader>
-            <PageContent>
+            <PageContent >
                 <div className="flex items-center justify-center">
                     <table className="w-full text-sm  text-left  rtl:text-right border border-gray-400 shadow-lg max-w-[1000px]">
                         <thead className="text-xs text-black uppercase border border-gray-400 text-center">

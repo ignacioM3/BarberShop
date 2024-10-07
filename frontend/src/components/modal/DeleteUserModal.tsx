@@ -41,13 +41,13 @@ export default function DeleteUserModal() {
                 <div className='flex gap-2 justify-center mt-4'>
                     <input 
                         type="submit" 
-                        className='bg-red-500 cursor-pointer text-white p-2 rounded-sm hover:bg-red-800 transition-colors'
+                        className='bg-red-500 cursor-pointer text-white px-4 py-2 rounded-sm hover:bg-red-800 transition-colors'
                         value="Eliminar"
                         />
                     <input 
                         type="button" 
                         value="Cancelar"
-                        className='bg-green-400 cursor-pointer text-white p-2 rounded-sm hover:bg-green-700 transition-colors'
+                        className='bg-green-400 cursor-pointer text-white px-4 py-2 rounded-sm hover:bg-green-700 transition-colors'
                         onClick={() => navigate(location.pathname, { replace: true })}
                     />
                 </div>

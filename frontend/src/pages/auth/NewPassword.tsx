@@ -6,9 +6,11 @@ import { PageContent } from '../../components/styles/PageContent';
 import { NewPasswordForm } from '../../components/auth/NewPasswordForm';
 
 
+
 export function NewPassword() {
     const [isValidToken, setIsValidToken] = useState(false);
     const [token, setToken] = useState<ConfirmToken['token']>("")
+
   return (
     <PageContainer>
       <PageContent>

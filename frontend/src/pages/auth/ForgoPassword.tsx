@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 import { AppRoutes } from "../../routes";
 import { ForgotPasswordForm } from "../../types";
 import { useForm } from "react-hook-form";
@@ -6,9 +6,13 @@ import { useMutation } from "@tanstack/react-query";
 import { toast } from "react-toastify";
 import { forgotPasswordApi } from "../../api/AuthApi";
 import ErrorMessage from "../../components/ErrorMessage";
+import useAuth from "../../hooks/useAuth";
 
 
 export function ForgoPassword() {
+  const {currentUser} = useAuth();
+    
+  if(!currentUser) return <Navigate to={AppRoutes.home.route()}/>
   const initialValues : ForgotPasswordForm = {
     email: ""
   }
