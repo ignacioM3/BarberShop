@@ -13,28 +13,28 @@ export function Header() {
   const { currentUser } = useAuth()
 
   return (
-    <header className='flex justify-between p-3 lg:py-0 border-b-2 bg-white shadow-sm items-center fixed w-full z-[100] top-0 rounded-b-md'>
+    <header className='flex h-[70px] md:h-auto justify-between p-3 lg:py-0 border-b-2 bg-white shadow-sm items-center fixed w-full z-[100] top-0 rounded-b-md'>
       <GiHamburgerMenu className='text-4xl cursor-pointer md:hidden' />
       <Link to={AppRoutes.home.route()}>
         <img className='w-[70px] lg:w-[80px]' src="/logo.jpg" alt="" />
       </Link>
       <div className='hidden md:flex gap-5 flex-grow items-center justify-center'>
-        <Link to={AppRoutes.home.route()} className='font-bold hover:bg-gray-500 p-3 rounded-md text-gray-600 hover:text-black'>Inicio</Link>
-        <Link to={AppRoutes.login.route()} className='font-bold hover:bg-gray-500 p-3 rounded-md text-gray-600 hover:text-black'>Nosotros</Link>
-        <Link to={AppRoutes.login.route()} className='font-bold hover:bg-gray-500 p-3 rounded-md text-gray-600 hover:text-black'>Sucursales</Link>
-        <Link to={AppRoutes.login.route()} className='font-bold hover:bg-gray-500 p-3 rounded-md text-gray-600 hover:text-black'>Precios</Link>
+        <Link to={AppRoutes.home.route()} className='font-bold hover:bg-gray-500 p-3 rounded-md text-gray-600 hover:text-white transition-colors'>Inicio</Link>
+        <Link to={AppRoutes.login.route()} className='font-bold hover:bg-gray-500 p-3 rounded-md text-gray-600 hover:text-white transition-colors'>Nosotros</Link>
+        <Link to={AppRoutes.login.route()} className='font-bold hover:bg-gray-500 p-3 rounded-md text-gray-600 hover:text-white transition-colors'>Sucursales</Link>
+        <Link to={AppRoutes.login.route()} className='font-bold hover:bg-gray-500 p-3 rounded-md text-gray-600 hover:text-white transition-colors'>Precios</Link>
       </div>
       {
         currentUser ?
-          <div className='flex gap-1 items-center justify-center cursor-pointer'>
+          <div className='flex gap-1 items-center justify-center cursor-pointer '>
             {
              ( currentUser.role === UserRole.ADMIN) && (
-              <Link to={AppRoutes.homeAdmin.route()} className=' font-bold mr-3 bg-gray-500 py-2 px-3 text-white rounded-sm shadow-md hover:bg-gray-600 transition-colors'>
+              <Link to={AppRoutes.homeAdmin.route()} className='hidden md:block font-bold mr-3 bg-gray-500 py-2 px-3 text-white rounded-sm shadow-md hover:bg-gray-600 transition-colors'>
                 Admin
               </Link>
              )
             }
-            <span className='font-bold uppercase'>{currentUser.name}</span>
+            <span className='font-bold uppercase hidden md:block'>{currentUser.name}</span>
             <FaUser className='text-2xl cursor-pointer' />
           </div>
           :
