@@ -26,6 +26,7 @@ export function CarrouselMobile({
               "linear-gradient(to bottom, rgba(255, 255, 255, 1), rgba(255, 255, 255, 0.9) 90%, rgba(255, 255, 255, 0))", // Aplica una máscara de gradiente
           WebkitMaskImage:
               "linear-gradient(to bottom, rgba(255, 255, 255, 1), rgba(255, 255, 255, 0.9) 90%, rgba(255, 255, 255, 0))",
+          borderRadius: "8px 8px 0 0"
       }}
 
           src={`/carrousel/${slides[currentIndex].url}`}

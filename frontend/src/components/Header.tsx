@@ -1,22 +1,34 @@
 
 import { FaUser } from 'react-icons/fa'
-import { GiHamburgerMenu } from 'react-icons/gi'
 import { Link } from 'react-router-dom'
 import useAuth from '../hooks/useAuth'
 import 'react-toastify/dist/ReactToastify.css'
-
+import { FaHome } from "react-icons/fa";
+import { FaUserGroup } from "react-icons/fa6";
 import { AppRoutes } from '../routes';
 import { UserRole } from '../types/use-role'
+import { Burger } from './Burger'
+import { IoIosBusiness } from "react-icons/io";
+import { useState } from 'react'
+import { FaDollarSign } from "react-icons/fa";
+import { CiLogout } from "react-icons/ci";
+import { FaCog } from "react-icons/fa";
 
 
 export function Header() {
   const { currentUser } = useAuth()
 
+  const [clicked, setClicked] = useState(false)
+  const handleClick = () => {
+    setClicked(!clicked)
+  }
+
   return (
-    <header className='flex h-[70px] md:h-auto justify-between p-3 lg:py-0 border-b-2 bg-white shadow-sm items-center fixed w-full z-[100] top-0 rounded-b-md'>
-      <GiHamburgerMenu className='text-4xl cursor-pointer md:hidden' />
+  <>
+      <header className='flex h-[70px] md:h-auto justify-between p-3 lg:py-0 border-b-2 bg-white shadow-sm items-center fixed w-full z-[100] top-0 rounded-b-md'>
+      <Burger clicked={clicked} handleClick={handleClick} />
       <Link to={AppRoutes.home.route()}>
-        <img className='w-[70px] lg:w-[80px]' src="/logo.jpg" alt="" />
+        <img className='w-[70px] h-[60px] lg:w-[80px]' src="/logo.jpg" alt="" />
       </Link>
       <div className='hidden md:flex gap-5 flex-grow items-center justify-center'>
         <Link to={AppRoutes.home.route()} className='font-bold hover:bg-gray-500 p-3 rounded-md text-gray-600 hover:text-white transition-colors'>Inicio</Link>
@@ -35,7 +47,7 @@ export function Header() {
              )
             }
             <span className='font-bold uppercase hidden md:block'>{currentUser.name}</span>
-            <FaUser className='text-2xl cursor-pointer' />
+            <FaUser className='text-3xl cursor-pointer' />
           </div>
           :
           <>
@@ -55,5 +67,14 @@ export function Header() {
 
 
     </header>
+    <div className={`${clicked ? "active" : ""} bg flex flex-col item`}>
+      <Link to={AppRoutes.home.route()} className='flex items-center gap-2 p-2 '><FaHome />Inicio</Link>
+        <Link to={AppRoutes.login.route()} className='flex items-center gap-2 p-2'><FaUserGroup />Nosotros</Link>
+        <Link to={AppRoutes.login.route()} className='flex items-center gap-2 p-2'><IoIosBusiness/>Sucursales</Link>
+        <Link to={AppRoutes.login.route()} className='flex items-center gap-2 p-2'><FaDollarSign />Precios</Link>
+        <Link to={""} className='flex items-center gap-2 p-2'><FaCog/>Configuracion</Link>
+        <Link to={""} className='flex items-center gap-2 p-2'><CiLogout />Cerrar Sesión</Link>
+      </div>
+  </>
   )
 }
