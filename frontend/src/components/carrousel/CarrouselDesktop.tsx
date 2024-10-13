@@ -19,7 +19,7 @@ export function CarrouselDesktop({
 
     return (
 
-        <div className="md:max-w-[2500px] md:h-[450px] w-full h-[300px] m-auto relative group overflow-hidden z-[0]">
+        <div className="md:max-w-[2500px] md:h-[450px] w-full h-[300px] m-auto relative group overflow-hidden z-[0] rounded-[2px]">
             {slides.length > 0 && (
                 <div
                     style={{

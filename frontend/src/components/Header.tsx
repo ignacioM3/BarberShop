@@ -53,27 +53,29 @@ export function Header() {
           <>
             <div className=' hidden md:flex gap-2 '>
             <Link to={AppRoutes.login.route()}
-              className='px-1 py-2 w-[100px] bg-gray-700 rounded-md cursor-pointer text-center text-white font-bold  text-[14px]'
+              className='px-1 py-2 w-[100px] bg-gray-700 rounded-md cursor-pointer text-center text-white font-bold  text-[14px] hover:bg-gray-800 transition-colors'
             >Iniciar Sesión
             </Link>
             <Link to={AppRoutes.register.route()}
-              className='px-2 py-2 w-[100px] bg-gray-700 rounded-md cursor-pointer text-center text-white font-bold text-sm'
+              className='px-2 py-2 w-[100px] bg-gray-700 rounded-md cursor-pointer text-center text-white font-bold text-sm  hover:bg-gray-800 transition-colors'
             >Registrate
             </Link>
           </div>
+
+          <FaUser className='text-3xl cursor-pointer md:hidden' />
           
           </>
       }
 
 
     </header>
-    <div className={`${clicked ? "active" : ""} bg flex flex-col item`}>
-      <Link to={AppRoutes.home.route()} className='flex items-center gap-2 p-2 '><FaHome />Inicio</Link>
-        <Link to={AppRoutes.login.route()} className='flex items-center gap-2 p-2'><FaUserGroup />Nosotros</Link>
-        <Link to={AppRoutes.login.route()} className='flex items-center gap-2 p-2'><IoIosBusiness/>Sucursales</Link>
-        <Link to={AppRoutes.login.route()} className='flex items-center gap-2 p-2'><FaDollarSign />Precios</Link>
-        <Link to={""} className='flex items-center gap-2 p-2'><FaCog/>Configuracion</Link>
-        <Link to={""} className='flex items-center gap-2 p-2'><CiLogout />Cerrar Sesión</Link>
+    <div className={`${clicked ? "active" : ""} bg flex flex-col item `}>
+      <Link to={AppRoutes.home.route()} className='flex items-center gap-2 p-2 hover:bg-gray-500 hover:text-white text-gray-600 hover:font-bold'><FaHome />Inicio</Link>
+        <Link to={AppRoutes.login.route()} className='flex items-center gap-2 p-2 hover:bg-gray-500 hover:text-white text-gray-600 hover:font-bold'><FaUserGroup />Nosotros</Link>
+        <Link to={AppRoutes.login.route()} className='flex items-center gap-2 p-2 hover:bg-gray-500 hover:text-white text-gray-600 hover:font-bold'><IoIosBusiness/>Sucursales</Link>
+        <Link to={AppRoutes.login.route()} className='flex items-center gap-2 p-2 hover:bg-gray-500 hover:text-white text-gray-600 hover:font-bold'><FaDollarSign />Precios</Link>
+        <Link to={""} className='flex items-center gap-2 p-2 hover:bg-gray-500 hover:text-white text-gray-600 hover:font-bold'><FaCog/>Configuracion</Link>
+        <Link to={""} className='flex items-center gap-2 p-2 hover:bg-gray-500 hover:text-white text-gray-600 hover:font-bold'><CiLogout />Cerrar Sesión</Link>
       </div>
   </>
   )
