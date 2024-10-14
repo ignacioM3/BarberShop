@@ -33,7 +33,7 @@ export function UserList() {
     }
 
 
-    if (isError) return <h1>Error</h1>
+    if (isError) return <h1>Falta Implementar error</h1>
     if (data) return (
         <PageContainer className="h-full">
             <PageHeader>

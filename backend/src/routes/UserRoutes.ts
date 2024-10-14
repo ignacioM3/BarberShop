@@ -14,6 +14,7 @@ router.delete('/:userId',
     handleInputErrors,
     UserControllers.deleteUser
     )
+    
 router.post('/create-barber',
     body('name').notEmpty().withMessage('El nombre no puede estar vacio'),
     body('email').isEmail().withMessage('Email no es válido'),
@@ -28,11 +29,14 @@ router.post('/create-barber',
     UserControllers.createUserBarber
 )
 
-router.get('/:userId', 
+router.get('/info/:userId', 
     param('userId').isMongoId().withMessage('ID no valido'),
     handleInputErrors,
     UserControllers.getUserById
 )
+
+router.get('/list-barber', UserControllers.getBarbers)
+
 
 
 export default router

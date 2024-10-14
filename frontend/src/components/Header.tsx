@@ -17,6 +17,7 @@ import { FaCog } from "react-icons/fa";
 
 export function Header() {
   const { currentUser } = useAuth()
+  console.log(currentUser)
 
   const [clicked, setClicked] = useState(false)
   const handleClick = () => {
@@ -74,6 +75,11 @@ export function Header() {
         <Link to={AppRoutes.login.route()} className='flex items-center gap-2 p-2 hover:bg-gray-500 hover:text-white text-gray-600 hover:font-bold'><FaUserGroup />Nosotros</Link>
         <Link to={AppRoutes.login.route()} className='flex items-center gap-2 p-2 hover:bg-gray-500 hover:text-white text-gray-600 hover:font-bold'><IoIosBusiness/>Sucursales</Link>
         <Link to={AppRoutes.login.route()} className='flex items-center gap-2 p-2 hover:bg-gray-500 hover:text-white text-gray-600 hover:font-bold'><FaDollarSign />Precios</Link>
+      {
+          currentUser?.role === UserRole.ADMIN && (
+            <Link to={AppRoutes.homeAdmin.route()} className='flex items-center gap-2 p-2 hover:bg-gray-500 hover:text-white text-green-600 bg-green-300 font-bold'><FaUserGroup />Admin</Link>
+          )
+        }
         <Link to={""} className='flex items-center gap-2 p-2 hover:bg-gray-500 hover:text-white text-gray-600 hover:font-bold'><FaCog/>Configuracion</Link>
         <Link to={""} className='flex items-center gap-2 p-2 hover:bg-gray-500 hover:text-white text-gray-600 hover:font-bold'><CiLogout />Cerrar Sesión</Link>
       </div>

@@ -23,6 +23,24 @@ export class UserControllers{
       }
     }
 
+    static getBarbers = async (req: Request, res: Response) =>{
+        if(req.user.role !== userRole.admin && req.user.role !== userRole.barber){
+         const error = new Error('Acción no Válida');
+         return res.status(404).json({error: error.message})
+        }
+        
+       try {
+         const listUsers = await User.find({
+             $or: [
+                 {role: {$in: userRole.barber}},
+             ]
+            })
+            res.json(listUsers)
+       } catch (error) {
+         console.log(error)
+       }
+     }
+
     static getUserById = async (req: Request, res: Response)=> {
         const {userId} = req.params;
         try {
