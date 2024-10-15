@@ -9,7 +9,6 @@ const router = express.Router();
 router.use(authenticate);
 router.param("branchId", BranchExists)
 
-
 router.post('/create-branch',
     body('name').notEmpty().withMessage('El nombre puede estar vació'),
     body('address').notEmpty().withMessage('La dirreción no puede estar vacia'),
@@ -27,5 +26,8 @@ router.post("/:branchId/add-barber",
     handleInputErrors,
     BranchControllers.addBarberToBranch)
 
-
+router.delete('/:branchId/remove-barber/:barberId', 
+    handleInputErrors,
+    BranchControllers.removeBarberToBranch
+)
 export default router;

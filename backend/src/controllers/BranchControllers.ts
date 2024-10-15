@@ -85,4 +85,27 @@ export class BranchControllers {
         console.log(error)
     }
   };
+
+  static removeBarberToBranch = async (req: Request, res: Response) => {
+    try {
+      const {barberId} = req.params;
+      const findBarber = await User.findById(barberId);
+      if (!findBarber) {
+        const error = new Error("Usuario no encontrado");
+        return res.status(404).json({ error: error.message });
+      }
+
+      if(!req.branch.barbers.some(barber => barber.toString() === findBarber.id.toString())){
+        const error = new Error('El barbero no existe en el local');
+        return res.status(409).json({error: error.message})
+      }
+      
+
+      req.branch.barbers = req.branch.barbers.filter(barber => barber._id.toString() !== barberId)
+      await req.branch.save();
+      res.send('Barbero eliminado correctamente del local')
+    } catch (error) {
+      console.log(error)
+    }
+  }
 }
