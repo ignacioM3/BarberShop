@@ -92,8 +92,8 @@ export class UserControllers{
 
     static createUserBarber = async (req: Request, res: Response) => {
         const {email} = req.body;
-        const findUser = User.findOne({email});
-        if(!findUser){
+        const findUser = await User.findOne({email});
+        if(findUser){
             const error = new Error('Usuario ya registrado')
             return res.status(400).json({error: error.message});
         }
