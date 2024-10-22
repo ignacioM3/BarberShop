@@ -106,12 +106,12 @@ export function UserList() {
                       onPageChange={(page) => setCurrentPage(page)}
                 />
 
-                <UserModal
+   
+            </PageContent>
+            <UserModal
                     open={open}
                     setOpen={setOpen}
                 />
-            </PageContent>
-
             <DeleteUserModal />
 
         </PageContainer>

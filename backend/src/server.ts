@@ -6,6 +6,7 @@ import authRoutes from './routes/AuthRoutes'
 import userRoutes from './routes/UserRoutes'
 import branchRoutes from './routes/BranchRoutes'
 import cors from 'cors'
+import { corsConfig } from './config/cors';
 
 
 dotenv.config();
@@ -13,7 +14,7 @@ connectDB()
 
 const app = express()
 
-app.use(cors())
+app.use(cors(corsConfig))
 
 app.use(morgan('dev'));
 app.use(express.json());

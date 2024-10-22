@@ -1,17 +1,26 @@
-import { PropsWithChildren } from "react";
+import { PropsWithChildren, useState } from "react";
 import Logo from "../components/Logo";
 import { menuSection } from "../menu-section";
 import useAuth from "../hooks/useAuth";
 import { UserRole } from "../types/use-role";
 import { FaUserAlt } from "react-icons/fa";
 import { IoIosLogOut } from "react-icons/io";
-import { GiHamburgerMenu } from "react-icons/gi";
 import { Link } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
+import { AppRoutes } from "../routes";
+import { FaHome } from "react-icons/fa";
+import { FaUserGroup } from "react-icons/fa6";
+import { IoIosBusiness } from "react-icons/io";
+import { FaDollarSign } from "react-icons/fa";
+import { CiLogout } from "react-icons/ci";
+import { FaCog } from "react-icons/fa";
+import { Burger } from "../components/Burger";
 
 export function AdminLayout({ children }: PropsWithChildren) {
     const { currentUser, logoutUser } = useAuth();
-    
+    const [clicked, setClicked] = useState<boolean>(false)
+    const handleClick = () => setClicked(!clicked);
+
     return (
         <div className="flex h-screen w-screen">
             <div className="bg-white hidden md:block h-screen w-[250px] p-5">
@@ -63,21 +72,18 @@ export function AdminLayout({ children }: PropsWithChildren) {
                             {currentUser?.name}({currentUser?.role})
                         </button>
                     </div>
-                    <button 
+                    <button
                         className="flex items-center gap-2 p-3 h-full pr-4 rounded hover:bg-gray-200 transition-colors"
                         onClick={logoutUser}
-                        >
+                    >
                         Salir
                         <IoIosLogOut />
                     </button>
                 </header>
 
                 {/* mobile */}
-                <header className="border-b-2 shadow-sm md:hidden w-full h-14 flex justify-between items-center p-4">
-                    <div>
-                        <GiHamburgerMenu className=" text-3xl" />
-                    </div>
-
+                <header className="border-b-2 shadow-sm md:hidden w-full h-14 flex justify-between items-center p-4  z-[100] fixed bg-white">
+                <Burger clicked={clicked} handleClick={handleClick} />
                     <div>
                         <button className="flex items-center gap-2">
                             <FaUserAlt />
@@ -85,15 +91,45 @@ export function AdminLayout({ children }: PropsWithChildren) {
                         </button>
                     </div>
                 </header>
-                <div className="bg-gray-100 w-full h-full">
+                <div className={`${clicked && "activeAdmin"} bg flex flex-col item md:hidden `}>
+                {
+                        menuSection.map((section, index) => (
+                            <section key={index}>
+                                {
+                                    section.label.map((label, index) => (
+                                        (!label.role || label.role.includes(currentUser?.role as UserRole)) && (
+                                            <p key={index} className="mt-2 font-bold font-heading">{label.label}</p>
+                                        )
+                                    ))
+                                }
+                                {
+                                    section.items.map(
+                                        (item) => (
+                                            (!item.role || (currentUser?.role && item.role.includes(currentUser?.role)))) &&
+                                            (
+                                                <Link to={item.to}  key={item.label} className='flex items-center gap-2 p-2 hover:bg-gray-500 hover:text-white text-gray-600 hover:font-bold'> <div>
+                                                {item.icon && item.icon}
+                                            </div>
+                                            <span >{item.label}</span></Link>
+                                                
+                                            ))
+                                       
+                                }
+                                  <button onClick={logoutUser} className='flex items-center gap-2 p-2 hover:bg-gray-500 hover:text-white text-gray-600 hover:font-bold'><CiLogout />Cerrar Sesión</button>
+                            </section>
+                        ))
+                    }
+                    
+                </div>
+                <div className="bg-gray-100 w-full h-full mt-14 md:mt-0">
                     {children}
                 </div>
             </div>
 
             <ToastContainer
-        pauseOnHover={false}
-        pauseOnFocusLoss={false}
-      />
+                pauseOnHover={false}
+                pauseOnFocusLoss={false}
+            />
 
         </div>
     )

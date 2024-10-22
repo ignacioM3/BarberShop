@@ -19,42 +19,42 @@ export function BarberList() {
   const [open, setOpen] = useState(false)
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [total, setTotal] = useState<number>(0)
-    const usersPerPage = 6;
+  const usersPerPage = 6;
 
 
-  const {data, isLoading, isError} = useQuery({
+  const { data, isLoading, isError } = useQuery({
     queryKey: ['getBarbers', currentPage],
     queryFn: () => getBarberList(currentPage),
     retry: false
   })
-  
+
   useEffect(() => {
     if (data) {
-        setTotal(data.totalUsers)
+      setTotal(data.totalUsers)
     }
-}, [data]);
+  }, [data]);
 
-  if(isLoading){
-    return <LoadingSpinner/>
+  if (isLoading) {
+    return <LoadingSpinner />
   }
 
-  if(isError) return <h1>falta implementar error</h1>
+  if (isError) return <h1>falta implementar error</h1>
 
 
-  if(data) return (
-    <PageContainer>
+  if (data) return (
+    <PageContainer className="h-full">
       <PageHeader>
         <PageTitle>
           Barberos
         </PageTitle>
         <ListAddButton
-          onClick={() => {}}
+          onClick={() => { }}
         >
           Agregar Barbero
         </ListAddButton>
       </PageHeader>
       <PageContent>
-  
+
       <div className="flex items-center justify-center">
                     <table className="w-full text-sm  text-left  rtl:text-right border border-gray-400 shadow-lg max-w-[1000px]">
                         <thead className="text-xs text-black uppercase border border-gray-400 text-center">
@@ -80,26 +80,26 @@ export function BarberList() {
                                                 <button className="border border-gray-700 p-2 rounded hover:bg-gray-400 hover:text-white hover:border-none transition-colors">
                                                     <MdOutlineEdit />
                                                 </button>
-                                                <button 
+                                                <button
                                                     className="border border-red-500 p-2 rounded text-red-500 hover:bg-red-500 hover:text-white transition-colors hover:border-none"
                                                     onClick={() => navigate(location.pathname + `?deleteProject=${row._id}`)}
-                                                    >
+                                                >
                                                     <RiDeleteBin6Line />
                                                 </button>
                                             </td>
                                         </tr>
                                     ))
-                                ) : <tr><td colSpan={4} className="text-center p-3">No hay usuarios</td></tr> 
+                                ) : <tr><td colSpan={4} className="text-center p-3">No hay usuarios</td></tr>
                             }
                         </tbody>
                     </table>
                 </div>
-                <Pagination 
-                  usersPerPage={usersPerPage}
-                  totalUsers={total}
-                  currentPage={currentPage}
-                  onPageChange={(page) => setCurrentPage(page)}
-                />
+        <Pagination
+          usersPerPage={usersPerPage}
+          totalUsers={total}
+          currentPage={currentPage}
+          onPageChange={(page) => setCurrentPage(page)}
+        />
       </PageContent>
     </PageContainer>
   )

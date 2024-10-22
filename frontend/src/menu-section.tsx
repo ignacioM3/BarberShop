@@ -3,7 +3,7 @@ import { FaUserAlt } from "react-icons/fa";
 import { HiScissors } from "react-icons/hi2";
 import { IoCalendarNumberOutline } from "react-icons/io5";
 import { TbMoneybag } from "react-icons/tb";
-import { IoMdHome } from "react-icons/io";
+import { AiFillHome } from "react-icons/ai";
 import { AppRoutes } from "./routes";
 
 export interface MenuItem {
@@ -36,7 +36,7 @@ export const menuSection: MenuSection[] = [
             
             {
                 label: "Home ",
-                icon: <IoMdHome />,
+                icon: <AiFillHome />,
                 to: AppRoutes.home.route()
             },
             {
