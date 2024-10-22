@@ -36,4 +36,7 @@ export type UserListType = Pick<User, 'email' | 'name' | 'confirmed' | 'role' | 
 export type UserCreateForm = Pick<User, 'name' | 'email' | 'password' >
 
 
-export const getUserListSchema = z.array(userSchema);
+export const getUserListSchema = z.object({
+    users: z.array(userSchema), 
+    totalUsers: z.number()
+});

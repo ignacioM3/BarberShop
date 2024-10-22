@@ -11,6 +11,7 @@ import { MdOutlineEdit } from "react-icons/md";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
+import { Pagination } from "../../components/Pagination";
 
 export function BarberList() {
   const navigate = useNavigate()
@@ -83,7 +84,6 @@ export function BarberList() {
                         </tbody>
                     </table>
                 </div>
-
       </PageContent>
     </PageContainer>
   )

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import UserModal from "../../components/modal/UserListModal";
 import { ListAddButton } from "../../components/styles/LinkButton";
 import { PageContainer } from "../../components/styles/PageContainer";
@@ -13,20 +13,31 @@ import LoadingSpinner from "../../components/LoadingSpinner";
 import { UserListType } from "../../types";
 import DeleteUserModal from "../../components/modal/DeleteUserModal";
 import { useLocation, useNavigate } from "react-router-dom";
+import { Pagination } from "../../components/Pagination";
 
 
 export function UserList() {
     const columns = ['Nombre', 'Número', 'Cortes'];
     const [open, setOpen] = useState(false)
+    const [currentPage, setCurrentPage] = useState<number>(1);
+    const userPerPage = 6;
+    const [total, setTotal] = useState<number>(0)
+
     const navigate = useNavigate();
     const location = useLocation()
 
 
     const { data, isLoading, isError } = useQuery({
-        queryKey: ['getUsers'],
-        queryFn: getUserList,
+        queryKey: ['getUsers', currentPage],
+        queryFn: () => getUserList(currentPage),
         retry: false
     })
+
+    useEffect(() => {
+        if (data) {
+            setTotal(data.totalUsers)
+        }
+    }, [data]);
 
     if (isLoading) {
         return <LoadingSpinner />
@@ -35,6 +46,8 @@ export function UserList() {
 
     if (isError) return <h1>Falta Implementar error</h1>
     if (data) return (
+        
+        
         <PageContainer className="h-full">
             <PageHeader>
                 <PageTitle>
@@ -62,8 +75,8 @@ export function UserList() {
                         </thead>
                         <tbody>
                             {
-                                data.length ? (
-                                    data.map((row: UserListType, rowIndex: number) => (
+                                data.totalUsers ? (
+                                    data.users.map((row: UserListType, rowIndex: number) => (
                                         <tr key={rowIndex} className="border border-gray-400 text-center">
                                             <td className="px-6 py-4">{row.name}</td>
                                             <td className="px-6 py-4">{row.role}</td>
@@ -72,20 +85,26 @@ export function UserList() {
                                                 <button className="border border-gray-700 p-2 rounded hover:bg-gray-400 hover:text-white hover:border-none transition-colors">
                                                     <MdOutlineEdit />
                                                 </button>
-                                                <button 
+                                                <button
                                                     className="border border-red-500 p-2 rounded text-red-500 hover:bg-red-500 hover:text-white transition-colors hover:border-none"
                                                     onClick={() => navigate(location.pathname + `?deleteProject=${row._id}`)}
-                                                    >
+                                                >
                                                     <RiDeleteBin6Line />
                                                 </button>
                                             </td>
                                         </tr>
                                     ))
-                                ) : <tr><td colSpan={4} className="text-center p-3">No hay usuarios</td></tr> 
+                                ) : <tr><td colSpan={4} className="text-center p-3">No hay usuarios</td></tr>
                             }
                         </tbody>
                     </table>
                 </div>
+                <Pagination 
+                      totalUsers={total}
+                      usersPerPage={userPerPage}
+                      currentPage={currentPage}
+                      onPageChange={(page) => setCurrentPage(page)}
+                />
 
                 <UserModal
                     open={open}
