@@ -1,40 +1,48 @@
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useForm } from "react-hook-form";
-import { createUserApi } from "../../api/AuthApi";
 import { toast } from "react-toastify";
+import { createBarberApi } from "../../api/BarberApi";
+import { UserCreateForm } from "../../types";
 import ErrorMessage from "../ErrorMessage";
 
-interface UserModalInterface {
+interface UserBarberModalProps {
     open: boolean;
     setOpen: (open: boolean) => void;
 }
 
-export default function UserModal({ open, setOpen }: UserModalInterface) {
+export function UserBarberModal({ open, setOpen }: UserBarberModalProps) {
     const initialValues = {
         name: "",
         number: "",
+        password_confirmation: "",
         password: "",
         email: ""
     }
 
-    const { register, handleSubmit, reset, formState: { errors } } = useForm(
-        { defaultValues: initialValues }
-    )
+    const queryClient = useQueryClient()
+    const { register, handleSubmit, reset, watch, formState: { errors } } = useForm({
+        defaultValues: initialValues
+    });
 
+    const password = watch('password');
     const { mutate } = useMutation({
-        mutationFn: createUserApi,
+        mutationFn: createBarberApi,
         onError: (error) => {
             toast.error(error.message)
-            toast.success('Usuario Creado correctamente')
         },
         onSuccess: (data) => {
             toast.success(data)
+            console.log(data)
+            queryClient.invalidateQueries({ queryKey: ['getBarbers'] })
+            setOpen(false)
+            reset()
         }
     })
 
-    const handleCreate = async () => {
-        
+    const handleCreateBarber = (formData: UserCreateForm) => {
+        mutate(formData);
     }
+
     return (
         <div
             className={`${open ? 'fixed' : 'hidden'} bg-[#4b4b4b72] h-screen left-0 bottom-0 right-0`}
@@ -43,39 +51,38 @@ export default function UserModal({ open, setOpen }: UserModalInterface) {
             <div className="w-full h-full flex items-center justify-center">
                 <form
                     onClick={(e) => e.stopPropagation()}
-                    onSubmit={handleSubmit(handleCreate)}
-                    className="bg-white w-[400px] shadow-md rounded-md p-7 mt-4"
+                    onSubmit={handleSubmit(handleCreateBarber)}
+                    className="bg-white w-[350px]  md:w-[400px] shadow-md rounded-md p-7 mt-8 md:mt-4"
                 >
-                    <h1 className="text-center text-xl font-bold text-gray-600 border-b border-gray-600 pb-3">Crear Usuario</h1>
+                    <h1 className="text-center text-xl font-bold text-gray-600 border-b border-gray-600 pb-3">Crear Barbero</h1>
                     <div className="my-2">
-                        <label htmlFor="name" className="uppercase text-gray-600 block font-bold">
-                            Nombre
+                        <label
+                            htmlFor="name"
+                            className="uppercase text-gray-600 block font-bold"
+                        >
+                            nombre
                         </label>
                         <input
+                            {...register("name", {
+                                required: "El nombre es obligatorio",
+                            })}
                             type="text"
-                            {
-                            ...register('name', {
-                                required: 'El nombre es obligatorio'
-                            })
-                            }
                             id="name"
                             className="w-full mt-2 p-2 border rounded-md bg-gray-100"
-                            placeholder="Ingrese el Nombre"
+                            placeholder="Ingresa el Nombre"
                         />
-                           {
-                            errors.name && (
-                                <ErrorMessage>
-                                    {errors.name?.message}
-                                </ErrorMessage>
-                            )
-                        }
+                        {errors.name && (
+                            <ErrorMessage>
+                                {errors.name.message}
+                            </ErrorMessage>
+                        )}
                     </div>
                     <div className="my-2">
                         <label
                             htmlFor="number"
                             className="uppercase text-gray-600 block font-bold"
                         >
-                            Numero
+                            Número
                         </label>
                         <input
                             {
@@ -84,9 +91,9 @@ export default function UserModal({ open, setOpen }: UserModalInterface) {
                             })
                             }
                             type="number"
-                            className="w-full mt-2 p-2 border rounded-md bg-gray-100"
                             id="number"
-                            placeholder="Ingrese el Numero"
+                            className="w-full mt-2 p-2 border rounded-md bg-gray-100"
+                            placeholder="Ingresa el Numero"
                         />
                         {
                             errors.number && (
@@ -110,13 +117,13 @@ export default function UserModal({ open, setOpen }: UserModalInterface) {
                                 pattern: {
                                     value: /\S+@\S+\.\S+/,
                                     message: "Email no válido"
-                                  }
+                                }
                             })
                             }
                             type="email"
-                            className="w-full mt-2 p-2 border rounded-md bg-gray-100"
                             id="email"
-                            placeholder="Ingrese el Email"
+                            className="w-full mt-2 p-2 border rounded-md bg-gray-100"
+                            placeholder="Ingresa el email"
                         />
                         {
                             errors.email && (
@@ -126,7 +133,6 @@ export default function UserModal({ open, setOpen }: UserModalInterface) {
                             )
                         }
                     </div>
-                    
                     <div className="my-2">
                         <label
                             htmlFor="password"
@@ -143,7 +149,7 @@ export default function UserModal({ open, setOpen }: UserModalInterface) {
                             type="password"
                             className="w-full mt-2 p-2 border rounded-md bg-gray-100"
                             id="password"
-                            placeholder="Ingrese el Numero"
+                            placeholder="Ingresa el password"
                         />
                         {
                             errors.password && (
@@ -153,23 +159,42 @@ export default function UserModal({ open, setOpen }: UserModalInterface) {
                             )
                         }
                     </div>
-
-                  <div className="flex gap-4 mt-4">
-                  <input
-                        type="submit"
-                        className="bg-green-500 w-full text-sm py-2 mb-2 text-gray-100 uppercase font-bold rounded cursor-pointer hover:bg-green-600 transition-colors"
-                        value="Crear Usuario"
-                        onClick={() => toast.success("hola")}
-                    />
-                    <input
-                        type="button"
-                        value="Cancelar"
-                        className="bg-red-500 w-full py-2 mb-2 text-sm text-gray-100 uppercase font-bold rounded cursor-pointer hover:bg-red-600 transition-colors"
-                        onClick={() => setOpen(false)}
-                    />
-                  </div>
+                    <div className="my-2">
+                        <label
+                            htmlFor="password_confirmation"
+                            className="uppercase text-gray-600 block font-bold"
+                        >
+                            Repeti el password
+                        </label>
+                        <input
+                            {...register("password_confirmation", {
+                                required: "Repetir Password es obligatorio",
+                                validate: value => value === password || 'Los Passwords no son iguales'
+                            })}
+                            type="password"
+                            className="w-full mt-2 p-2 border rounded-md bg-gray-100"
+                            id="password_confirmation"
+                            placeholder="Repita el password"
+                        />
+                        {errors.password_confirmation && (
+                            <ErrorMessage>{errors.password_confirmation.message}</ErrorMessage>
+                        )}
+                    </div>
+                    <div className="flex gap-4 mt-4">
+                        <input
+                            type="submit"
+                            className="bg-green-500 w-full text-sm py-2 mb-2 text-gray-100 uppercase font-bold rounded cursor-pointer hover:bg-green-600 transition-colors"
+                            value="Crear Usuario"
+                        />
+                        <input
+                            type="button"
+                            value="Cancelar"
+                            className="bg-red-500 w-full py-2 mb-2 text-sm text-gray-100 uppercase font-bold rounded cursor-pointer hover:bg-red-600 transition-colors"
+                            onClick={() => setOpen(false)}
+                        />
+                    </div>
                 </form>
             </div>
         </div>
     )
-} 
+}

@@ -11,7 +11,6 @@ import { Burger } from './Burger'
 import { IoIosBusiness } from "react-icons/io";
 import { useState } from 'react'
 import { FaDollarSign } from "react-icons/fa";
-import { CiLogout } from "react-icons/ci";
 import { FaCog } from "react-icons/fa";
 import { FaRegUser } from "react-icons/fa";
 import { RiLoginBoxLine } from "react-icons/ri";

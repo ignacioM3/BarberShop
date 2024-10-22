@@ -12,6 +12,7 @@ import { RiDeleteBin6Line } from "react-icons/ri";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { Pagination } from "../../components/Pagination";
+import { UserBarberModal } from "../../components/modal/UserBarberModal";
 
 export function BarberList() {
   const navigate = useNavigate()
@@ -48,7 +49,7 @@ export function BarberList() {
           Barberos
         </PageTitle>
         <ListAddButton
-          onClick={() => { }}
+          onClick={() => setOpen(true)}
         >
           Agregar Barbero
         </ListAddButton>
@@ -101,6 +102,11 @@ export function BarberList() {
           onPageChange={(page) => setCurrentPage(page)}
         />
       </PageContent>
+
+      <UserBarberModal
+      open={open}
+      setOpen={setOpen}
+      />
     </PageContainer>
   )
 }

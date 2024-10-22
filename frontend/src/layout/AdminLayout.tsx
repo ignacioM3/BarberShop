@@ -9,6 +9,7 @@ import { Link } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import { CiLogout } from "react-icons/ci";
 import { Burger } from "../components/Burger";
+import 'react-toastify/dist/ReactToastify.css'
 
 export function AdminLayout({ children }: PropsWithChildren) {
     const { currentUser, logoutUser } = useAuth();
