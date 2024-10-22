@@ -12,12 +12,12 @@ export class UserControllers {
     try {
       const page = parseInt(req.query.page as string) || 1;
       const limit = parseInt(req.query.limit as string) || 6;
-      const skip = (page - 1) * 6;
+      const skip = (page - 1) * limit;
 
       const totalUsers = await User.countDocuments({
-        $or: [{ role: { $in: userRole.client } }]
-    });
-    
+        $or: [{ role: { $in: userRole.client } }],
+      });
+
       const listUsers = await User.find({
         $or: [{ role: { $in: userRole.client } }],
       })
@@ -25,7 +25,7 @@ export class UserControllers {
         .limit(limit);
       res.json({
         users: listUsers,
-        totalUsers
+        totalUsers,
       });
     } catch (error) {
       console.log(error);
@@ -39,10 +39,25 @@ export class UserControllers {
     }
 
     try {
+      const page = parseInt(req.query.page as string) || 1;
+      const limit = parseInt(req.query.limit as string) || 6;
+
+      const skip = (page - 1) * limit;
+
+      const totalUsers = await User.countDocuments({
+        $or: [{role: {$in: userRole.barber}}]
+      })
+
       const listUsers = await User.find({
         $or: [{ role: { $in: userRole.barber } }],
+      })
+        .skip(skip)
+        .limit(limit);
+      res.json({
+        users: listUsers,
+        totalUsers
+
       });
-      res.json(listUsers);
     } catch (error) {
       console.log(error);
     }
