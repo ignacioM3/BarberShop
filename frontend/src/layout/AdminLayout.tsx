@@ -7,13 +7,7 @@ import { FaUserAlt } from "react-icons/fa";
 import { IoIosLogOut } from "react-icons/io";
 import { Link } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
-import { AppRoutes } from "../routes";
-import { FaHome } from "react-icons/fa";
-import { FaUserGroup } from "react-icons/fa6";
-import { IoIosBusiness } from "react-icons/io";
-import { FaDollarSign } from "react-icons/fa";
 import { CiLogout } from "react-icons/ci";
-import { FaCog } from "react-icons/fa";
 import { Burger } from "../components/Burger";
 
 export function AdminLayout({ children }: PropsWithChildren) {

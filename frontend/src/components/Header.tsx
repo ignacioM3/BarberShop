@@ -14,19 +14,22 @@ import { FaDollarSign } from "react-icons/fa";
 import { CiLogout } from "react-icons/ci";
 import { FaCog } from "react-icons/fa";
 import { FaRegUser } from "react-icons/fa";
-
+import { RiLoginBoxLine } from "react-icons/ri";
+import { IoIosLogOut } from "react-icons/io";
 
 export function Header() {
-  const { currentUser } = useAuth()
+  const { currentUser, logoutUser } = useAuth()
   console.log(currentUser)
 
   const [clicked, setClicked] = useState(false)
   const [clicked2, setClicked2] = useState(false)
   const handleClick = () => setClicked(!clicked)
-  const handlePerfil = () => setClicked2(!clicked2)
+  const handlePerfil = () => {
+    setClicked2(!clicked2)
+  }
 
   return (
-    <>
+    <>  
       <header className='flex h-[70px] md:h-auto justify-between p-3 lg:py-0 border-b-2 bg-white shadow-sm items-center fixed w-full z-[100] top-0 rounded-b-md'>
         <Burger clicked={clicked} handleClick={handleClick} />
         <Link to={AppRoutes.home.route()}>
@@ -64,7 +67,7 @@ export function Header() {
                 </Link>
               </div>
 
-              <FaUser className='text-3xl cursor-pointer md:hidden' />
+              <FaUser className='text-3xl cursor-pointer md:hidden' onClick={handlePerfil}/>
 
             </>
         }
@@ -76,17 +79,27 @@ export function Header() {
         <Link to={AppRoutes.login.route()} className='flex items-center gap-2 p-2 hover:bg-gray-500 hover:text-white text-gray-600 hover:font-bold'><FaUserGroup />Nosotros</Link>
         <Link to={AppRoutes.login.route()} className='flex items-center gap-2 p-2 hover:bg-gray-500 hover:text-white text-gray-600 hover:font-bold'><IoIosBusiness />Sucursales</Link>
         <Link to={AppRoutes.login.route()} className='flex items-center gap-2 p-2 hover:bg-gray-500 hover:text-white text-gray-600 hover:font-bold'><FaDollarSign />Precios</Link>
-        {
-          currentUser?.role === UserRole.ADMIN && (
-            <Link to={AppRoutes.homeAdmin.route()} className='flex items-center gap-2 p-2 hover:bg-gray-500 hover:text-white text-green-600 bg-green-300 font-bold'><FaUserGroup />Admin</Link>
-          )
-        }
-        <Link to={""} className='flex items-center gap-2 p-2 hover:bg-gray-500 hover:text-white text-gray-600 hover:font-bold'><FaCog />Configuracion</Link>
-        <Link to={""} className='flex items-center gap-2 p-2 hover:bg-gray-500 hover:text-white text-gray-600 hover:font-bold'><CiLogout />Cerrar Sesión</Link>
+       
+
       </div>
       <div className={`${clicked2 && 'activePerfil'} bg bgWidth  flex flex-col md:hidden`}>
-        <Link to={AppRoutes.home.route()} className='flex items-center justify-end gap-2 p-2 hover:bg-gray-500 hover:text-white text-gray-600 hover:font-bold'><FaRegUser />Perfil</Link>
-        <Link to={AppRoutes.login.route()} className='flex items-center justify-end gap-2 p-2 hover:bg-gray-500 hover:text-white text-gray-600 hover:font-bold'><CiLogout />Cerrar Sesión</Link>
+       {
+        currentUser ? (
+          <>
+          {currentUser.role === UserRole.ADMIN && (
+             <Link to={AppRoutes.homeAdmin.route()} className='flex items-center justify-end gap-2 p-2 hover:bg-gray-500 hover:text-white text-green-600 bg-green-300 font-bold'>Admin<FaUserGroup /></Link>
+          )}
+           <Link to={AppRoutes.home.route()} className='flex items-center justify-end gap-2 p-2 hover:bg-gray-500 hover:text-white text-gray-600 hover:font-bold'>Perfil<FaRegUser className='font-bold'/></Link>
+           <Link to={""} className='flex items-center justify-end gap-2 p-2 hover:bg-gray-500 hover:text-white text-gray-600 hover:font-bold'>Configuracion<FaCog /></Link>
+           <button onClick={logoutUser}  className='flex items-center justify-end gap-2 p-2 hover:bg-gray-500 hover:text-white text-gray-600 hover:font-bold'>Cerrar Sesión<IoIosLogOut className='font-bold text-xl' /></button>
+          </>
+        ) : (
+          <>
+           <Link to={AppRoutes.register.route()} className='flex items-center justify-end gap-2 p-2 hover:bg-gray-500 hover:text-white text-gray-600 hover:font-bold'>Registrarse<FaRegUser className='font-bold'/></Link>
+           <Link to={AppRoutes.login.route()} className='flex items-center justify-end gap-2 p-2 hover:bg-gray-500 hover:text-white text-gray-600 hover:font-bold'>Iniciar Sesión<RiLoginBoxLine  className='font-bold text-xl' /></Link>
+          </>
+        )
+       }
       </div>
     </>
   )
