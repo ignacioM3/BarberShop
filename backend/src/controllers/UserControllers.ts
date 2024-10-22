@@ -130,7 +130,7 @@ export class UserControllers {
       user.role = userRole.barber;
       await user.save();
 
-      res.json({ msg: "Usuario Creado Correctamente" });
+      res.send("Usuario Creado Correctamente" );
     } catch (error) {
       console.log(error);
     }
