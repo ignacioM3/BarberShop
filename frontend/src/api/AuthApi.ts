@@ -135,9 +135,9 @@ export async function getUserList(page: number) {
   }
 }
 
-export async function getBarberList(){
+export async function getBarberList(page: number){
   try {
-    const url = "/users/list-barber";
+    const url = `/users/list-barber?page=${page}`;
     const {data} = await api(url);
   
     const response = getUserListSchema.safeParse(data);

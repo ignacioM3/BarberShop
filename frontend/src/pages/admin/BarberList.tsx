@@ -10,19 +10,29 @@ import { UserListType } from "../../types";
 import { MdOutlineEdit } from "react-icons/md";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import { useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Pagination } from "../../components/Pagination";
 
 export function BarberList() {
   const navigate = useNavigate()
   const columns = ['Nombre', 'Número', 'Cortes'];
   const [open, setOpen] = useState(false)
+  const [currentPage, setCurrentPage] = useState<number>(1);
+  const [total, setTotal] = useState<number>(0)
+    const usersPerPage = 6;
+
 
   const {data, isLoading, isError} = useQuery({
-    queryKey: ['getBarbers'],
-    queryFn: getBarberList,
+    queryKey: ['getBarbers', currentPage],
+    queryFn: () => getBarberList(currentPage),
     retry: false
   })
+  
+  useEffect(() => {
+    if (data) {
+        setTotal(data.totalUsers)
+    }
+}, [data]);
 
   if(isLoading){
     return <LoadingSpinner/>
@@ -60,8 +70,8 @@ export function BarberList() {
                         </thead>
                         <tbody>
                             {
-                                data.length ? (
-                                    data.map((row: UserListType, rowIndex: number) => (
+                                data.totalUsers ? (
+                                    data.users.map((row: UserListType, rowIndex: number) => (
                                         <tr key={rowIndex} className="border border-gray-400 text-center">
                                             <td className="px-6 py-4">{row.name}</td>
                                             <td className="px-6 py-4">{row.role}</td>
@@ -84,6 +94,12 @@ export function BarberList() {
                         </tbody>
                     </table>
                 </div>
+                <Pagination 
+                  usersPerPage={usersPerPage}
+                  totalUsers={total}
+                  currentPage={currentPage}
+                  onPageChange={(page) => setCurrentPage(page)}
+                />
       </PageContent>
     </PageContainer>
   )
