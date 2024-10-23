@@ -28,11 +28,15 @@ const userSchema = z.object({
     name: z.string(),
     email: z.string().email(),
     confirmed: z.boolean(),
+    haircuts: z.number(),
+    instagram: z.string().optional(),
+    number: z.number().optional(),
     password: z.string(),
     role: z.enum([UserRole.ADMIN, UserRole.BARBER, UserRole.CLIENT] as const)
 });
 export type User = z.infer<typeof userSchema>;
-export type UserListType = Pick<User, 'email' | 'name' | 'confirmed' | 'role' | '_id'>;
+export type UserListType = Pick<User, 'email' | 'name' | 'confirmed' | 'role' | '_id' | 'haircuts' | 'instagram' | 'number'>;
+export type UserBarberListType = Pick<User, 'email' | 'name' | 'confirmed' | 'role' | '_id'>
 export type UserCreateForm = Pick<User, 'name' | 'email' | 'password' >
 
 

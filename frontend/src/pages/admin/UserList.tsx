@@ -17,7 +17,7 @@ import { Pagination } from "../../components/Pagination";
 
 
 export function UserList() {
-    const columns = ['Nombre', 'Número', 'Cortes'];
+    const columns = ['Nombre', 'Instagram', 'Número','Confirmado', 'Cortes'];
     const [open, setOpen] = useState(false)
     const [currentPage, setCurrentPage] = useState<number>(1);
     const userPerPage = 6;
@@ -79,8 +79,10 @@ export function UserList() {
                                     data.users.map((row: UserListType, rowIndex: number) => (
                                         <tr key={rowIndex} className="border border-gray-400 text-center">
                                             <td className="px-6 py-4">{row.name}</td>
-                                            <td className="px-6 py-4">{row.role}</td>
+                                            <td className="px-6 py-4">{row.instagram ? row.instagram : "falta"}</td>
+                                            <td className="px-6 py-4">{row.number}</td>
                                             <td className="px-6 py-4">{row.confirmed ? 'si' : 'no'}</td>
+                                            <td className="px-6 py-4">{row.haircuts}</td>
                                             <td className="px-6 py-4 flex items-center gap-2 text-xl">
                                                 <button className="border border-gray-700 p-2 rounded hover:bg-gray-400 hover:text-white hover:border-none transition-colors">
                                                     <MdOutlineEdit />

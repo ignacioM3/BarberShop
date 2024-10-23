@@ -6,7 +6,7 @@ import { PageHeader } from "../../components/styles/PageHeader";
 import { PageTitle } from "../../components/styles/PageTitle";
 import { getBarberList } from "../../api/AuthApi";
 import LoadingSpinner from "../../components/LoadingSpinner";
-import { UserListType } from "../../types";
+import { UserBarberListType } from "../../types";
 import { MdOutlineEdit } from "react-icons/md";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import { useNavigate } from "react-router-dom";
@@ -72,7 +72,7 @@ export function BarberList() {
                         <tbody>
                             {
                                 data.totalUsers ? (
-                                    data.users.map((row: UserListType, rowIndex: number) => (
+                                    data.users.map((row: UserBarberListType, rowIndex: number) => (
                                         <tr key={rowIndex} className="border border-gray-400 text-center">
                                             <td className="px-6 py-4">{row.name}</td>
                                             <td className="px-6 py-4">{row.role}</td>

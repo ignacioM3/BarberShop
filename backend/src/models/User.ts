@@ -8,7 +8,8 @@ export interface IUser extends Document{
     confirmed: boolean,
     role: UserRole,
     haircuts: number,
-    number: number
+    number: number,
+    instagram: string
 }
 
 const userSchema: Schema = new Schema({
@@ -42,7 +43,8 @@ const userSchema: Schema = new Schema({
         enum: Object.values(userRole)
     },
     haircuts: {
-        Type: Number,
+        type: Number,
+        default: 0,
     },
     number: {
         type: Number,
