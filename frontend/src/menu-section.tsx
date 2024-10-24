@@ -4,6 +4,8 @@ import { HiScissors } from "react-icons/hi2";
 import { IoCalendarNumberOutline } from "react-icons/io5";
 import { TbMoneybag } from "react-icons/tb";
 import { AiFillHome } from "react-icons/ai";
+import { MdOutlineProductionQuantityLimits } from "react-icons/md";
+import { BiBuildings } from "react-icons/bi";
 import { AppRoutes } from "./routes";
 
 export interface MenuItem {
@@ -49,6 +51,18 @@ export const menuSection: MenuSection[] = [
                 label: "Barberos",
                 icon: <HiScissors />, 
                 to: AppRoutes.barberListAdmin.route(),
+                role: [UserRole.ADMIN]
+            },
+            {
+                label: "Sucursales",
+                icon: <BiBuildings />,
+                to: "",
+                role: [UserRole.ADMIN]
+            },
+            {
+                label: "Productos",
+                icon: <MdOutlineProductionQuantityLimits />,
+                to: "",
                 role: [UserRole.ADMIN]
             }
         ]

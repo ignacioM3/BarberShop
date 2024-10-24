@@ -7,7 +7,7 @@ import { PageTitle } from "../../components/styles/PageTitle";
 import { getBarberList } from "../../api/AuthApi";
 import LoadingSpinner from "../../components/LoadingSpinner";
 import { UserBarberListType } from "../../types";
-import { MdOutlineEdit } from "react-icons/md";
+import { MdBlock, MdOutlineEdit } from "react-icons/md";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
@@ -86,6 +86,11 @@ export function BarberList() {
                                                     onClick={() => navigate(location.pathname + `?deleteProject=${row._id}`)}
                                                 >
                                                     <RiDeleteBin6Line />
+                                                </button>
+                                                <button 
+                                                     className="border border-blue-500 p-2 rounded text-blue-500 hover:bg-blue-500 hover:text-white transition-colors hover:border-none"
+                                                >
+                                                    <MdBlock />
                                                 </button>
                                             </td>
                                         </tr>

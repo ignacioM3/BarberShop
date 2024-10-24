@@ -13,6 +13,7 @@ import LoadingSpinner from "../../components/LoadingSpinner";
 import { UserListType } from "../../types";
 import DeleteUserModal from "../../components/modal/DeleteUserModal";
 import { useLocation, useNavigate } from "react-router-dom";
+import { MdBlock } from "react-icons/md";
 import { Pagination } from "../../components/Pagination";
 
 
@@ -92,6 +93,11 @@ export function UserList() {
                                                     onClick={() => navigate(location.pathname + `?deleteProject=${row._id}`)}
                                                 >
                                                     <RiDeleteBin6Line />
+                                                </button>
+                                                <button 
+                                                     className="border border-blue-500 p-2 rounded text-blue-500 hover:bg-blue-500 hover:text-white transition-colors hover:border-none"
+                                                >
+                                                    <MdBlock />
                                                 </button>
                                             </td>
                                         </tr>

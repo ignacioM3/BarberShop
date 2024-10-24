@@ -110,11 +110,11 @@ export function AdminLayout({ children }: PropsWithChildren) {
                                             ))
                                        
                                 }
-                                  <button onClick={logoutUser} className='flex items-center gap-2 p-2 hover:bg-gray-500 hover:text-white text-gray-600 hover:font-bold'><CiLogout />Cerrar Sesión</button>
+                                 
                             </section>
                         ))
                     }
-                    
+                     <button onClick={logoutUser} className='flex items-center gap-2 p-2 hover:bg-gray-500 hover:text-white text-gray-600 hover:font-bold'><CiLogout />Cerrar Sesión</button>
                 </div>
                 <div className="bg-gray-100 w-full h-full mt-14 md:mt-0">
                     {children}
