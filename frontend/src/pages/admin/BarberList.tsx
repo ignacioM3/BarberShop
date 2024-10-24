@@ -16,7 +16,7 @@ import { UserBarberModal } from "../../components/modal/UserBarberModal";
 
 export function BarberList() {
   const navigate = useNavigate()
-  const columns = ['Nombre', 'Número', 'Cortes'];
+  const columns = ['Nombre', 'Número', 'Sucursal', "Activo"];
   const [open, setOpen] = useState(false)
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [total, setTotal] = useState<number>(0)
@@ -76,6 +76,7 @@ export function BarberList() {
                                         <tr key={rowIndex} className="border border-gray-400 text-center">
                                             <td className="px-6 py-4">{row.name}</td>
                                             <td className="px-6 py-4">{row.role}</td>
+                                            <td className="px-6 py-4">{row.confirmed ? 'si' : 'no'}</td>
                                             <td className="px-6 py-4">{row.confirmed ? 'si' : 'no'}</td>
                                             <td className="px-6 py-4 flex items-center gap-2 text-xl">
                                                 <button className="border border-gray-700 p-2 rounded hover:bg-gray-400 hover:text-white hover:border-none transition-colors">

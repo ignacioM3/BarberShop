@@ -19,6 +19,7 @@ import { Pagination } from "../../components/Pagination";
 
 export function UserList() {
     const columns = ['Nombre', 'Instagram', 'Número','Confirmado', 'Cortes'];
+    const columnsMobile = ['Nombre', 'Confirmado']
     const [open, setOpen] = useState(false)
     const [currentPage, setCurrentPage] = useState<number>(1);
     const userPerPage = 6;
@@ -67,7 +68,14 @@ export function UserList() {
                             <tr>
                                 {
                                     columns.map((col, index) => (
-                                        <th key={index} scope="col" className="px-6 py-3">
+                                        <th key={index} scope="col" className="px-6 py-3 hidden md:table-cell">
+                                            {col}
+                                        </th>
+                                    ))
+                                }
+                                  {
+                                    columnsMobile.map((col, index) => (
+                                        <th key={index} scope="col" className="px-6 py-3 md:hidden">
                                             {col}
                                         </th>
                                     ))
@@ -79,23 +87,23 @@ export function UserList() {
                                 data.totalUsers ? (
                                     data.users.map((row: UserListType, rowIndex: number) => (
                                         <tr key={rowIndex} className="border border-gray-400 text-center">
-                                            <td className="px-6 py-4">{row.name}</td>
-                                            <td className="px-6 py-4">{row.instagram ? row.instagram : "falta"}</td>
-                                            <td className="px-6 py-4">{row.number}</td>
-                                            <td className="px-6 py-4">{row.confirmed ? 'si' : 'no'}</td>
-                                            <td className="px-6 py-4">{row.haircuts}</td>
+                                            <td className="md:px-6 py-4">{row.name}</td>
+                                            <td className="px-6 py-4 hidden md:table-cell">{row.instagram ? row.instagram : "falta"}</td>
+                                            <td className="px-6 py-4 hidden md:table-cell">{row.number}</td>
+                                            <td className="md:px-6 py-4">{row.confirmed ? 'si' : 'no'}</td>
+                                            <td className="px-6 py-4 hidden md:table-cell">{row.haircuts}</td>
                                             <td className="px-6 py-4 flex items-center gap-2 text-xl">
-                                                <button className="border border-gray-700 p-2 rounded hover:bg-gray-400 hover:text-white hover:border-none transition-colors">
+                                                <button className="border border-gray-700 p-1 md:p-2 rounded hover:bg-gray-400 hover:text-white hover:border-none transition-colors">
                                                     <MdOutlineEdit />
                                                 </button>
                                                 <button
-                                                    className="border border-red-500 p-2 rounded text-red-500 hover:bg-red-500 hover:text-white transition-colors hover:border-none"
+                                                    className="border border-red-500 p-1 md:p-2 rounded text-red-500 hover:bg-red-500 hover:text-white transition-colors hover:border-none"
                                                     onClick={() => navigate(location.pathname + `?deleteProject=${row._id}`)}
                                                 >
                                                     <RiDeleteBin6Line />
                                                 </button>
                                                 <button 
-                                                     className="border border-blue-500 p-2 rounded text-blue-500 hover:bg-blue-500 hover:text-white transition-colors hover:border-none"
+                                                     className="border border-blue-500 p-1 md:p-2 rounded text-blue-500 hover:bg-blue-500 hover:text-white transition-colors hover:border-none"
                                                 >
                                                     <MdBlock />
                                                 </button>
