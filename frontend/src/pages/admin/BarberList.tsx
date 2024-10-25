@@ -76,8 +76,8 @@ export function BarberList() {
                                         <tr key={rowIndex} className="border border-gray-400 text-center">
                                             <td className="px-6 py-4">{row.name}</td>
                                             <td className="px-6 py-4">{row.role}</td>
-                                            <td className="px-6 py-4">{row.confirmed ? 'si' : 'no'}</td>
-                                            <td className="px-6 py-4">{row.confirmed ? 'si' : 'no'}</td>
+                                            <td className="px-6 py-4">{row.branch ? row.branch.name : 'No asignado'}</td>
+                                               <td className="px-6 py-4">{row.confirmed ? 'si' : 'no'}</td>
                                             <td className="px-6 py-4 flex items-center gap-2 text-xl">
                                                 <button className="border border-gray-700 p-2 rounded hover:bg-gray-400 hover:text-white hover:border-none transition-colors">
                                                     <MdOutlineEdit />

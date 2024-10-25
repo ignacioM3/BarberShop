@@ -21,7 +21,25 @@ export type ConfirmToken = Pick<Auth, 'token'>
 export type ForgotPasswordForm = Pick<Auth, 'email'>
 export type NewPasswordFormType = Pick<Auth, 'password' | 'password_confirmation'>
 
+export const branchSchema = z.object({
+    _id: z.string(),
+    name: z.string(),
+    address: z.string(),
+    barbers: z.array(z.object({
+      _id: z.string(),
+      name: z.string(),
+    })),
+  });
 
+
+  export const barberSchema = z.object({
+    _id: z.string(),
+    name: z.string(),
+    email: z.string().email(),
+    confirmed: z.boolean(),
+    role: z.string(),
+    branch: branchSchema.optional(),
+  });
 
 const userSchema = z.object({
     _id: z.string(),
@@ -36,11 +54,36 @@ const userSchema = z.object({
 });
 export type User = z.infer<typeof userSchema>;
 export type UserListType = Pick<User, 'email' | 'name' | 'confirmed' | 'role' | '_id' | 'haircuts' | 'instagram' | 'number'>;
-export type UserBarberListType = Pick<User, 'email' | 'name' | 'confirmed' | 'role' | '_id'>
 export type UserCreateForm = Pick<User, 'name' | 'email' | 'password' >
 
+export type UserBarberListType = {
+    _id: string;
+    name: string;
+    role: string;
+    confirmed: boolean;
+    branch?: {
+      _id: string;
+      name: string;
+    };
+  };
 
 export const getUserListSchema = z.object({
     users: z.array(userSchema), 
     totalUsers: z.number()
+});
+
+
+export const getBarberListSchema = z.object({
+    users: z.array(z.object({
+        _id: z.string(),
+        name: z.string(),
+        confirmed: z.boolean(),
+        role: z.enum([UserRole.ADMIN, UserRole.BARBER, UserRole.CLIENT] as const),
+        branch: z.object({
+            _id: z.string(),
+            name: z.string(),
+            address: z.string(),
+        }).optional() // Si la sucursal es opcional
+    })),
+    totalUsers: z.number(),
 });

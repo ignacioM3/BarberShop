@@ -52,7 +52,8 @@ export class UserControllers {
         $or: [{ role: { $in: userRole.barber } }],
       })
         .skip(skip)
-        .limit(limit);
+        .limit(limit)
+        .populate('branch')
       res.json({
         users: listUsers,
         totalUsers

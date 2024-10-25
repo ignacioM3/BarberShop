@@ -78,7 +78,11 @@ export class BranchControllers {
       }
 
       req.branch.barbers.push(findBarber.id);
-      await req.branch.save();
+      findBarber.branchId = req.branch.id
+
+
+      
+      await Promise.allSettled([findBarber.save(), req.branch.save()])
       res.send('Barbero agregado correctamente');
       
     } catch (error) {

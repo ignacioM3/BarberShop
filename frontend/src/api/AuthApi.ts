@@ -3,6 +3,7 @@ import api from "../lib/axios";
 import {
   ConfirmToken,
   ForgotPasswordForm,
+  getBarberListSchema,
   getUserListSchema,
   NewPasswordFormType,
   RequestConfirmationCodeForm,
@@ -139,8 +140,9 @@ export async function getBarberList(page: number){
   try {
     const url = `/users/list-barber?page=${page}`;
     const {data} = await api(url);
-  
-    const response = getUserListSchema.safeParse(data);
+    console.log(data)
+    const response = getBarberListSchema.safeParse(data);
+    console.log(response)
     if(response.success){
       return response.data
     }

@@ -1,5 +1,6 @@
-import mongoose, { Document, Schema, Types } from "mongoose";
+import mongoose, { Document, PopulatedDoc, Schema, Types } from "mongoose";
 import { UserRole, userRole } from "./RoleUser";
+import { IBranch } from "./Branch";
 
 export interface IUser extends Document{
     email: string,
@@ -10,7 +11,7 @@ export interface IUser extends Document{
     haircuts: number,
     number: number,
     instagram: string,
-    branchId: Types.ObjectId
+    branchId: PopulatedDoc<IBranch & Document>
 }
 
 const userSchema: Schema = new Schema({
@@ -50,7 +51,7 @@ const userSchema: Schema = new Schema({
     number: {
         type: Number,
     },
-    branchId: {
+    branch: {
         type: Types.ObjectId,
         ref: 'Branch'
     }
