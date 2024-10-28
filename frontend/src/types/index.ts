@@ -29,7 +29,10 @@ export const branchSchema = z.object({
   name: z.string(),
   address: z.string(),
   barbers: z.array(
-    z.string()
+   z.object({
+    _id: z.string(),
+    name: z.string()
+   })
   ),
 });
 
@@ -107,7 +110,10 @@ export const getBranchListSchema = z.array(
     name: z.string(),
     address: z.string(),
     barbers: z.array(
-       z.string()
+       z.object({
+        _id: z.string(),
+        name: z.string()
+       })
     ),
   })
 )

@@ -34,7 +34,7 @@ export class BranchControllers {
     }
 
     try {
-      const listBranch = await Branch.find({});
+      const listBranch = await Branch.find({}).populate('barbers');
       res.json(listBranch);
     } catch (error) {
       console.log(error);

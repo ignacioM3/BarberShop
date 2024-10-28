@@ -7,6 +7,8 @@ export async function getAllBranchsApi() {
         const url = '/branch/get-branchs';
         const {data} = await api(url);
         const response = getBranchListSchema.safeParse(data);
+        console.log(response);
+        console.log(data)
         if(response.success){
             return response.data
         }

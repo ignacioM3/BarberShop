@@ -56,12 +56,12 @@ export function BranchList() {
                         </thead>
                         <tbody>
                         {
-                                data.length ? (
+                                data ? (
                                     data.map((row: BranchListType, rowIndex: number) => (
                                         <tr key={rowIndex} className="border border-gray-400 text-center">
                                             <td className="md:px-6 py-4">{row.name}</td>
                                             <td className="md:px-6 py-4">{row.address}</td>
-                                            <td className="md:px-6 py-4">{row._id}</td>
+                                            <td className="md:px-6 py-4">{row.barbers.length}</td>
                                            
                                             <td className="px-6 py-4 flex items-center gap-2 text-xl">
                                                 <button className="border border-gray-700 p-1 md:p-2 rounded hover:bg-gray-400 hover:text-white hover:border-none transition-colors">
