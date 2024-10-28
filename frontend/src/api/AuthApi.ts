@@ -140,19 +140,16 @@ export async function getBarberList(page: number){
   try {
     const url = `/users/list-barber?page=${page}`;
     const {data} = await api(url);
-    console.log(data)
     const response = getBarberListSchema.safeParse(data);
-    console.log(response)
     if(response.success){
       return response.data
     }
+    
   } catch (error) {
     if (isAxiosError(error) && error.response) {
       throw new Error(error.response.data.error);
     }
   }
-
-
 }
 
 export async function createUserApi(formData: UserCreateForm) {

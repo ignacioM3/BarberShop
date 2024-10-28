@@ -56,7 +56,7 @@ export const menuSection: MenuSection[] = [
             {
                 label: "Sucursales",
                 icon: <BiBuildings />,
-                to: "",
+                to: AppRoutes.branchListAdmin.route(),
                 role: [UserRole.ADMIN]
             },
             {

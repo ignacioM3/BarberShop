@@ -67,6 +67,13 @@ export const AppRoutes = {
         allowedRoles: [UserRole.ADMIN],
         page: async () => (await import('./pages/admin/BarberList')).BarberList,
         layout: adminLayoutImport
+    },
+    branchListAdmin: {
+        route: () => "/admin/branch",
+        requiresAuth: true,
+        allowedRoles: [UserRole.ADMIN],
+        page: async () => (await import('./pages/admin/BranchList')).BranchList,
+        layout: adminLayoutImport
     }
 
 } as const satisfies Record<string, RouterDefinition>;
