@@ -23,18 +23,6 @@ const Img: BannerImages[] = [
     mobile: false
   },
   {
-    id: "3ecfa248-5995-45a1-9f3c-231d6b279bc4.webp",
-    alt: "banner2",
-    url: "3ecfa248-5995-45a1-9f3c-231d6b279bc4.webp",
-    mobile: true
-  },
-  {
-    id: "a674edbd-f23b-4e5a-83e7-46de9eeaa927.jpg",
-    alt: "banner2",
-    url: "a674edbd-f23b-4e5a-83e7-46de9eeaa927.jpg",
-    mobile: true
-  },
-  {
     id: "logo3.jpg",
     alt: "banner2",
     url: "logo3.jpg",
@@ -47,9 +35,15 @@ const Img: BannerImages[] = [
     mobile: true
   },
   {
-    id: "logo5.jpeg",
+    id: "a674edbd-f23b-4e5a-83e7-46de9eeaa927.jpg",
     alt: "banner2",
-    url: "logo5.jpeg",
+    url: "a674edbd-f23b-4e5a-83e7-46de9eeaa927.jpg",
+    mobile: true
+  },
+  {
+    id: "mobile1.jpg",
+    alt: "banner2",
+    url: "mobile1.jpg",
     mobile: true
   },
 ]
@@ -98,7 +92,7 @@ export function Carrousel() {
     if (slides.length > 1) {
       const interval = setInterval(() => {
         nextSlide();
-      }, 2000);
+      }, 2500);
 
       return () => clearInterval(interval);
     }
