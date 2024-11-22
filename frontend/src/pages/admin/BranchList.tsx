@@ -11,11 +11,13 @@ import { MdBlock, MdOutlineEdit } from "react-icons/md";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import { BranchListType } from "../../types";
 import { useNavigate } from "react-router-dom";
-
+import { IoPersonAddSharp } from "react-icons/io5";
+import { AddBarberToBranch } from "../../components/modal/AddBarberToBranch";
 
 export function BranchList() {
     const columns = ['Nombre', 'Dirreción', 'Barberos']
     const [open, setOpen] = useState(false)
+    const [addBarbers, setAddBarbers] = useState(false)
 
     const navigate = useNavigate()
 
@@ -64,6 +66,12 @@ export function BranchList() {
                                             <td className="md:px-6 py-4">{row.barbers.length}</td>
                                            
                                             <td className="px-6 py-4 flex items-center gap-2 text-xl">
+                                            <button 
+                                                onClick={() => setAddBarbers(true)}
+                                                     className="border border-blue-500 p-1 md:p-2 rounded text-blue-500 hover:bg-blue-500 hover:text-white transition-colors hover:border-none"
+                                                >
+                                                    <IoPersonAddSharp />
+                                                </button>
                                                 <button className="border border-gray-700 p-1 md:p-2 rounded hover:bg-gray-400 hover:text-white hover:border-none transition-colors">
                                                     <MdOutlineEdit />
                                                 </button>
@@ -73,11 +81,7 @@ export function BranchList() {
                                                 >
                                                     <RiDeleteBin6Line />
                                                 </button>
-                                                <button 
-                                                     className="border border-blue-500 p-1 md:p-2 rounded text-blue-500 hover:bg-blue-500 hover:text-white transition-colors hover:border-none"
-                                                >
-                                                    <MdBlock />
-                                                </button>
+                                            
                                             </td>
                                         </tr>
                                     ))
@@ -87,6 +91,11 @@ export function BranchList() {
                     </table>
                 </div>
             </PageContent>
+
+            <AddBarberToBranch 
+                open={addBarbers}
+                setOpen={setAddBarbers}
+            />
         </PageContainer>
     )
 }
