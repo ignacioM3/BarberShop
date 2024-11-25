@@ -10,6 +10,7 @@ export interface IUser extends Document{
     role: UserRole,
     haircuts: number,
     number: number,
+    blocked: boolean,
     instagram: string,
     branchId: PopulatedDoc<IBranch & Document>
 }
@@ -43,6 +44,10 @@ const userSchema: Schema = new Schema({
         default: userRole.client,
         type: String,
         enum: Object.values(userRole)
+    },
+    blocked: {
+        default: false,
+        type: Boolean,
     },
     haircuts: {
         type: Number,

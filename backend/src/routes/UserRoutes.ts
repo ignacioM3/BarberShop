@@ -15,6 +15,11 @@ router.delete('/:userId',
     UserControllers.deleteUser
     )
     
+router.post('/block/:userId',
+    param('userId').isMongoId().withMessage('ID no válido'),
+    handleInputErrors,
+    UserControllers.blockUserById
+)
 router.post('/create-barber',
     body('name').notEmpty().withMessage('El nombre no puede estar vacio'),
     body('email').isEmail().withMessage('Email no es válido'),

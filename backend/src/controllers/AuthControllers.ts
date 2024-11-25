@@ -30,7 +30,7 @@ export class AuthControllers {
         token: token.token,
       });
       await Promise.allSettled([user.save(), token.save()]);
-      res.send("Cuenta creada correctamente");
+      res.send("Revista tu email para terminar de confirmar tu cuenta");
     } catch (error) {
       res.status(500).json({ error: "Hubo un error en el servidor" });
     }
@@ -39,11 +39,13 @@ export class AuthControllers {
     try {
       const { email, password } = req.body;
       const user = await User.findOne({ email });
-      console.log(email);
-      console.log(user);
       if (!user) {
         const error = new Error("Usuario no encontrado");
         return res.status(409).json({ error: error.message });
+      }
+      if(user.blocked){
+        const error = new Error("Usuario Bloqueado comunicarse con el administrador");
+        return res.status(403).json({error: error.message})
       }
 
       if (!user.confirmed) {

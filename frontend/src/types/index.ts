@@ -56,13 +56,14 @@ const userSchema = z.object({
   instagram: z.string().optional(),
   number: z.number().optional(),
   password: z.string(),
+  blocked: z.boolean().optional(),
   role: z.enum([UserRole.ADMIN, UserRole.BARBER, UserRole.CLIENT] as const),
 });
 
 export type User = z.infer<typeof userSchema>;
 
 // --- User Form Types ---
-export type UserListType = Pick<User, 'email' | 'name' | 'confirmed' | 'role' | '_id' | 'haircuts' | 'instagram' | 'number'>;
+export type UserListType = Pick<User, 'email' | 'name' | 'confirmed' | 'role' | '_id' | 'haircuts' | 'instagram' | 'number' | 'blocked'>;
 export type UserCreateForm = Pick<User, 'name' | 'email' | 'password'>;
 
 export type UserBarberListType = {

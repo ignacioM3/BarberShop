@@ -177,3 +177,15 @@ export async function deleteUserApi(id: User['_id']){
     }
   }
 } 
+
+export async function blockUserById(id: User['_id']) {
+  try {
+    const url = `/users/block/${id}`
+    const {data} = await api.post<string>(url)
+    return data
+  } catch (error) {
+    if(isAxiosError(error) && error.response){
+      throw new Error(error.response.data.error);
+    }
+  }
+}

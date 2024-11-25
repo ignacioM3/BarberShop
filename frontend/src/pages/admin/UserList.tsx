@@ -15,6 +15,7 @@ import DeleteUserModal from "../../components/modal/DeleteUserModal";
 import { useLocation, useNavigate } from "react-router-dom";
 import { MdBlock } from "react-icons/md";
 import { Pagination } from "../../components/Pagination";
+import { BlockUserModal } from "../../components/modal/BlockUserModal";
 
 
 export function UserList() {
@@ -93,17 +94,18 @@ export function UserList() {
                                             <td className="md:px-6 py-4">{row.confirmed ? 'si' : 'no'}</td>
                                             <td className="px-6 py-4 hidden md:table-cell">{row.haircuts}</td>
                                             <td className="px-6 py-4 flex items-center gap-2 text-xl">
-                                                <button className="border border-gray-700 p-1 md:p-2 rounded hover:bg-gray-400 hover:text-white hover:border-none transition-colors">
+                                                <button className="border border-gray-700 p-1 md:p-2 rounded hover:bg-gray-400 hover:text-white hover:border-gray-400 transition-colors">
                                                     <MdOutlineEdit />
                                                 </button>
                                                 <button
-                                                    className="border border-red-500 p-1 md:p-2 rounded text-red-500 hover:bg-red-500 hover:text-white transition-colors hover:border-none"
-                                                    onClick={() => navigate(location.pathname + `?deleteProject=${row._id}`)}
+                                                    className="border border-red-500 p-1 md:p-2 rounded text-red-500 hover:bg-red-500 hover:text-white transition-colors "
+                                                    onClick={() => navigate(location.pathname + `?deleteUser=${row._id}`)}
                                                 >
                                                     <RiDeleteBin6Line />
                                                 </button>
                                                 <button 
-                                                     className="border border-blue-500 p-1 md:p-2 rounded text-blue-500 hover:bg-blue-500 hover:text-white transition-colors hover:border-none"
+                                                     onClick={() => navigate(location.pathname + `?blockUserId=${row._id}${row.blocked && "&block=true"}`)}
+                                                     className={`border border-blue-500 ${row.blocked ? "bg-blue-500 text-white" : "" } p-1 md:p-2 rounded text-blue-500 hover:bg-blue-500 hover:text-white transition-colors `}
                                                 >
                                                     <MdBlock />
                                                 </button>
@@ -129,6 +131,7 @@ export function UserList() {
                     setOpen={setOpen}
                 />
             <DeleteUserModal />
+            <BlockUserModal />
 
         </PageContainer>
     )

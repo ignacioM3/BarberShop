@@ -136,4 +136,23 @@ export class UserControllers {
       console.log(error);
     }
   };
+
+  static blockUserById = async (req: Request, res: Response) => {
+    const {userId} = req.params;
+    const findUser = await User.findById(userId)
+    if (!findUser) {
+      const error = new Error("Usuario no encontrado");
+      return res.status(404).json({ error: error.message });
+    }
+
+    if (req.user.role !== userRole.admin) {
+      const error = new Error("Acción no valida");
+      return res.status(404).json({ error: error.message });
+    }
+
+    findUser.blocked = !findUser.blocked;
+    await findUser.save();
+    res.send("Usuario Bloqueado")
+
+  }
 }

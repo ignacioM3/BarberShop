@@ -9,8 +9,8 @@ export default function DeleteUserModal() {
     const queryClient = useQueryClient();
 
     const queryParams = new URLSearchParams(location.search);
-    const deleteProjectId = queryParams.get('deleteProject')!
-    const show = deleteProjectId ? true : false;
+    const deleteUserId = queryParams.get('deleteUser')!
+    const show = deleteUserId ? true : false;
 
     const {mutate} = useMutation({
         mutationFn: deleteUserApi,
@@ -25,7 +25,7 @@ export default function DeleteUserModal() {
         }
     })
 
-    const handleSubmit = () => mutate(deleteProjectId)
+    const handleSubmit = () => mutate(deleteUserId)
   return (
     <div 
         className={`${show ? 'fixed' : 'hidden'} bg-[#4b4b4b72] h-screen left-0 bottom-0 right-0 `}

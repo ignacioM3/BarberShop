@@ -42,7 +42,7 @@ function Register() {
 
   return (
     <div className="my-5 mx-4 md:mx-0">
-      <h1 className="text-4xl font-black text-center lg:text-2xl">Crear Cuenta</h1>
+      <h1 className="text-4xl font-black text-center lg:text-2xl md:mt-[80px]">Crear Cuenta</h1>
       <p className="text-2xl font-light mt-5 text-center lg:text-xl lg:mt-2">Llena el formulario para {''}
         <span className="text-gray-500 font-bold">Crear tu cuenta</span>
       </p>
