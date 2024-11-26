@@ -123,5 +123,5 @@ export const getBranchListSchema = z.array(
 
 //Type for branch
 export type Branch = z.infer<typeof branchSchema>;
-
 export type BranchListType = Pick<Branch, '_id' | 'address' | 'name' | 'barbers'>
+export type getDetailsBranch = Pick<Branch, '_id' | 'address' | 'barbers' | 'name'>

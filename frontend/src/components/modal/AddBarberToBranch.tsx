@@ -1,10 +1,16 @@
+import { getDetailsBranch } from "../../types";
+import { RiDeleteBinLine } from "react-icons/ri";
+import { IoMdPersonAdd } from "react-icons/io";
+
 interface AddBarberToBranchInterface{
     open: boolean;
     setOpen: (open: boolean) => void;
+    branch?: getDetailsBranch
 }
 
 
-export  function AddBarberToBranch({open, setOpen}: AddBarberToBranchInterface) {
+export  function AddBarberToBranch({open, setOpen, branch}: AddBarberToBranchInterface) {
+
   return (
     <div 
         className={`${open ? 'fixed': 'hidden'} bg-[#4b4b4b72] h-screen left-0 bottom-0 right-0`}
@@ -15,7 +21,21 @@ export  function AddBarberToBranch({open, setOpen}: AddBarberToBranchInterface) 
                 className="bg-white max-w-[400px] shadow-md rounded-md p-7 mt-4"
                 onClick={(e) => e.stopPropagation()}
                 >
-                    <h2>Agregar Barberos a Munro</h2>
+                    <h2 className="text-xl text-center font-bold my-2  border-b-2 pb-2">Agregar Barberos a <span className="font-bold text-gray-500">{branch?.name}</span></h2>
+                    <div>
+                      <h4 className=" font-bold text-xl text-gray-500 my-2">Barberos Actuales:</h4>
+                      {branch?.barbers.length ? branch.barbers.map(barber => (
+                        <div className="flex items-center justify-between mt-2">
+                          <span className="font-bold">{barber.name}</span>
+                          <RiDeleteBinLine className="text-xl text-red-600 cursor-pointer"/>
+                        </div>
+                      )): <span className="font-bold flex justify-center">No hay barberos agregados</span>}
+                      <h4 className="font-bold text-gray-500 mt-2">Barberos Disponibles:</h4>
+                      <div className="flex items-center justify-between mt-2">
+                        <span className="font-bold">Nacho Marquez</span>
+                        <IoMdPersonAdd className="text-xl text-green-500 cursor-pointer" />
+                      </div>
+                    </div>
                 </form>
             </div>
     </div>

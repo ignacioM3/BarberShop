@@ -9,7 +9,7 @@ import { getAllBranchsApi } from "../../api/BranchApi";
 import LoadingSpinner from "../../components/LoadingSpinner";
 import { MdBlock, MdOutlineEdit } from "react-icons/md";
 import { RiDeleteBin6Line } from "react-icons/ri";
-import { BranchListType } from "../../types";
+import { BranchListType, getDetailsBranch } from "../../types";
 import { useNavigate } from "react-router-dom";
 import { IoPersonAddSharp } from "react-icons/io5";
 import { AddBarberToBranch } from "../../components/modal/AddBarberToBranch";
@@ -18,6 +18,7 @@ export function BranchList() {
     const columns = ['Nombre', 'Dirreción', 'Barberos']
     const [open, setOpen] = useState(false)
     const [addBarbers, setAddBarbers] = useState(false)
+    const [branch, setBranch] = useState<getDetailsBranch>()
 
     const navigate = useNavigate()
 
@@ -67,8 +68,11 @@ export function BranchList() {
                                            
                                             <td className="px-6 py-4 flex items-center gap-2 text-xl">
                                             <button 
-                                                onClick={() => setAddBarbers(true)}
-                                                     className="border border-blue-500 p-1 md:p-2 rounded text-blue-500 hover:bg-blue-500 hover:text-white transition-colors hover:border-none"
+                                                onClick={() => {
+                                                    setAddBarbers(true)
+                                                    setBranch(row)
+                                                }}
+                                                className="border border-blue-500 p-1 md:p-2 rounded text-blue-500 hover:bg-blue-500 hover:text-white transition-colors hover:border-none"
                                                 >
                                                     <IoPersonAddSharp />
                                                 </button>
@@ -92,10 +96,11 @@ export function BranchList() {
                 </div>
             </PageContent>
 
-            <AddBarberToBranch 
+            {setAddBarbers && <AddBarberToBranch 
                 open={addBarbers}
                 setOpen={setAddBarbers}
-            />
+                branch={branch}
+            />}
         </PageContainer>
     )
 }
