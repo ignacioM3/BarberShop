@@ -80,8 +80,6 @@ export class BranchControllers {
       req.branch.barbers.push(findBarber.id);
       findBarber.branchId = req.branch.id
 
-
-      
       await Promise.allSettled([findBarber.save(), req.branch.save()])
       res.send('Barbero agregado correctamente');
       
@@ -108,6 +106,23 @@ export class BranchControllers {
       req.branch.barbers = req.branch.barbers.filter(barber => barber._id.toString() !== barberId)
       await req.branch.save();
       res.send('Barbero eliminado correctamente del local')
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  static getBarberOutBranch = async(req: Request, res: Response) => {
+    try {
+      const barbers = await User.find({
+        role: userRole.barber,
+        branch: null
+      })
+
+      if(!barbers){
+        const error = new Error('No hay barberos sin sucursal asignada')
+        return res.status(404).json({error: error.message})
+      }
+      res.json(barbers)
     } catch (error) {
       console.log(error)
     }

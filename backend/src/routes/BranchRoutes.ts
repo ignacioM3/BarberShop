@@ -17,6 +17,7 @@ router.post('/create-branch',
 
 
 router.get('/get-branchs', BranchControllers.getBranchs)
+router.get('/get-barbers', BranchControllers.getBarberOutBranch)
 router.get('/info/:branchId', 
     param('branchId').isMongoId().withMessage('ID no válido'),
     handleInputErrors,
@@ -30,4 +31,6 @@ router.delete('/:branchId/remove-barber/:barberId',
     handleInputErrors,
     BranchControllers.removeBarberToBranch
 )
+
+
 export default router;
