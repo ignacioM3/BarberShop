@@ -104,7 +104,7 @@ export function UserList() {
                                                     <RiDeleteBin6Line />
                                                 </button>
                                                 <button 
-                                                     onClick={() => navigate(location.pathname + `?blockUserId=${row._id}${row.blocked && "&block=true"}`)}
+                                                     onClick={() => navigate(location.pathname + `?blockUserId=${row._id}&${row.blocked && "block=true"}`)}
                                                      className={`border border-blue-500 ${row.blocked ? "bg-blue-500 text-white" : "" } p-1 md:p-2 rounded text-blue-500 hover:bg-blue-500 hover:text-white transition-colors `}
                                                 >
                                                     <MdBlock />

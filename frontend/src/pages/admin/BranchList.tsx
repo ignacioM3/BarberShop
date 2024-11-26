@@ -44,7 +44,7 @@ export function BranchList() {
             </PageHeader>
             <PageContent>
                 <div className="flex items-center justify-normal">
-                    <table className="w-full text-sm text-left rtl:text-right border border-gray-400 shadow-lg max-w-[1000px]">
+                    <table className="w-full text-sm text-left rtl:text-right border border-gray-400 shadow-lg max-w-[1000px] mx-auto">
                         <thead className="text-xs text-black uppercase border border-gray-400 text-center">
                             <tr>
                                 {

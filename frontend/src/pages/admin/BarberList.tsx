@@ -13,6 +13,8 @@ import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { Pagination } from "../../components/Pagination";
 import { UserBarberModal } from "../../components/modal/UserBarberModal";
+import DeleteUserModal from "../../components/modal/DeleteUserModal";
+import { BlockUserModal } from "../../components/modal/BlockUserModal";
 
 export function BarberList() {
   const navigate = useNavigate()
@@ -84,12 +86,13 @@ export function BarberList() {
                                                 </button>
                                                 <button
                                                     className="border border-red-500 p-2 rounded text-red-500 hover:bg-red-500 hover:text-white transition-colors hover:border-none"
-                                                    onClick={() => navigate(location.pathname + `?deleteProject=${row._id}`)}
+                                                    onClick={() => navigate(location.pathname + `?deleteUser=${row._id}`)}
                                                 >
                                                     <RiDeleteBin6Line />
                                                 </button>
                                                 <button 
-                                                     className="border border-blue-500 p-2 rounded text-blue-500 hover:bg-blue-500 hover:text-white transition-colors hover:border-none"
+                                                      className={`border border-blue-500 ${row.blocked ? "bg-blue-500 text-white" : "" } p-1 md:p-2 rounded text-blue-500 hover:bg-blue-500 hover:text-white transition-colors `}
+                                                     onClick={() => navigate(location.pathname + `?blockUserId=${row._id}&${row.blocked && "block=true"}`)}
                                                 >
                                                     <MdBlock />
                                                 </button>
@@ -113,6 +116,8 @@ export function BarberList() {
       open={open}
       setOpen={setOpen}
       />
+      <DeleteUserModal />
+      <BlockUserModal />
     </PageContainer>
   )
 }

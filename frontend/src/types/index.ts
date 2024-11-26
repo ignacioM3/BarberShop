@@ -71,6 +71,7 @@ export type UserBarberListType = {
   name: string;
   role: string;
   confirmed: boolean;
+  blocked?: boolean;
   branch?: {
     _id: string;
     name: string;
@@ -90,6 +91,7 @@ export const getBarberListSchema = z.object({
       _id: z.string(),
       name: z.string(),
       confirmed: z.boolean(),
+      blocked: z.boolean().optional(),
       role: z.enum([UserRole.ADMIN, UserRole.BARBER, UserRole.CLIENT] as const),
       branch: z
         .object({
