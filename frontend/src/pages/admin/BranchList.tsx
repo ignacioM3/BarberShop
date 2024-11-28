@@ -5,7 +5,7 @@ import { PageHeader } from "../../components/styles/PageHeader";
 import { PageTitle } from "../../components/styles/PageTitle";
 import { PageContent } from "../../components/styles/PageContent";
 import { useQuery } from "@tanstack/react-query";
-import { getAllBranchsApi } from "../../api/BranchApi";
+import { getAllBranchsApi, getBarbersOutBranch } from "../../api/BranchApi";
 import LoadingSpinner from "../../components/LoadingSpinner";
 import { MdBlock, MdOutlineEdit } from "react-icons/md";
 import { RiDeleteBin6Line } from "react-icons/ri";
@@ -27,7 +27,11 @@ export function BranchList() {
         queryFn: getAllBranchsApi,
         retry: false
     })
-
+    const {data: barbers} = useQuery({
+        queryKey: ['getBarbersOutBranch'],
+        queryFn: getBarbersOutBranch,
+        retry: false
+    })
     if (isLoading) return <LoadingSpinner />
     if (isError) return <h1>Falta Implementar error</h1>
 
@@ -100,6 +104,7 @@ export function BranchList() {
                 open={addBarbers}
                 setOpen={setAddBarbers}
                 branch={branch}
+                barbers={barbers}
             />}
         </PageContainer>
     )
