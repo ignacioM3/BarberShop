@@ -37,7 +37,7 @@ export default function Login() {
     return <Navigate to={AppRoutes.home.route()}/>
   }
   return (
-    <div className="my-5">
+    <div className="my-5 mt-[100px] ">
       <h1 className="text-center text-4xl font-black ">Iniciar Sesión</h1>
       <p className="text-2xl font-light mt-5 text-center lg:text-xl lg:mt-2">
         Bienvenido a tu Barberia{" "}

@@ -10,7 +10,6 @@ export default function DeleteUserModal() {
 
     const queryParams = new URLSearchParams(location.search);
     const deleteUserId = queryParams.get('deleteUser')!
-    console.log(deleteUserId)
     const show = deleteUserId ? true : false;
 
     const {mutate} = useMutation({

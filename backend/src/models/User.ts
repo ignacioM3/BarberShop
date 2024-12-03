@@ -12,7 +12,7 @@ export interface IUser extends Document{
     number: number,
     blocked: boolean,
     instagram: string,
-    branchId: PopulatedDoc<IBranch & Document>
+    branch: PopulatedDoc<IBranch & Document>
 }
 
 const userSchema: Schema = new Schema({

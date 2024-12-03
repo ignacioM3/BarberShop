@@ -20,7 +20,7 @@ export function Home() {
         <h2 className="font-bold flex text-xl gap-1 p-3 items-center justify-center md:my-4">
           Nuestros Trabajos
         </h2>
-        <div className="flex justify-center">
+        <div className="flex justify-center flex-col md:flex-row">
 
           <div className="relative flex justify-center">
 

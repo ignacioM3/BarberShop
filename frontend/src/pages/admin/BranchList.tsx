@@ -5,33 +5,29 @@ import { PageHeader } from "../../components/styles/PageHeader";
 import { PageTitle } from "../../components/styles/PageTitle";
 import { PageContent } from "../../components/styles/PageContent";
 import { useQuery } from "@tanstack/react-query";
-import { getAllBranchsApi, getBarbersOutBranch } from "../../api/BranchApi";
+import { getAllBranchsApi } from "../../api/BranchApi";
 import LoadingSpinner from "../../components/LoadingSpinner";
-import { MdBlock, MdOutlineEdit } from "react-icons/md";
+import { MdOutlineEdit } from "react-icons/md";
 import { RiDeleteBin6Line } from "react-icons/ri";
-import { BranchListType, getDetailsBranch } from "../../types";
-import { useNavigate } from "react-router-dom";
+import { BranchListType } from "../../types";
+import { Link, useNavigate } from "react-router-dom";
 import { IoPersonAddSharp } from "react-icons/io5";
-import { AddBarberToBranch } from "../../components/modal/AddBarberToBranch";
+import { AppRoutes } from "../../routes";
 
 export function BranchList() {
     const columns = ['Nombre', 'Dirreción', 'Barberos']
     const [open, setOpen] = useState(false)
-    const [addBarbers, setAddBarbers] = useState(false)
-    const [branch, setBranch] = useState<getDetailsBranch>()
-
     const navigate = useNavigate()
+
+
 
     const { data, isError, isLoading } = useQuery({
         queryKey: ['getBranchs'],
         queryFn: getAllBranchsApi,
         retry: false
     })
-    const {data: barbers} = useQuery({
-        queryKey: ['getBarbersOutBranch'],
-        queryFn: getBarbersOutBranch,
-        retry: false
-    })
+
+
     if (isLoading) return <LoadingSpinner />
     if (isError) return <h1>Falta Implementar error</h1>
 
@@ -62,24 +58,21 @@ export function BranchList() {
                             </tr>
                         </thead>
                         <tbody>
-                        {
+                            {
                                 data ? (
                                     data.map((row: BranchListType, rowIndex: number) => (
                                         <tr key={rowIndex} className="border border-gray-400 text-center">
                                             <td className="md:px-6 py-4">{row.name}</td>
                                             <td className="md:px-6 py-4">{row.address}</td>
                                             <td className="md:px-6 py-4">{row.barbers.length}</td>
-                                           
+
                                             <td className="px-6 py-4 flex items-center gap-2 text-xl">
-                                            <button 
-                                                onClick={() => {
-                                                    setAddBarbers(true)
-                                                    setBranch(row)
-                                                }}
-                                                className="border border-blue-500 p-1 md:p-2 rounded text-blue-500 hover:bg-blue-500 hover:text-white transition-colors hover:border-none"
+                                                <Link to={AppRoutes.AddBarberToBranchAdmin.route(row._id)}
+                                                    className="border border-blue-500 p-1 md:p-2 rounded text-blue-500 hover:bg-blue-500 hover:text-white transition-colors hover:border-none"
+                                                   
                                                 >
                                                     <IoPersonAddSharp />
-                                                </button>
+                                                </Link>
                                                 <button className="border border-gray-700 p-1 md:p-2 rounded hover:bg-gray-400 hover:text-white hover:border-none transition-colors">
                                                     <MdOutlineEdit />
                                                 </button>
@@ -89,7 +82,7 @@ export function BranchList() {
                                                 >
                                                     <RiDeleteBin6Line />
                                                 </button>
-                                            
+
                                             </td>
                                         </tr>
                                     ))
@@ -99,13 +92,6 @@ export function BranchList() {
                     </table>
                 </div>
             </PageContent>
-
-            {setAddBarbers && <AddBarberToBranch 
-                open={addBarbers}
-                setOpen={setAddBarbers}
-                branch={branch}
-                barbers={barbers}
-            />}
         </PageContainer>
     )
 }

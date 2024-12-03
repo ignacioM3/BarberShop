@@ -42,8 +42,6 @@ export function BarberList() {
   }
 
   if (isError) return <h1>falta implementar error</h1>
-
-
   if (data) return (
     <PageContainer className="h-full">
       <PageHeader>

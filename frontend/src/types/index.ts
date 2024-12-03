@@ -31,7 +31,7 @@ export const branchSchema = z.object({
   barbers: z.array(
    z.object({
     _id: z.string(),
-    name: z.string()
+    name: z.string().optional()
    })
   ),
 });
@@ -75,7 +75,7 @@ export type UserBarberListType = {
   branch?: {
     _id: string;
     name: string;
-  };
+  } | null
 };
 
 // --- Get User List Schema ---
@@ -99,7 +99,8 @@ export const getBarberListSchema = z.object({
           name: z.string(),
           address: z.string(),
         })
-        .optional(),
+        .optional()
+        .nullable(),
     })
   ),
   totalUsers: z.number(),
@@ -123,6 +124,8 @@ export const getBranchListSchema = z.array(
 
 //Type for branch
 export type Branch = z.infer<typeof branchSchema>;
+export type getBranchByIdType  = Pick<Branch, '_id'>
 export type BranchListType = Pick<Branch, '_id' | 'address' | 'name' | 'barbers'>
 export type getDetailsBranch = Pick<Branch, '_id' | 'address' | 'barbers' | 'name'>
 export type BarberOutBranch = Pick<User, '_id' | 'name'>
+export type ListBarberInBranch = Pick<User, '_id' | 'name'>

@@ -44,7 +44,7 @@ export class BranchControllers {
   static getBranchById = async (req: Request, res: Response) => {
     const { branchId } = req.params;
     try {
-      const branch = await Branch.findById(branchId);
+      const branch = await Branch.findById(branchId).populate('barbers');
       if (!branch) {
         const error = new Error("Local no encontrado");
         return res.status(404).json({ error: error.message });
@@ -78,7 +78,7 @@ export class BranchControllers {
       }
 
       req.branch.barbers.push(findBarber.id);
-      findBarber.branchId = req.branch.id
+      findBarber.branch = req.branch.id
 
       await Promise.allSettled([findBarber.save(), req.branch.save()])
       res.send('Barbero agregado correctamente');
@@ -104,7 +104,8 @@ export class BranchControllers {
       
 
       req.branch.barbers = req.branch.barbers.filter(barber => barber._id.toString() !== barberId)
-      await req.branch.save();
+      findBarber.branch = null;
+      await Promise.allSettled([req.branch.save(), findBarber.save()])
       res.send('Barbero eliminado correctamente del local')
     } catch (error) {
       console.log(error)

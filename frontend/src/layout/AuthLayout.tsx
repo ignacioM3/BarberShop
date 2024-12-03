@@ -13,7 +13,7 @@ export function AuthLayout({children}: PropsWithChildren) {
   return (
     <>
     <Header />
-      <div className='mt-[70px] md:mt-[62px]'>
+      <div className='mt-[100px] md:mt-[62px]'>
         {children}
       </div>
 

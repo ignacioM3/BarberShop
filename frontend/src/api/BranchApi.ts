@@ -1,6 +1,6 @@
 import { isAxiosError } from "axios";
 import api from "../lib/axios";
-import { getBranchListSchema } from "../types";
+import { branchSchema,  getBranchListSchema } from "../types";
 
 export async function getAllBranchsApi() {
   try {
@@ -25,6 +25,50 @@ export async function getBarbersOutBranch() {
     return data;
   } catch (error) {
     if (isAxiosError(error) && error.response) {
+      throw new Error(error.response.data.error);
+    }
+  }
+}
+
+
+export async function removeBarberToBranch({ branchId, barberId }: { branchId: string; barberId: string }){
+  try {
+    const url = `/branch/${branchId}/remove-barber/${barberId}`
+    const {data} = await api.delete(url)
+    return data;
+  } catch (error) {
+    if (isAxiosError(error) && error.response) {
+      throw new Error(error.response.data.error);
+    }
+  }
+}
+
+export async function addBarberToBranch({ branchId, barberId }: { branchId: string; barberId: string }){
+  try {
+    const url = `/branch/${branchId}/add-barber`
+    const {data} = await api.post(url, {
+      id: barberId
+    })
+    return data;
+  } catch (error) {
+    if (isAxiosError(error) && error.response) {
+      throw new Error(error.response.data.error);
+    }
+  }
+}
+
+export async function getBranchById(branchId: string){
+  try {
+    const url = `/branch/info/${branchId}`
+   const {data} = await api(url);
+   console.log(data)
+   const response = branchSchema.safeParse(data);
+   if (response.success) {
+    console.log(response.data)
+    return response.data;
+  }
+  } catch (error) {
+      if (isAxiosError(error) && error.response) {
       throw new Error(error.response.data.error);
     }
   }
