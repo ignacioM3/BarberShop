@@ -1,5 +1,6 @@
 import { UserRole } from './types/use-role';
 import { RouterDefinition } from './routes/router-definition'
+import { AppointmentToday } from './pages/admin/AppointmentToday';
 
 const appLayoutImport = async () =>
     (await import('./layout/AuthLayout')).AuthLayout
@@ -80,6 +81,20 @@ export const AppRoutes = {
         requiresAuth: true,
         allowedRoles: [UserRole.ADMIN],
         page: async () => (await import('./pages/admin/AddBarberToBranch')).AddBarberToBranch,
+        layout: adminLayoutImport
+    },
+    Appointment: {
+        route: () => `/admin/appointment`,
+        requiresAuth: true,
+        allowedRoles: [UserRole.ADMIN],
+        page: async () => (await import('./pages/admin/Appointment')).Appointment,
+        layout: adminLayoutImport
+    },
+    AppointmentToday:{
+        route: () => `/admin/appointment/today`,
+        requiresAuth: true,
+        allowedRoles: [UserRole.ADMIN],
+        page: async () => (await import('./pages/admin/AppointmentToday')).AppointmentToday,
         layout: adminLayoutImport
     }
 

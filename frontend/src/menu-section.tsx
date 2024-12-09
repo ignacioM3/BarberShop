@@ -78,7 +78,7 @@ export const menuSection: MenuSection[] = [
             {
                 label: "Turnos",
                 icon: <IoCalendarNumberOutline />, 
-                to: "/dashboard/turnos",
+                to: AppRoutes.Appointment.route(),
                 role: [UserRole.ADMIN]
             },
             {
