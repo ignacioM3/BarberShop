@@ -24,6 +24,7 @@ export  function AppointmentToday() {
                 </ListAddButton>
         </PageHeader>
         <PageContent>
+        <h2 className="text-xl text-gray-500 mb-4">Cesar</h2>
           <div className="flex justify-center mx-auto flex-wrap gap-3 md:max-w-[1000px]">
             <div 
               className="flex text-center flex-col border border-gray-400 p-2 rounded-md cursor-pointer w-[80px] items-center justify-center"
