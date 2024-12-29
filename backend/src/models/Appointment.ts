@@ -2,11 +2,13 @@ import mongoose, {Document,  Schema, Types } from "mongoose";
 
 export interface IAppointment extends Document{
     userId?: Types.ObjectId;
-    branchesId: Types.ObjectId;
+    name?: string;
+    branchId: Types.ObjectId;
     barberId: Types.ObjectId;
     timeSlot: Date;
     status: string;
     day: Date;
+    manual: boolean;
 }
 
 export const appointmentSchema: Schema = new Schema({
@@ -14,11 +16,14 @@ export const appointmentSchema: Schema = new Schema({
         type: Types.ObjectId,
         ref: 'User',
     }, 
+    manual: {
+        type: Boolean,
+    },
     barberId: {
         type: Types.ObjectId,
         ref: 'User'
     },
-    branchesId: {
+    branchId: {
         type: Types.ObjectId,
         ref: 'Branch'
     },

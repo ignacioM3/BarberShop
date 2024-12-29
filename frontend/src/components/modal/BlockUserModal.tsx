@@ -10,7 +10,6 @@ export function BlockUserModal() {
 
     const queryParams = new URLSearchParams(location.search);
     const blockUserId = queryParams.get('blockUserId')!
-    console.log(blockUserId)
     const msg = queryParams.get('block')
     const show = blockUserId ? true : false;
 

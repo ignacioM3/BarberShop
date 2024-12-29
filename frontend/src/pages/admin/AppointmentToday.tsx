@@ -6,6 +6,7 @@ import { PageTitle } from "../../components/styles/PageTitle";
 import { PageContent } from "../../components/styles/PageContent";
 import { AppointmentDetails } from "../../components/modal/AppointmentDetails";
 import { useLocation, useNavigate } from "react-router-dom";
+import { AppointmentModal } from "../../components/modal/AddAppointmentModal";
 
 
 export  function AppointmentToday() {
@@ -34,12 +35,17 @@ export  function AppointmentToday() {
               <span>Nacho</span>
             </div>
 
-            <div className="flex text-center flex-col border border-gray-400 p-2 rounded-md cursor-pointer w-[80px] items-center justify-center">
+            <div 
+              className="flex text-center flex-col border border-gray-400 p-2 rounded-md cursor-pointer w-[80px] items-center justify-center"
+              >
               <span className="font-bold">10:30</span>
               <p>Gabriel</p>
             </div>
 
-            <div className="flex text-center flex-col border border-gray-400 p-2 rounded-md cursor-pointer w-[80px] items-center justify-center">
+            <div 
+              className="flex text-center flex-col border border-gray-400 p-2 rounded-md cursor-pointer w-[80px] items-center justify-center"
+              onClick={() => setOpen(true)}
+              >
               <span className="font-bold">11:00</span>
               <span className="text-green-500 font-bold uppercase">Libre</span>
             </div>
@@ -127,6 +133,10 @@ export  function AppointmentToday() {
         </PageContent>
 
         <AppointmentDetails />
+        <AppointmentModal 
+        open={open}
+        setOpen={setOpen}
+        />
     </PageContainer>
   )
 }

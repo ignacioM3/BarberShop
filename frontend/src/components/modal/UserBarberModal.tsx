@@ -4,6 +4,7 @@ import { toast } from "react-toastify";
 import { createBarberApi } from "../../api/BarberApi";
 import { UserCreateForm } from "../../types";
 import ErrorMessage from "../ErrorMessage";
+import { TitleModal } from "./TitleModal";
 
 interface UserBarberModalProps {
     open: boolean;
@@ -54,7 +55,7 @@ export function UserBarberModal({ open, setOpen }: UserBarberModalProps) {
                     onSubmit={handleSubmit(handleCreateBarber)}
                     className="bg-white w-[350px]  md:w-[400px] shadow-md rounded-md p-7 mt-8 md:mt-4"
                 >
-                    <h1 className="text-center text-xl font-bold text-gray-600 border-b border-gray-600 pb-3">Crear Barbero</h1>
+                    <TitleModal>Crear Barbero</TitleModal>
                     <div className="my-2">
                         <label
                             htmlFor="name"
