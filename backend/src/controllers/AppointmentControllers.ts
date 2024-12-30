@@ -22,4 +22,34 @@ export class AppointmentControllers{
             res.status(500).json({ error: "Hubo un error en el servidor" });
         }
     }
+
+    static getTodayAppointment = async (req: Request, res: Response) => {
+        const {branchId} = req.params;
+        try {
+            const branch = await Branch.findById(branchId).populate('barbers');
+            if (!branch) {
+                const error = new Error("Local no encontrado");
+                return res.status(404).json({ error: error.message });
+            }
+            const today = new Date();
+            const todayString = today.toISOString().split('T')[0]; 
+            const todayDate = new Date(todayString); 
+
+         
+            const appointments = await Appointment.aggregate([
+                { $match: { branchId: branch._id, day: todayDate } }, // Filtrar por sucursal y fecha
+                {
+                    $group: {
+                        _id: "$barberId", // Agrupar por barbero
+                        appointments: { $push: "$$ROOT" } // Incluir todos los turnos del barbero
+                    }
+                }
+            ]);
+
+            res.status(200).json({ branch, appointments });
+
+        } catch (error) {
+            res.status(500).json({ error: "Hubo un error en el servidor" });
+        }
+    }
 }

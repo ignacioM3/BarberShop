@@ -15,5 +15,10 @@ router.post("/:branchId/create-appointment",
     handleInputErrors,
     AppointmentControllers.createAppointmentBarber
 )
+router.get("/:branchId/today",
+    param("branchId").isMongoId().withMessage("ID no válido"),
+    handleInputErrors,
+    AppointmentControllers.getTodayAppointment
+)
 
 export default router
