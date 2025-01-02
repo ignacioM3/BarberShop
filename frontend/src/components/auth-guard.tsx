@@ -8,7 +8,6 @@ export interface AuthGuardProps {
     allowedRoles?: UserRole[];
 }
 export function AuthGuard({
-    redirectPath,
     allowedRoles,
     children,
 }: PropsWithChildren<AuthGuardProps>) {

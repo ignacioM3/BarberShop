@@ -71,12 +71,6 @@ export function Home() {
 
 
       </div>
-    {/* Productos */}
-      <div className="my-6">
-        <h2 className="font-bold flex text-xl gap-1 p-3 items-center">
-          Productos
-        </h2>
-      </div>
 
     </>
   )

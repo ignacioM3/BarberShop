@@ -46,6 +46,12 @@ const Img: BannerImages[] = [
     url: "mobile1.jpg",
     mobile: true
   },
+  {
+    id: "mobile2.jpg",
+    alt: "banner 3",
+    url: "mobile2.jpg",
+    mobile: true
+  },
 ]
 
 
