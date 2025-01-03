@@ -3,6 +3,7 @@ import { useForm } from "react-hook-form";
 import { createUserApi } from "../../api/AuthApi";
 import { toast } from "react-toastify";
 import ErrorMessage from "../ErrorMessage";
+import ErrorLabel from "../styles/ErrorLabel";
 
 interface UserModalInterface {
     open: boolean;
@@ -33,7 +34,7 @@ export default function UserModal({ open, setOpen }: UserModalInterface) {
     })
 
     const handleCreate = async () => {
-        
+
     }
     return (
         <div
@@ -44,12 +45,19 @@ export default function UserModal({ open, setOpen }: UserModalInterface) {
                 <form
                     onClick={(e) => e.stopPropagation()}
                     onSubmit={handleSubmit(handleCreate)}
-                    className="bg-white w-[400px] shadow-md rounded-md p-7 mt-4"
+                    className="bg-white w-[400px] shadow-md rounded-md p-7 mt-4 mx-2"
                 >
                     <h1 className="text-center text-xl font-bold text-gray-600 border-b border-gray-600 pb-3">Crear Usuario</h1>
                     <div className="my-2">
-                        <label htmlFor="name" className="uppercase text-gray-600 block font-bold">
+                        <label htmlFor="name" className="uppercase text-gray-600 font-bold flex justify-between items-center ">
                             Nombre
+                            {
+                                errors.name && (
+                                    <ErrorLabel>
+                                        {errors.name?.message}
+                                    </ErrorLabel>
+                                )
+                            }
                         </label>
                         <input
                             type="text"
@@ -62,20 +70,21 @@ export default function UserModal({ open, setOpen }: UserModalInterface) {
                             className="w-full mt-2 p-2 border rounded-md bg-gray-100"
                             placeholder="Ingrese el Nombre"
                         />
-                           {
-                            errors.name && (
-                                <ErrorMessage>
-                                    {errors.name?.message}
-                                </ErrorMessage>
-                            )
-                        }
+
                     </div>
                     <div className="my-2">
                         <label
                             htmlFor="number"
-                            className="uppercase text-gray-600 block font-bold"
+                            className="uppercase text-gray-600 font-bold flex justify-between items-center"
                         >
                             Numero
+                            {
+                                errors.number && (
+                                    <ErrorLabel>
+                                        {errors.number?.message}
+                                    </ErrorLabel>
+                                )
+                            }
                         </label>
                         <input
                             {
@@ -88,20 +97,21 @@ export default function UserModal({ open, setOpen }: UserModalInterface) {
                             id="number"
                             placeholder="Ingrese el Numero"
                         />
-                        {
-                            errors.number && (
-                                <ErrorMessage>
-                                    {errors.number?.message}
-                                </ErrorMessage>
-                            )
-                        }
+
                     </div>
                     <div className="my-2">
                         <label
                             htmlFor="email"
-                            className="uppercase text-gray-600 block font-bold"
+                            className="uppercase text-gray-600 flex justify-between items-center font-bold"
                         >
                             Email
+                            {
+                                errors.email && (
+                                    <ErrorLabel>
+                                        {errors.email?.message}
+                                    </ErrorLabel>
+                                )
+                            }
                         </label>
                         <input
                             {
@@ -110,7 +120,7 @@ export default function UserModal({ open, setOpen }: UserModalInterface) {
                                 pattern: {
                                     value: /\S+@\S+\.\S+/,
                                     message: "Email no válido"
-                                  }
+                                }
                             })
                             }
                             type="email"
@@ -118,26 +128,27 @@ export default function UserModal({ open, setOpen }: UserModalInterface) {
                             id="email"
                             placeholder="Ingrese el Email"
                         />
-                        {
-                            errors.email && (
-                                <ErrorMessage>
-                                    {errors.email?.message}
-                                </ErrorMessage>
-                            )
-                        }
+
                     </div>
-                    
+
                     <div className="my-2">
                         <label
                             htmlFor="password"
-                            className="uppercase text-gray-600 block font-bold"
+                            className="uppercase text-gray-600 flex justify-between items-center font-bold"
                         >
                             Password
+                            {
+                                errors.password && (
+                                    <ErrorLabel>
+                                        {errors.password?.message}
+                                    </ErrorLabel>
+                                )
+                            }
                         </label>
                         <input
                             {
                             ...register('password', {
-                                required: 'El password es obligatorio'
+                                required: 'El password es obligatorio',
                             })
                             }
                             type="password"
@@ -145,29 +156,23 @@ export default function UserModal({ open, setOpen }: UserModalInterface) {
                             id="password"
                             placeholder="Ingrese el Numero"
                         />
-                        {
-                            errors.password && (
-                                <ErrorMessage>
-                                    {errors.password?.message}
-                                </ErrorMessage>
-                            )
-                        }
+
                     </div>
 
-                  <div className="flex gap-4 mt-4">
-                  <input
-                        type="submit"
-                        className="bg-green-500 w-full text-sm py-2 mb-2 text-gray-100 uppercase font-bold rounded cursor-pointer hover:bg-green-600 transition-colors"
-                        value="Crear Usuario"
-                        onClick={() => toast.success("hola")}
-                    />
-                    <input
-                        type="button"
-                        value="Cancelar"
-                        className="bg-red-500 w-full py-2 mb-2 text-sm text-gray-100 uppercase font-bold rounded cursor-pointer hover:bg-red-600 transition-colors"
-                        onClick={() => setOpen(false)}
-                    />
-                  </div>
+                    <div className="flex gap-4 mt-4">
+                        <input
+                            type="submit"
+                            className="bg-green-500 w-full text-sm py-2 mb-2 text-gray-100 uppercase font-bold rounded cursor-pointer hover:bg-green-600 transition-colors"
+                            value="Crear Usuario"
+                            onClick={() => toast.success("Falta implementar")}
+                        />
+                        <input
+                            type="button"
+                            value="Cancelar"
+                            className="bg-red-500 w-full py-2 mb-2 text-sm text-gray-100 uppercase font-bold rounded cursor-pointer hover:bg-red-600 transition-colors"
+                            onClick={() => setOpen(false)}
+                        />
+                    </div>
                 </form>
             </div>
         </div>

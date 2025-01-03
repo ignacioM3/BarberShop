@@ -39,9 +39,11 @@ export class AuthControllers {
     try {
       const { email, password } = req.body;
       const user = await User.findOne({ email });
-      if (!user) {
-        const error = new Error("Usuario no encontrado");
-        return res.status(409).json({ error: error.message });
+      
+      const isPasswordCorrect = await bcrypt.compare(password, user.password);
+      if (!isPasswordCorrect) {
+        const error = new Error("Password Incorrecto");
+        return res.status(401).json({ error: error.message });
       }
       if(user.blocked){
         const error = new Error("Usuario Bloqueado comunicarse con el administrador");
@@ -65,12 +67,7 @@ export class AuthControllers {
         return res.status(401).json({ error: error.message });
       }
 
-      const isPasswordCorrect = await bcrypt.compare(password, user.password);
-      if (!isPasswordCorrect) {
-        const error = new Error("Password Incorrecto");
-        return res.status(401).json({ error: error.message });
-      }
-
+   
       const token = generateJWT({ id: user.id });
       res.send(token);
     } catch (error) {

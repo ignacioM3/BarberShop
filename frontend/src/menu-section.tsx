@@ -31,7 +31,7 @@ export const menuSection: MenuSection[] = [
         label: [
             {
                 label: 'Administración',
-                role: [UserRole.ADMIN]
+                role: [UserRole.ADMIN, UserRole.BARBER]
             }
         ],
         items: [
@@ -63,7 +63,7 @@ export const menuSection: MenuSection[] = [
                 label: "Productos",
                 icon: <MdOutlineProductionQuantityLimits />,
                 to: "",
-                role: [UserRole.ADMIN]
+                role: [UserRole.ADMIN, UserRole.BARBER]
             }
         ]
     },
@@ -71,7 +71,7 @@ export const menuSection: MenuSection[] = [
         label: [
             {
                 label: 'Planificación',
-                role: [UserRole.ADMIN]
+                role: [UserRole.ADMIN, UserRole.BARBER]
             }
         ],
         items: [ 
@@ -79,7 +79,7 @@ export const menuSection: MenuSection[] = [
                 label: "Turnos",
                 icon: <IoCalendarNumberOutline />, 
                 to: AppRoutes.Appointment.route(),
-                role: [UserRole.ADMIN]
+                role: [UserRole.ADMIN, UserRole.BARBER]
             },
             {
                 label: "Ganancias",

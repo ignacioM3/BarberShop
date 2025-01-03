@@ -44,7 +44,7 @@ export function Header() {
           currentUser ?
             <div className='flex gap-1 items-center justify-center cursor-pointer '>
               {
-                (currentUser.role === UserRole.ADMIN) && (
+                (currentUser.role === UserRole.ADMIN || currentUser.role === UserRole.BARBER) && (
                   <Link to={AppRoutes.homeAdmin.route()} className='hidden md:block font-bold mr-3 bg-gray-500 py-2 px-3 text-white rounded-sm shadow-md hover:bg-gray-600 transition-colors'>
                     Admin
                   </Link>

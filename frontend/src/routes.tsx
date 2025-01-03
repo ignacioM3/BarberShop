@@ -50,7 +50,7 @@ export const AppRoutes = {
     homeAdmin: {
         route: () => "/admin/dashboard",
         requiresAuth: true,
-        allowedRoles: [UserRole.ADMIN],
+        allowedRoles: [UserRole.ADMIN, UserRole.BARBER],
         page: async () => (await import('./pages/admin/HomeAdmin')).HomeAdmin,
         layout: adminLayoutImport
     },
@@ -85,14 +85,14 @@ export const AppRoutes = {
     Appointment: {
         route: () => `/admin/appointment`,
         requiresAuth: true,
-        allowedRoles: [UserRole.ADMIN],
+        allowedRoles: [UserRole.ADMIN, UserRole.BARBER],
         page: async () => (await import('./pages/admin/Appointment')).Appointment,
         layout: adminLayoutImport
     },
     AppointmentToday:{
         route: () => `/admin/appointment/today`,
         requiresAuth: true,
-        allowedRoles: [UserRole.ADMIN],
+        allowedRoles: [UserRole.ADMIN, UserRole.BARBER],
         page: async () => (await import('./pages/admin/AppointmentToday')).AppointmentToday,
         layout: adminLayoutImport
     }
