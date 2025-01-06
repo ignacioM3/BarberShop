@@ -1,14 +1,41 @@
-import { useState } from "react";
-import { ListAddButton } from "../../components/styles/LinkButton";
+
 import { PageContainer } from "../../components/styles/PageContainer";
 import { PageHeader } from "../../components/styles/PageHeader";
 import { PageTitle } from "../../components/styles/PageTitle";
 import { PageContent } from "../../components/styles/PageContent";
 import { Link } from "react-router-dom";
 import { AppRoutes } from "../../routes";
+import useAuth from "../../hooks/useAuth";
+import LoadingSpinner from "../../components/LoadingSpinner";
+import { getAllBranchsApi } from "../../api/BranchApi";
+import { useQuery } from "@tanstack/react-query";
 
 
 export function Appointment() {
+    const {currentUser} = useAuth()
+
+    
+    const { data, isError, isLoading } = useQuery({
+        queryKey: ['getBranchs'],
+        queryFn: getAllBranchsApi,
+        retry: false
+    })
+
+
+    if (isLoading) return <LoadingSpinner />
+    if (isError) return <h1>Falta Implementar error</h1>
+    const userBranch = data?.find(branch => 
+        branch.barbers.some(barber => barber._id === currentUser?._id)
+    );
+
+    if(!userBranch) return (
+        <PageContainer>
+            <PageHeader>
+                <PageTitle className="text-center text-red-700 uppercase">No tenes local asignado</PageTitle>
+            </PageHeader>
+        </PageContainer>
+    )
+
     return (
         <PageContainer>
             <PageHeader>
@@ -17,7 +44,7 @@ export function Appointment() {
             <PageContent>
                 <div className="flex flex-col md:flex-row items-center justify-center gap-4">
                     <Link
-                        to={AppRoutes.AppointmentToday.route()}
+                        to={AppRoutes.AppointmentToday.route(userBranch?._id)}
                         className="bg-gray-400 p-8 rounded-md cursor-pointer uppercase font-bold text-white hover:bg-gray-500 transition-colors w-full text-center md:max-w-[300px]">
 
                         Turnos del dia

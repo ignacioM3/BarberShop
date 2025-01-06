@@ -18,11 +18,6 @@ export  function AppointmentToday() {
     <PageContainer className="h-full">
         <PageHeader>
             <PageTitle>Turnos de hoy</PageTitle>
-            <ListAddButton
-                    onClick={() => setOpen(true)}
-                >
-                    Agregar Turno
-                </ListAddButton>
         </PageHeader>
         <PageContent>
         <h2 className="text-xl text-gray-500 mb-4">Cesar</h2>

@@ -9,6 +9,20 @@ interface AppointmentModalProps {
     
 }
 
+const generateTimeOptions = (): string[] => {
+    const times: string[] = [];
+    for (let hour = 9; hour <= 20; hour++) {
+      const hourString = hour.toString().padStart(2, '0');
+      times.push(`${hourString}:00`);
+      if (hour !== 20) {
+        times.push(`${hourString}:30`);
+      }
+    }
+    return times;
+  };
+
+  const timeOptions = generateTimeOptions();
+
 
 export function AppointmentModal({ open, setOpen }: AppointmentModalProps) {
     const initialValues = {
@@ -28,10 +42,10 @@ export function AppointmentModal({ open, setOpen }: AppointmentModalProps) {
             <div className="w-full h-full flex items-center justify-center">
                 <form
                     onClick={(e) => e.stopPropagation()}
-                    className="bg-white w-[350px]  md:w-[400px] shadow-md rounded-md p-7 mt-8 mx-4 md:mt-4"
+                    className="bg-white w-[350px]  md:w-[400px] shadow-md rounded-md px-7 py-4 mt-8 mx-4 md:mt-4"
                 >
                     <TitleModal>Crear Turno - 11:30</TitleModal>
-                    <div className="my-2">
+                    <div className="mt-2">
                         <label
                             htmlFor="name"
                             className="uppercase text-gray-600 block font-bold"
@@ -44,12 +58,12 @@ export function AppointmentModal({ open, setOpen }: AppointmentModalProps) {
                             })}
                             type="text"
                             id="name"
-                            className="w-full mt-2 p-2 border rounded-md bg-gray-100"
+                            className="w-full mt-2 py-1 px-2 border rounded-md bg-gray-100"
                             placeholder="Ingresa el Nombre"
                         />
                         
                     </div>
-                    <div className="my-2">
+                    <div className="my-1">
                         <label
                             htmlFor="service"
                             className="uppercase text-gray-600 block font-bold"
@@ -61,16 +75,39 @@ export function AppointmentModal({ open, setOpen }: AppointmentModalProps) {
                                 required: "Selecciona un servicio",
                             })}
                             id="service"
-                            className="w-full mt-2 p-2 border rounded-md bg-gray-100 cursor-pointer"
+                            className="w-full mt-2 py-1 px-2 border rounded-md bg-gray-100 cursor-pointer"
                         >
                             <option value="">Selecciona un Servicio</option>
                             <option value="corte">Corte</option>
-                            <option value="afeitado">Afeitado</option>
-                            <option value="tinte">Tinte</option>
+                            <option value="afeitado">Claritos</option>
+                            <option value="tinte">Global</option>
                         </select>
                         
                     </div>
-                    <div className="my-2">
+                    <div className="my-1">
+                        <label
+                            htmlFor="hour"
+                            className="uppercase text-gray-600 block font-bold"
+                        >
+                            Hora
+                        </label>
+                        <select
+                            {...register("hour", {
+                                required: "Selecciona un servicio",
+                            })}
+                            id="hour"
+                            className="w-full mt-2 py-1 px-2 border rounded-md bg-gray-100 cursor-pointer"
+                        >
+                            <option value="">Selecciona un Servicio</option>
+                            {
+                                timeOptions.map((time, index) => ( 
+                                    <option key={index} value={time}>{time}</option>
+                                ))
+                            }
+                        </select>
+                        
+                    </div>
+                    <div className="my-1">
                         <label
                             htmlFor="name"
                             className="uppercase text-gray-600 block font-bold"
@@ -83,12 +120,12 @@ export function AppointmentModal({ open, setOpen }: AppointmentModalProps) {
                             })}
                             type="text"
                             id="name"
-                            className="w-full mt-2 p-2 border rounded-md bg-gray-100"
+                            className="w-full mt-2 py-1 px-2 border rounded-md bg-gray-100"
                             placeholder="Ingresa el Nombre"
                         />
                         
                     </div>
-                    <div className="my-2">
+                    <div className="my-1">
                         <label
                             htmlFor="name"
                             className="uppercase text-gray-600 block font-bold"
@@ -101,12 +138,12 @@ export function AppointmentModal({ open, setOpen }: AppointmentModalProps) {
                             })}
                             type="text"
                             id="name"
-                            className="w-full mt-2 p-2 border rounded-md bg-gray-100"
+                            className="w-full mt-2 py-1 px-2 border rounded-md bg-gray-100"
                             placeholder="Ingresa el Nombre"
                         />
                         
                     </div>
-                    <div className="my-2">
+                    <div className="my-1">
                         <label
                             htmlFor="name"
                             className="uppercase text-gray-600 block font-bold"
@@ -119,7 +156,7 @@ export function AppointmentModal({ open, setOpen }: AppointmentModalProps) {
                             })}
                             type="text"
                             id="name"
-                            className="w-full mt-2 p-2 border rounded-md bg-gray-100"
+                            className="w-full mt-2 py-1 px-2 border rounded-md bg-gray-100"
                             placeholder="Ingresa el Nombre"
                         />
                         

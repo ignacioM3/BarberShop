@@ -7,6 +7,7 @@ import { AiFillHome } from "react-icons/ai";
 import { MdOutlineProductionQuantityLimits } from "react-icons/md";
 import { BiBuildings } from "react-icons/bi";
 import { AppRoutes } from "./routes";
+import { TbCalendarSearch } from "react-icons/tb";
 
 export interface MenuItem {
     label: string;
@@ -24,6 +25,7 @@ export interface MenuSection {
     label: MenuLabel[];
     items: MenuItem[];
 }
+
 
 
 export const menuSection: MenuSection[] = [ 
@@ -77,16 +79,24 @@ export const menuSection: MenuSection[] = [
         items: [ 
             {
                 label: "Turnos",
-                icon: <IoCalendarNumberOutline />, 
+               
+                icon: <TbCalendarSearch />,
                 to: AppRoutes.Appointment.route(),
                 role: [UserRole.ADMIN, UserRole.BARBER]
+            },
+            {
+                label: "Mis Turnos",
+                icon: <IoCalendarNumberOutline />, 
+                to: "falta",
+                role: [UserRole.BARBER, UserRole.ADMIN] 
             },
             {
                 label: "Ganancias",
                 icon: <TbMoneybag />, 
                 to: "/dashboard/ganancias",
                 role: [UserRole.ADMIN]
-            }
+            },
+            
         ]
     }
 ];

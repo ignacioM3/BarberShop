@@ -3,6 +3,7 @@ import { UserRole } from './use-role';
 
 // --- Auth Schema ---
 const authSchema = z.object({
+  _id: z.string(),
   name: z.string(),
   email: z.string().email(),
   password: z.string(),
@@ -17,7 +18,7 @@ type Auth = z.infer<typeof authSchema>;
 // --- Auth Form Types ---
 export type UserRegistrationForm = Pick<Auth, 'email' | 'name' | 'password' | 'password_confirmation'>;
 export type UserLoginForm = Pick<Auth, 'email' | 'password'>;
-export type UserLogged = Pick<Auth, 'email' | 'name' | 'role'>;
+export type UserLogged = Pick<Auth, 'email' | 'name' | 'role' | '_id'>;
 export type RequestConfirmationCodeForm = Pick<Auth, 'email'>;
 export type ConfirmToken = Pick<Auth, 'token'>;
 export type ForgotPasswordForm = Pick<Auth, 'email'>;

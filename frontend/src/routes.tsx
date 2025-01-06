@@ -90,7 +90,7 @@ export const AppRoutes = {
         layout: adminLayoutImport
     },
     AppointmentToday:{
-        route: () => `/admin/appointment/today`,
+        route: (id?: string) => `/admin/appointment/${id?? ":id"}/today`,
         requiresAuth: true,
         allowedRoles: [UserRole.ADMIN, UserRole.BARBER],
         page: async () => (await import('./pages/admin/AppointmentToday')).AppointmentToday,
