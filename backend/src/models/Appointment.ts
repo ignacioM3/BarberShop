@@ -7,6 +7,7 @@ export interface IAppointment extends Document{
     barberId: Types.ObjectId;
     timeSlot: Date;
     status: string;
+    details: string
     day: Date;
     manual: boolean;
 }

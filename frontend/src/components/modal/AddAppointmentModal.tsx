@@ -1,6 +1,8 @@
 import { useForm } from "react-hook-form";
-import ErrorMessage from "../ErrorMessage";
 import { TitleModal } from "./TitleModal";
+import useAuth from "../../hooks/useAuth";
+import { toast } from "react-toastify";
+import ErrorLabel from "../styles/ErrorLabel";
 
 
 interface AppointmentModalProps {
@@ -9,30 +11,26 @@ interface AppointmentModalProps {
     
 }
 
-const generateTimeOptions = (): string[] => {
-    const times: string[] = [];
-    for (let hour = 9; hour <= 20; hour++) {
-      const hourString = hour.toString().padStart(2, '0');
-      times.push(`${hourString}:00`);
-      if (hour !== 20) {
-        times.push(`${hourString}:30`);
-      }
-    }
-    return times;
-  };
-
-  const timeOptions = generateTimeOptions();
 
 
 export function AppointmentModal({ open, setOpen }: AppointmentModalProps) {
-    const initialValues = {
+    const {currentUser} = useAuth()
+     const initialValues = {
         name: "",
+        service: "",
         number: "",
-        password_confirmation: "",
-        password: "",
-        email: ""
+        instagram: "",
+        details: ""
+
     }
-    const {register, handleSubmit, reset, watch, formState: {errors}} = useForm()
+    const {register, handleSubmit, reset, watch, formState: {errors}} = useForm({
+        defaultValues: initialValues
+    })
+
+    const handleCreateAppointment = (formData: any) => {
+        toast.success(formData.name)
+        console.log(formData.name);
+    }
 
     return (
         <div
@@ -42,15 +40,23 @@ export function AppointmentModal({ open, setOpen }: AppointmentModalProps) {
             <div className="w-full h-full flex items-center justify-center">
                 <form
                     onClick={(e) => e.stopPropagation()}
+                    onSubmit={handleSubmit(handleCreateAppointment)}
                     className="bg-white w-[350px]  md:w-[400px] shadow-md rounded-md px-7 py-4 mt-8 mx-4 md:mt-4"
                 >
                     <TitleModal>Crear Turno - 11:30</TitleModal>
                     <div className="mt-2">
                         <label
                             htmlFor="name"
-                            className="uppercase text-gray-600 block font-bold"
+                            className="uppercase text-gray-600 font-bold flex justify-between items-center"
                         >
-                            nombre
+                            nombre 
+                            {
+                                errors.name && (
+                                    <ErrorLabel>
+                                        {errors.name?.message}
+                                    </ErrorLabel>
+                                )
+                            }
                         </label>
                         <input
                             {...register("name", {
@@ -66,9 +72,15 @@ export function AppointmentModal({ open, setOpen }: AppointmentModalProps) {
                     <div className="my-1">
                         <label
                             htmlFor="service"
-                            className="uppercase text-gray-600 block font-bold"
+                            className="uppercase text-gray-600 font-bold flex justify-between items-center"
                         >
-                            Servicio
+                            Servicio{
+                                errors.service?.message && (
+                                    <ErrorLabel>
+                                        {errors.service?.message}
+                                    </ErrorLabel>
+                                )
+                            }
                         </label>
                         <select
                             {...register("service", {
@@ -84,60 +96,32 @@ export function AppointmentModal({ open, setOpen }: AppointmentModalProps) {
                         </select>
                         
                     </div>
+                  
                     <div className="my-1">
                         <label
-                            htmlFor="hour"
-                            className="uppercase text-gray-600 block font-bold"
-                        >
-                            Hora
-                        </label>
-                        <select
-                            {...register("hour", {
-                                required: "Selecciona un servicio",
-                            })}
-                            id="hour"
-                            className="w-full mt-2 py-1 px-2 border rounded-md bg-gray-100 cursor-pointer"
-                        >
-                            <option value="">Selecciona un Servicio</option>
-                            {
-                                timeOptions.map((time, index) => ( 
-                                    <option key={index} value={time}>{time}</option>
-                                ))
-                            }
-                        </select>
-                        
-                    </div>
-                    <div className="my-1">
-                        <label
-                            htmlFor="name"
-                            className="uppercase text-gray-600 block font-bold"
+                            htmlFor="instagram"
+                            className="uppercase text-gray-600 font-bold flex justify-between items-center"
                         >
                             Instagram (Opcional)
                         </label>
                         <input
-                            {...register("name", {
-                                required: "El nombre es obligatorio",
-                            })}
                             type="text"
-                            id="name"
+                            id="instagram"
                             className="w-full mt-2 py-1 px-2 border rounded-md bg-gray-100"
-                            placeholder="Ingresa el Nombre"
+                            placeholder="Ingresa el instagram"
                         />
                         
                     </div>
                     <div className="my-1">
                         <label
-                            htmlFor="name"
+                            htmlFor="number"
                             className="uppercase text-gray-600 block font-bold"
                         >
                             Numero (opcional)
                         </label>
                         <input
-                            {...register("name", {
-                                required: "El nombre es obligatorio",
-                            })}
                             type="text"
-                            id="name"
+                            id="number"
                             className="w-full mt-2 py-1 px-2 border rounded-md bg-gray-100"
                             placeholder="Ingresa el Nombre"
                         />
@@ -145,13 +129,20 @@ export function AppointmentModal({ open, setOpen }: AppointmentModalProps) {
                     </div>
                     <div className="my-1">
                         <label
-                            htmlFor="name"
-                            className="uppercase text-gray-600 block font-bold"
+                            htmlFor="details"
+                            className="uppercase text-gray-600 font-bold flex justify-between items-center"
                         >
                             Detalles
+                            {
+                                errors.details?.message && (
+                                    <ErrorLabel>
+                                        {errors.details?.message}
+                                    </ErrorLabel>
+                                )
+                            }
                         </label>
                         <input
-                            {...register("name", {
+                            {...register("details", {
                                 required: "El nombre es obligatorio",
                             })}
                             type="text"

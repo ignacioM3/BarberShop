@@ -130,3 +130,20 @@ export type BranchListType = Pick<Branch, '_id' | 'address' | 'name' | 'barbers'
 export type getDetailsBranch = Pick<Branch, '_id' | 'address' | 'barbers' | 'name'>
 export type BarberOutBranch = Pick<User, '_id' | 'name'>
 export type ListBarberInBranch = Pick<User, '_id' | 'name'>
+
+
+// Appointment Schema
+const appointmentSchema = z.object({
+  _id: z.string(),
+  name: z.string().optional(),
+  userId: z.string().optional(),
+  barberId: z.string(),
+  branchId: z.string(),
+  timeSlot: z.string(),
+  day: z.string(),
+  status: z.enum(['available', "booked", "canceled"] as const),
+  manual: z.boolean(),
+})
+
+export type Appointment = z.infer<typeof appointmentSchema>;
+export type createAppointmentForm = Pick<Appointment, 'barberId' | 'timeSlot' | 'day' | 'status' | 'manual' | 'name' | 'branchId'>;

@@ -33,7 +33,6 @@ export function UserBarberModal({ open, setOpen }: UserBarberModalProps) {
         },
         onSuccess: (data) => {
             toast.success(data)
-            console.log(data)
             queryClient.invalidateQueries({ queryKey: ['getBarbers'] })
             setOpen(false)
             reset()

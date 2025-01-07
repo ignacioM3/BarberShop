@@ -1,9 +1,9 @@
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useForm } from "react-hook-form";
 import { createUserApi } from "../../api/AuthApi";
 import { toast } from "react-toastify";
-import ErrorMessage from "../ErrorMessage";
 import ErrorLabel from "../styles/ErrorLabel";
+import { createAppointmentForm } from "../../types";
 
 interface UserModalInterface {
     open: boolean;
@@ -17,6 +17,7 @@ export default function UserModal({ open, setOpen }: UserModalInterface) {
         password: "",
         email: ""
     }
+    const queryClient = useQueryClient()
 
     const { register, handleSubmit, reset, formState: { errors } } = useForm(
         { defaultValues: initialValues }
@@ -26,15 +27,16 @@ export default function UserModal({ open, setOpen }: UserModalInterface) {
         mutationFn: createUserApi,
         onError: (error) => {
             toast.error(error.message)
-            toast.success('Usuario Creado correctamente')
         },
         onSuccess: (data) => {
             toast.success(data)
+            setOpen(false)
+            reset()
         }
     })
 
-    const handleCreate = async () => {
-
+    const handleCreate = async (formData: createAppointmentForm) => {
+        mutate(formData)
     }
     return (
         <div
