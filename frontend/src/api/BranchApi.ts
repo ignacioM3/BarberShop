@@ -61,7 +61,7 @@ export async function getBranchById(branchId: string){
   try {
     const url = `/branch/info/${branchId}`
    const {data} = await api(url);
-   console.log(data)
+
    const response = branchSchema.safeParse(data);
    if (response.success) {
     console.log(response.data)

@@ -9,12 +9,13 @@ import useAuth from "../../hooks/useAuth";
 import LoadingSpinner from "../../components/LoadingSpinner";
 import { getAllBranchsApi } from "../../api/BranchApi";
 import { useQuery } from "@tanstack/react-query";
+import { UserRole } from "../../types/use-role";
 
 
 export function Appointment() {
-    const {currentUser} = useAuth()
+    const { currentUser } = useAuth()
 
-    
+
     const { data, isError, isLoading } = useQuery({
         queryKey: ['getBranchs'],
         queryFn: getAllBranchsApi,
@@ -24,40 +25,43 @@ export function Appointment() {
 
     if (isLoading) return <LoadingSpinner />
     if (isError) return <h1>Falta Implementar error</h1>
-    const userBranch = data?.find(branch => 
-        branch.barbers.some(barber => barber._id === currentUser?._id)
-    );
+    if (currentUser?.role === UserRole.ADMIN || currentUser?.role === UserRole.BARBER) {
+        const userBranch = data?.find(branch =>
+            branch.barbers.some(barber => barber._id === currentUser?._id)
+        );
 
-    if(!userBranch) return (
-        <PageContainer>
-            <PageHeader>
-                <PageTitle className="text-center text-red-700 uppercase">No tenes local asignado</PageTitle>
-            </PageHeader>
-        </PageContainer>
-    )
+        if (!userBranch) return (
+            <PageContainer>
+                <PageHeader>
+                    <PageTitle className="text-center text-red-700 uppercase">No tenes local asignado</PageTitle>
+                </PageHeader>
+            </PageContainer>
+        )
 
-    return (
-        <PageContainer>
-            <PageHeader>
-                <PageTitle>Administrador de turnos</PageTitle>
-            </PageHeader>
-            <PageContent>
-                <div className="flex flex-col md:flex-row items-center justify-center gap-4">
-                    <Link
-                        to={AppRoutes.AppointmentToday.route(userBranch?._id)}
-                        className="bg-gray-400 p-8 rounded-md cursor-pointer uppercase font-bold text-white hover:bg-gray-500 transition-colors w-full text-center md:max-w-[300px]">
+        return (
+            <PageContainer>
+                <PageHeader>
+                    <PageTitle>Administrador de turnos</PageTitle>
+                </PageHeader>
+                <PageContent>
+                    <div className="flex flex-col md:flex-row items-center justify-center gap-4">
+                        <Link
+                            to={AppRoutes.AppointmentToday.route(userBranch?._id)}
+                            className="bg-gray-400 p-8 rounded-md cursor-pointer uppercase font-bold text-white hover:bg-gray-500 transition-colors w-full text-center md:max-w-[300px]">
 
-                        Turnos del dia
+                            Turnos del dia
 
-                    </Link>
-                    <div className="bg-gray-400 p-8 rounded-md cursor-pointer uppercase font-bold text-white hover:bg-gray-500 transition-colors w-full text-center md:max-w-[300px]">
-                        <span>Turnos de la semana</span>
+                        </Link>
+                        <div className="bg-gray-400 p-8 rounded-md cursor-pointer uppercase font-bold text-white hover:bg-gray-500 transition-colors w-full text-center md:max-w-[300px]">
+                            <span>Turnos de la semana</span>
+                        </div>
+                        <div className="bg-gray-400 p-8 rounded-md cursor-pointer uppercase font-bold text-white hover:bg-gray-500 transition-colors w-full text-center md:max-w-[300px]">
+                            <span>Historial de turnos</span>
+                        </div>
                     </div>
-                    <div className="bg-gray-400 p-8 rounded-md cursor-pointer uppercase font-bold text-white hover:bg-gray-500 transition-colors w-full text-center md:max-w-[300px]">
-                        <span>Historial de turnos</span>
-                    </div>
-                </div>
-            </PageContent>
-        </PageContainer>
-    )
+                </PageContent>
+            </PageContainer>
+        )
+    }
+
 }

@@ -3,17 +3,18 @@ import { TitleModal } from "./TitleModal";
 import useAuth from "../../hooks/useAuth";
 import { toast } from "react-toastify";
 import ErrorLabel from "../styles/ErrorLabel";
-
-
-interface AppointmentModalProps {
-    open: boolean;
-    setOpen: (open: boolean) => void;
-    
-}
+import { useLocation, useNavigate } from "react-router-dom";
 
 
 
-export function AppointmentModal({ open, setOpen }: AppointmentModalProps) {
+
+export function AppointmentModal() {
+    const navigate = useNavigate();
+    const location = useLocation();
+    const queryParams = new URLSearchParams(location.search);
+    const time = queryParams.get('time')!
+    const show = time ? true : false
+
     const {currentUser} = useAuth()
      const initialValues = {
         name: "",
@@ -34,8 +35,8 @@ export function AppointmentModal({ open, setOpen }: AppointmentModalProps) {
 
     return (
         <div
-            className={`${open ? 'fixed' : 'hidden'} bg-[#4b4b4b72] h-screen left-0 bottom-0 right-0`}
-            onClick={() => setOpen(false)}
+            className={`${show ? 'fixed' : 'hidden'} bg-[#4b4b4b72] h-screen left-0 bottom-0 right-0`}
+            onClick={() => navigate(location.pathname, { replace: true })}
         >
             <div className="w-full h-full flex items-center justify-center">
                 <form
@@ -43,7 +44,7 @@ export function AppointmentModal({ open, setOpen }: AppointmentModalProps) {
                     onSubmit={handleSubmit(handleCreateAppointment)}
                     className="bg-white w-[350px]  md:w-[400px] shadow-md rounded-md px-7 py-4 mt-8 mx-4 md:mt-4"
                 >
-                    <TitleModal>Crear Turno - 11:30</TitleModal>
+                    <TitleModal>Crear Turno - {time}</TitleModal>
                     <div className="mt-2">
                         <label
                             htmlFor="name"
@@ -112,6 +113,7 @@ export function AppointmentModal({ open, setOpen }: AppointmentModalProps) {
                         />
                         
                     </div>
+                    
                     <div className="my-1">
                         <label
                             htmlFor="number"
@@ -154,11 +156,13 @@ export function AppointmentModal({ open, setOpen }: AppointmentModalProps) {
                     </div>
                     <div className="flex gap-4 mt-4">
                      
+                   
+                   
                         <input
                             type="button"
                             value="Cancelar"
                             className="bg-red-500 w-full py-2 mb-2 text-sm text-gray-100 uppercase font-bold rounded cursor-pointer hover:bg-red-600 transition-colors"
-                            onClick={() => setOpen(false)}
+                            onClick={() => navigate(location.pathname, { replace: true })}
                         />
                            <input
                             type="submit"

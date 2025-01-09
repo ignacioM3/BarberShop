@@ -29,6 +29,8 @@ export const branchSchema = z.object({
   _id: z.string(),
   name: z.string(),
   address: z.string(),
+  open: z.string(),
+  close: z.string(),
   barbers: z.array(
    z.object({
     _id: z.string(),

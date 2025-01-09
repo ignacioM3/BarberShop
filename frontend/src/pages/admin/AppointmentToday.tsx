@@ -1,136 +1,90 @@
-import { useState } from "react";
 import { PageContainer } from "../../components/styles/PageContainer";
 import { PageHeader } from "../../components/styles/PageHeader";
 import { PageTitle } from "../../components/styles/PageTitle";
 import { PageContent } from "../../components/styles/PageContent";
 import { AppointmentDetails } from "../../components/modal/AppointmentDetails";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { AppointmentModal } from "../../components/modal/AddAppointmentModal";
+import { useQuery } from "@tanstack/react-query";
+import LoadingSpinner from "../../components/LoadingSpinner";
+import { getTodayAppointmentApi } from "../../api/AppointmentApi";
+import useAuth from "../../hooks/useAuth";
+import { generateTimeSlots } from "../../utils/generateTime";
+import { Appointment } from "../../types";
+
+export function AppointmentToday() {
+  const navigate = useNavigate();
+  const location = useLocation();
+  const { id } = useParams();
+  const branchId = id!;
+  const { currentUser } = useAuth();
+
+  const { data, isLoading, isError } = useQuery({
+    queryFn: () => getTodayAppointmentApi(branchId),
+    queryKey: ["getTodayAppointmentApi", branchId],
+    retry: false,
+  });
 
 
-export  function AppointmentToday() {
-  const navigate = useNavigate()
-  const location = useLocation()
-    
-    const [open, setOpen] = useState(false)
-  return (
-    <PageContainer className="h-full">
+
+  if (isLoading) return <LoadingSpinner />;
+  if (isError) return <h1>Falta implementar error</h1>;
+  if (data) {
+    const timeSlots = generateTimeSlots(data.branch.open, data.branch.close, 30);
+
+    const getAppointmentByBarberId = data.appointments.filter((a: Appointment) =>
+      a.barberId === currentUser?._id ? a : null
+    );
+
+    const getAppointmentName = (slot: string) => {
+      const appointment = getAppointmentByBarberId.find(
+        (a: Appointment) => a.timeSlot === slot
+      );
+
+      
+      if (appointment) {
+        const firtName = appointment.name.split(" ")[0]
+        return firtName; 
+      }
+
+      return null;
+    };
+
+    return (
+      <PageContainer className="h-full">
         <PageHeader>
-            <PageTitle>Turnos de hoy</PageTitle>
+          <PageTitle>Turnos de hoy</PageTitle>
         </PageHeader>
         <PageContent>
-        <h2 className="text-xl text-gray-500 mb-4">Cesar</h2>
+          <h2 className="text-xl text-gray-500 mb-4">Cesar</h2>
           <div className="flex justify-center mx-auto flex-wrap gap-3 md:max-w-[1000px]">
-            <div 
-              className="flex text-center flex-col border border-gray-400 p-2 rounded-md cursor-pointer w-[80px] items-center justify-center"
-              onClick={() => navigate(location.pathname + `?detailsAppointment=123123`)}
-              >
-              <span className="font-bold">10:00</span>
-              <span>Nacho</span>
-            </div>
-
-            <div 
-              className="flex text-center flex-col border border-gray-400 p-2 rounded-md cursor-pointer w-[80px] items-center justify-center"
-              >
-              <span className="font-bold">10:30</span>
-              <p>Gabriel</p>
-            </div>
-
-            <div 
-              className="flex text-center flex-col border border-gray-400 p-2 rounded-md cursor-pointer w-[80px] items-center justify-center"
-              onClick={() => setOpen(true)}
-              >
-              <span className="font-bold">11:00</span>
-              <span className="text-green-500 font-bold uppercase">Libre</span>
-            </div>
-
-            <div className="flex text-center flex-col border border-gray-400 p-2 rounded-md cursor-pointer w-[80px] items-center justify-center">
-              <span className="font-bold">11:30</span>
-              <span className="text-green-500 font-bold uppercase">libre</span>
-            </div>
-
-            <div className="flex text-center flex-col border border-gray-400 p-2 rounded-md cursor-pointer w-[80px] items-center justify-center">
-              <span className="font-bold">12:00</span>
-              <span className="text-green-500 font-bold uppercase">Libre</span>
-            </div>
-
-            <div className="flex text-center flex-col border border-gray-400 p-2 rounded-md cursor-pointer w-[80px] items-center justify-center">
-              <span className="font-bold">12:30</span>
-              <span className="text-green-500 font-bold uppercase">Libre</span>
-            </div>
-
-            <div className="flex text-center flex-col border border-gray-400 p-2 rounded-md cursor-pointer w-[80px] items-center justify-center">
-              <span className="font-bold">13:00</span>
-              <span className="text-green-500 font-bold uppercase">Libre</span>
-            </div>
-
-            <div className="flex text-center flex-col border border-gray-400 p-2 rounded-md cursor-pointer w-[80px] items-center justify-center">
-              <span className="font-bold">13:30</span>
-              <span className="text-green-500 font-bold uppercase">Libre</span>
-            </div>
-
-            <div className="flex text-center flex-col border border-gray-400 p-2 rounded-md cursor-pointer w-[80px] items-center justify-center">
-              <span className="font-bold">14:00</span>
-              <span className="text-green-500 font-bold uppercase">Libre</span>
-            </div>
-
-            <div className="flex text-center flex-col border border-gray-400 p-2 rounded-md cursor-pointer w-[80px] items-center justify-center">
-              <span className="font-bold">14:30</span>
-              <span className="text-green-500 font-bold uppercase">Libre</span>
-            </div>
-
-            <div className="flex text-center flex-col border border-gray-400 p-2 rounded-md cursor-pointer w-[80px] items-center justify-center">
-              <span className="font-bold">15:00</span>
-              <span className="text-green-500 font-bold uppercase">Libre</span>
-            </div>
-
-            <div className="flex text-center flex-col border border-gray-400 p-2 rounded-md cursor-pointer w-[80px] items-center justify-center">
-              <span className="font-bold">15:30</span>
-              <span className="text-green-500 font-bold uppercase">Libre</span>
-            </div>
-
-            <div className="flex text-center flex-col border border-gray-400 p-2 rounded-md cursor-pointer w-[80px] items-center justify-center">
-              <span className="font-bold">16:00</span>
-              <span className="text-green-500 font-bold uppercase">Libre</span>
-            </div>
-            <div className="flex text-center flex-col border border-gray-400 p-2 rounded-md cursor-pointer w-[80px] items-center justify-center">
-              <span className="font-bold">16:30</span>
-              <span className="text-green-500 font-bold uppercase">Libre</span>
-            </div>
-            <div className="flex text-center flex-col border border-gray-400 p-2 rounded-md cursor-pointer w-[80px] items-center justify-center">
-              <span className="font-bold">17:00</span>
-              <span className="text-green-500 font-bold uppercase">Libre</span>
-            </div>
-            <div className="flex text-center flex-col border border-gray-400 p-2 rounded-md cursor-pointer w-[80px] items-center justify-center">
-              <span className="font-bold">17:30</span>
-              <span className="text-green-500 font-bold uppercase">Libre</span>
-            </div>
-
-            <div className="flex text-center flex-col border border-gray-400 p-2 rounded-md cursor-pointer w-[80px] items-center justify-center">
-              <span className="font-bold">18:00</span>
-              <span className="text-green-500 font-bold uppercase">Libre</span>
-            </div>
-            <div className="flex text-center flex-col border border-gray-400 p-2 rounded-md cursor-pointer w-[80px] items-center justify-center">
-              <span className="font-bold">18:30</span>
-              <span className="text-green-500 font-bold uppercase">Libre</span>
-            </div>
-            <div className="flex text-center flex-col border border-gray-400 p-2 rounded-md cursor-pointer w-[80px] items-center justify-center">
-              <span className="font-bold">19:00</span>
-              <span className="text-green-500 font-bold uppercase">Libre</span>
-            </div>
-            <div className="flex text-center flex-col border border-gray-400 p-2 rounded-md cursor-pointer w-[80px] items-center justify-center">
-              <span className="font-bold">19:30</span>
-              <span className="text-green-500 font-bold uppercase">Libre</span>
-            </div>
-
+            {timeSlots.map((slot, index) => {
+              const appointmentName = getAppointmentName(slot);
+              return (
+                <div
+                  key={index}
+                  className={`flex text-center flex-col border border-gray-400 p-2 rounded-md cursor-pointer w-[80px] items-center justify-center ${appointmentName ? "bg-gray-200" : "bg-white"
+                    }`}
+                  onClick={() =>
+                    !appointmentName && navigate(location.pathname + `?time=${slot}`)
+                  }
+                >
+                  <span className="font-bold">{slot}</span>
+                  {appointmentName ? (
+                    <span className="text-red-500 font-bold">{appointmentName}</span>
+                  ) : (
+                    <span className="text-green-500 font-bold uppercase">Libre</span>
+                  )}
+                </div>
+              );
+            })}
           </div>
         </PageContent>
 
         <AppointmentDetails />
-        <AppointmentModal 
-        open={open}
-        setOpen={setOpen}
-        />
-    </PageContainer>
-  )
+        <AppointmentModal />
+      </PageContainer>
+    );
+  }
+
 }

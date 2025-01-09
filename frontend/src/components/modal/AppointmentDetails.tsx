@@ -30,6 +30,7 @@ export function AppointmentDetails() {
       window.removeEventListener("keydown", handleKeyDown);
     };
   }, [show, navigate, location.pathname]);
+  
   return (
     <div
       className={`${show ? 'fixed' : 'hidden'} bg-[#4b4b4b72] h-screen left-0 bottom-0 right-0`}

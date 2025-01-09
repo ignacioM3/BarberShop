@@ -5,10 +5,10 @@ export interface IAppointment extends Document{
     name?: string;
     branchId: Types.ObjectId;
     barberId: Types.ObjectId;
-    timeSlot: Date;
+    timeSlot: string;
     status: string;
     details: string
-    day: Date;
+    day: string;
     manual: boolean;
 }
 
@@ -20,6 +20,9 @@ export const appointmentSchema: Schema = new Schema({
     manual: {
         type: Boolean,
     },
+    name: {
+        type: String,
+    },
     barberId: {
         type: Types.ObjectId,
         ref: 'User'
@@ -30,18 +33,20 @@ export const appointmentSchema: Schema = new Schema({
     },
     day: {
         required: true,
-        type: Date
+        type: String
     },
     timeSlot: {
         required: true,
-        type: Date
+        type: String
     },
     status: {
         required: true,
         type: String,
         enum: ['available', "booked", "canceled"]
+    },
+    details: {
+        type: String,
     }
-    
 })
 
 const Appointment = mongoose.model<IAppointment>('Appointment', appointmentSchema);

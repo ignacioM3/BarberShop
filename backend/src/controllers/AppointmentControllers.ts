@@ -31,25 +31,27 @@ export class AppointmentControllers{
                 const error = new Error("Local no encontrado");
                 return res.status(404).json({ error: error.message });
             }
+    
             const today = new Date();
             const todayString = today.toISOString().split('T')[0]; 
-            const todayDate = new Date(todayString); 
-
-         
-            const appointments = await Appointment.aggregate([
-                { $match: { branchId: branch._id, day: todayDate } }, // Filtrar por sucursal y fecha
-                {
-                    $group: {
-                        _id: "$barberId", // Agrupar por barbero
-                        appointments: { $push: "$$ROOT" } // Incluir todos los turnos del barbero
-                    }
-                }
-            ]);
-
+            console.log(todayString)
+    
+            
+            const appointments = await Appointment.find({
+                branchId: branch._id,
+                day: todayString
+            });
+    
+            
+            if (!appointments.length) {
+                return res.status(200).json({ branch, appointments: [] });
+            }
+    
+            // Devolver las citas de los barberos
             res.status(200).json({ branch, appointments });
-
         } catch (error) {
             res.status(500).json({ error: "Hubo un error en el servidor" });
         }
     }
+    
 }

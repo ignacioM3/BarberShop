@@ -1,12 +1,11 @@
 import mongoose, { Schema, Types, Document } from 'mongoose'
 
-
-
-
 export interface IBranch extends Document{
     barbers: Types.ObjectId[];
     name: string;
     address: string;
+    open: string,   
+    close: string,
 }
 
 const branchSchema: Schema = new Schema({
@@ -21,6 +20,14 @@ const branchSchema: Schema = new Schema({
     address: {
         type: String, 
         required: true,
+    },
+    open: {
+        type: String,
+        match: /^([01]\d|2[0-3]):([0-5]\d)$/, 
+    },
+    close: {
+        type: String,
+        match: /^([01]\d|2[0-3]):([0-5]\d)$/,
     }
 })
 
