@@ -12,6 +12,8 @@ router.post("/:branchId/create-appointment",
     body("name").notEmpty().withMessage("El nombre no puede estar vacio"),
     body("timeSlot").notEmpty().withMessage("Debe ingresar el horario"),
     body("day").notEmpty().withMessage("Debe ingresar el dia del turno"),
+    body("service").notEmpty().withMessage("Debe ingresar el servicio"),
+    body("price").notEmpty().withMessage("Debe ingresar el precio"),
     handleInputErrors,
     AppointmentControllers.createAppointmentBarber
 )

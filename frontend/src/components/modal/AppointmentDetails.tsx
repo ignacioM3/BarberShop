@@ -65,7 +65,7 @@ export function AppointmentDetails() {
                 <p className="flex justify-between font-bold">Precio <span className="font-normal">${data.price}</span></p>
                 <p className="flex justify-between font-bold">Whatsapp <span className="font-normal flex items-center gap-2">{data.whatsapp ?<a className="flex items-center gap-2" href={`https://www.instagram.com/${data.instagram}/`} target="_blank"> <FaWhatsapp className="text-green-500 cursor-pointer text-xl" /> {data.whatsapp} </a>: "Sin whatsapp"}</span></p>
                 <p className="flex justify-between font-bold">Instagram <span className="font-normal">{data.instagram ? <a className="flex items-center gap-2" href={`https://www.instagram.com/${data.instagram}/`} target="_blank"><FaInstagram className="text-[#E1306C] cursor-pointer text-xl" /> {data.instagram}</a> : "Sin instagram"}</span></p>
-                <p className="flex justify-between font-bold">Turno <span className="font-normal">{data.manual ? "Online" : "Manual"}</span></p>
+                <p className="flex justify-between font-bold">Turno <span className="font-normal">{data.manual ? "Manual" : "Online"}</span></p>
 
                 <p className="text-center font-bold">Detalles</p>
                 <p className="text-center">{data.details ? data.details : "no hay detalles"}</p>

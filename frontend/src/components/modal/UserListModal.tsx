@@ -3,7 +3,7 @@ import { useForm } from "react-hook-form";
 import { createUserApi } from "../../api/AuthApi";
 import { toast } from "react-toastify";
 import ErrorLabel from "../styles/ErrorLabel";
-import { createAppointmentForm } from "../../types";
+import {  UserCreateForm } from "../../types";
 
 interface UserModalInterface {
     open: boolean;
@@ -35,7 +35,7 @@ export default function UserModal({ open, setOpen }: UserModalInterface) {
         }
     })
 
-    const handleCreate = async (formData: createAppointmentForm) => {
+    const handleCreate = async (formData: UserCreateForm) => {
         mutate(formData)
     }
     return (

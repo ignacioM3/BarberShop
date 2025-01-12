@@ -1,5 +1,6 @@
 import { z } from 'zod';
 import { UserRole } from './use-role';
+import { AppointmentStatus } from './appointment-status';
 
 // --- Auth Schema ---
 const authSchema = z.object({
@@ -138,14 +139,20 @@ export type ListBarberInBranch = Pick<User, '_id' | 'name'>
 const appointmentSchema = z.object({
   _id: z.string(),
   name: z.string().optional(),
-  userId: z.string().optional(),
   barberId: z.string(),
   branchId: z.string(),
   timeSlot: z.string(),
   day: z.string(),
-  status: z.enum(['available', "booked", "canceled", "completed"] as const),
+  status: z.enum([AppointmentStatus.AVAILABLE, AppointmentStatus.BOOKED, AppointmentStatus.CANCELED, AppointmentStatus.COMPLETED] as const),
   manual: z.boolean(),
+  instagram: z.string().optional(),
+  whatsapp: z.string().optional(),
+  price: z.number(),
+  service: z.string(),
+  details: z.string().optional(),
+
 })
 
 export type Appointment = z.infer<typeof appointmentSchema>;
-export type createAppointmentForm = Pick<Appointment, 'barberId' | 'timeSlot' | 'day' | 'status' | 'manual' | 'name' | 'branchId'>;
+export type createAppointmentForm = Pick<Appointment, 'name' | 'instagram' | 'whatsapp' | 'details' | 'service'>;
+export type createAppointmentApiType = Pick<Appointment,  'day' | 'timeSlot' | 'price' | 'manual' | 'status' | 'service' | 'name' | 'instagram' | 'whatsapp' | 'details'>;

@@ -1,9 +1,12 @@
 import { useForm } from "react-hook-form";
 import { TitleModal } from "./TitleModal";
-import useAuth from "../../hooks/useAuth";
 import { toast } from "react-toastify";
 import ErrorLabel from "../styles/ErrorLabel";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { createAppointmentApi } from "../../api/AppointmentApi";
+import { createAppointmentForm } from "../../types";
+import { AppointmentStatus } from "../../types/appointment-status";
 
 
 
@@ -14,23 +17,48 @@ export function AppointmentModal() {
     const queryParams = new URLSearchParams(location.search);
     const time = queryParams.get('time')!
     const show = time ? true : false
+    const {id} = useParams()
+    const branchId = id!
+    const queryClient = useQueryClient();
 
-    const {currentUser} = useAuth()
      const initialValues = {
         name: "",
         service: "",
-        number: "",
+        whatsapp: "",
         instagram: "",
         details: ""
 
     }
-    const {register, handleSubmit, reset, watch, formState: {errors}} = useForm({
+
+    const {mutate} = useMutation({
+        mutationFn: createAppointmentApi,
+        onError: (error) => {
+            toast.error(error.message)
+        },
+        onSuccess: (data) => {
+            toast.success(data);
+            navigate(location.pathname, { replace: true })
+            queryClient.invalidateQueries({queryKey: ["getTodayAppointment", branchId]})
+            reset()
+        }
+    })
+
+    const {register, handleSubmit, reset, formState: {errors}} = useForm({
         defaultValues: initialValues
     })
 
-    const handleCreateAppointment = (formData: any) => {
-        toast.success(formData.name)
-        console.log(formData.name);
+    const handleCreateAppointment = (formData: createAppointmentForm) => {
+        
+        const data = {
+            ...formData,
+            branchId: branchId,
+            day: new Date().toISOString().split('T')[0],
+            timeSlot: time,
+            price: 7000,
+            manual: true,
+            status: AppointmentStatus.BOOKED,
+        }
+        mutate({branchId: branchId, formData: data})
     }
 
     return (
@@ -107,6 +135,7 @@ export function AppointmentModal() {
                         </label>
                         <input
                             type="text"
+                            {...register("instagram")}
                             id="instagram"
                             className="w-full mt-2 py-1 px-2 border rounded-md bg-gray-100"
                             placeholder="Ingresa el instagram"
@@ -116,14 +145,15 @@ export function AppointmentModal() {
                     
                     <div className="my-1">
                         <label
-                            htmlFor="number"
+                            htmlFor="whatsapp"
                             className="uppercase text-gray-600 block font-bold"
                         >
                             Numero (opcional)
                         </label>
                         <input
                             type="text"
-                            id="number"
+                            {...register("whatsapp")}
+                            id="whatsapp"
                             className="w-full mt-2 py-1 px-2 border rounded-md bg-gray-100"
                             placeholder="Ingresa el Nombre"
                         />
@@ -135,18 +165,9 @@ export function AppointmentModal() {
                             className="uppercase text-gray-600 font-bold flex justify-between items-center"
                         >
                             Detalles
-                            {
-                                errors.details?.message && (
-                                    <ErrorLabel>
-                                        {errors.details?.message}
-                                    </ErrorLabel>
-                                )
-                            }
                         </label>
                         <input
-                            {...register("details", {
-                                required: "El nombre es obligatorio",
-                            })}
+                            {...register("details")}
                             type="text"
                             id="name"
                             className="w-full mt-2 py-1 px-2 border rounded-md bg-gray-100"
@@ -155,9 +176,7 @@ export function AppointmentModal() {
                         
                     </div>
                     <div className="flex gap-4 mt-4">
-                     
-                   
-                   
+
                         <input
                             type="button"
                             value="Cancelar"

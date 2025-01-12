@@ -25,12 +25,12 @@ export function AppointmentToday() {
 
   const { data, isLoading, isError } = useQuery({
     queryFn: () => getTodayAppointmentApi(branchId),
-    queryKey: ["getTodayAppointmentApi", branchId],
+    queryKey: ["getTodayAppointment", branchId],
     retry: false,
   });
 
 
-
+console.log(data)
   if (isLoading) return <LoadingSpinner />;
   if (isError) return <h1>Falta implementar error</h1>;
   if (data) {
