@@ -7,9 +7,13 @@ export interface IAppointment extends Document{
     barberId: Types.ObjectId;
     timeSlot: string;
     status: string;
-    details: string
+    details: string;
     day: string;
     manual: boolean;
+    instagram?: string;
+    whatsapp?: number;
+    service: string;
+    price: number;
 }
 
 export const appointmentSchema: Schema = new Schema({
@@ -42,10 +46,24 @@ export const appointmentSchema: Schema = new Schema({
     status: {
         required: true,
         type: String,
-        enum: ['available', "booked", "canceled"]
+        enum: ['available', "booked", "canceled", "completed"]
     },
     details: {
         type: String,
+    },
+    instagram: {
+        type: String,
+    },
+    whatsapp: {
+        type: Number,
+    },
+    service: {
+        type: String,
+        required: true,
+    },
+    price: {
+        type: Number,
+        required: true,
     }
 })
 

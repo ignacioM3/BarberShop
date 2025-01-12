@@ -19,6 +19,10 @@ export function AppointmentToday() {
   const branchId = id!;
   const { currentUser } = useAuth();
 
+  const queryParams = new URLSearchParams(location.search);
+  const detailsAppointment = queryParams.get('detailsAppointment');
+
+
   const { data, isLoading, isError } = useQuery({
     queryFn: () => getTodayAppointmentApi(branchId),
     queryKey: ["getTodayAppointmentApi", branchId],
@@ -43,8 +47,8 @@ export function AppointmentToday() {
 
       
       if (appointment) {
-        const firtName = appointment.name.split(" ")[0]
-        return firtName; 
+        const firtName = appointment.name.split(" ")[0];
+        return { firtName, appointment };
       }
 
       return null;
@@ -59,19 +63,26 @@ export function AppointmentToday() {
           <h2 className="text-xl text-gray-500 mb-4">Cesar</h2>
           <div className="flex justify-center mx-auto flex-wrap gap-3 md:max-w-[1000px]">
             {timeSlots.map((slot, index) => {
-              const appointmentName = getAppointmentName(slot);
+              const appointmentData = getAppointmentName(slot);
               return (
                 <div
                   key={index}
-                  className={`flex text-center flex-col border border-gray-400 p-2 rounded-md cursor-pointer w-[80px] items-center justify-center ${appointmentName ? "bg-gray-200" : "bg-white"
+                  className={`flex text-center flex-col border ${
+                    appointmentData?.appointment.status === "completed" 
+                    ? "border-green-600 border-2"
+                    : appointmentData?.appointment.status === "canceled"
+                    ? "border-orange-600 border-2" 
+                    : "border-gray-400"
+
+                    } p-2 rounded-md cursor-pointer w-[80px] items-center justify-center ${appointmentData ? "bg-gray-200" : "bg-white"
                     }`}
                   onClick={() =>
-                    !appointmentName && navigate(location.pathname + `?time=${slot}`)
+                    appointmentData ? navigate(location.pathname + `?detailsAppointment=${appointmentData.appointment._id}`) : navigate(location.pathname + `?time=${slot}`)
                   }
                 >
                   <span className="font-bold">{slot}</span>
-                  {appointmentName ? (
-                    <span className="text-red-500 font-bold">{appointmentName}</span>
+                  {appointmentData ? (
+                    <span className="text-red-500 font-bold">{appointmentData.appointment.status === "canceled" ? "Libre" : appointmentData.firtName}</span>
                   ) : (
                     <span className="text-green-500 font-bold uppercase">Libre</span>
                   )}
@@ -80,8 +91,8 @@ export function AppointmentToday() {
             })}
           </div>
         </PageContent>
-
-        <AppointmentDetails />
+        {detailsAppointment && <AppointmentDetails />}
+        
         <AppointmentModal />
       </PageContainer>
     );

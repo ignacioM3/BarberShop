@@ -143,7 +143,7 @@ const appointmentSchema = z.object({
   branchId: z.string(),
   timeSlot: z.string(),
   day: z.string(),
-  status: z.enum(['available', "booked", "canceled"] as const),
+  status: z.enum(['available', "booked", "canceled", "completed"] as const),
   manual: z.boolean(),
 })
 

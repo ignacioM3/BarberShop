@@ -53,5 +53,19 @@ export class AppointmentControllers{
             res.status(500).json({ error: "Hubo un error en el servidor" });
         }
     }
+
+    static getAppointmentById = async (req: Request, res: Response) => {
+        const {appointmentId} = req.params;
+        try {
+            const appointment = await Appointment.findById(appointmentId);
+            if(!appointment){
+                const error = new Error("Turno no encontrado");
+                return res.status(404).json({error: error.message});
+            }
+            res.status(200).json(appointment);
+        } catch (error) {
+            return res.status(500).json({ error: "Hubo un error en el servidor" });
+        }
+    }
     
 }

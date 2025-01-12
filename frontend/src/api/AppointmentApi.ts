@@ -14,3 +14,15 @@ export async function getTodayAppointmentApi (branchId: string){
   }
 }
 
+export async function getAppointmentByIdApi (appointmentId: string){
+  try {
+    const url = `/appointment/${appointmentId}`;
+    const {data} = await api(url);
+    return data;
+
+  } catch (error) {
+    if (isAxiosError(error) && error.response) {
+      throw new Error(error.response.data.error);
+    }
+  }
+}

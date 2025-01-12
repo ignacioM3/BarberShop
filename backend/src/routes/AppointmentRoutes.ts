@@ -21,4 +21,7 @@ router.get("/:branchId/today",
     AppointmentControllers.getTodayAppointment
 )
 
+router.get("/:appointmentId", 
+    param("appointmentId").isMongoId().withMessage("ID no válido"),
+    AppointmentControllers.getAppointmentById)
 export default router
