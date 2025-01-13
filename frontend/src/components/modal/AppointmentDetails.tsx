@@ -1,22 +1,28 @@
-import { useLocation, useNavigate } from "react-router-dom"
+import { useLocation, useNavigate, useParams } from "react-router-dom"
 import { MdDelete } from "react-icons/md";
 import { FaRegEdit } from "react-icons/fa";
 import { useEffect } from "react";
 import { FaWhatsapp } from "react-icons/fa";
 import { FaCheckSquare } from "react-icons/fa";
 import { FaInstagram } from "react-icons/fa6";
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import LoadingSpinner from "../LoadingSpinner";
-import { getAppointmentByIdApi } from "../../api/AppointmentApi";
+import { deleteAppointmentApi, getAppointmentByIdApi, updateStatusAppointmentApi } from "../../api/AppointmentApi";
 import { MdCancelPresentation } from "react-icons/md";
+import { toast } from "react-toastify";
+import { AppointmentStatus } from "../../types/appointment-status";
+import { deleteAppointmentApiType } from "../../types";
 
 
 export function AppointmentDetails() {
   const navigate = useNavigate()
   const location = useLocation();
+  const {id} = useParams()
+  const branchId = id!
   const queryParams = new URLSearchParams(location.search);
   const AppointmentHours = queryParams.get('detailsAppointment')!
   const show = AppointmentHours ? true : false
+  const queryClient = useQueryClient();
 
   const { data, isLoading, isError } = useQuery({
     queryKey: ['appointment', AppointmentHours],
@@ -24,6 +30,37 @@ export function AppointmentDetails() {
     retry: false
   })
 
+  const {mutate} = useMutation({
+    mutationFn: updateStatusAppointmentApi,
+    onError: (error) => {
+      toast.error(error.message)
+    },
+    onSuccess: (data) => {
+      toast.success(data)
+      queryClient.invalidateQueries({queryKey: ["getTodayAppointment", branchId]})
+      navigate(location.pathname, {replace: true})
+    }
+  })
+
+  const {mutate: deleteAppointment} = useMutation({
+    mutationFn: deleteAppointmentApi,
+    onError: (error) => {
+      toast.error(error.message)
+    },
+    onSuccess: (data) => {
+      toast.success("Eliminado correctamente")
+      queryClient.invalidateQueries({queryKey: ["getTodayAppointment", branchId]})
+      navigate(location.pathname, {replace: true})
+    }
+  })
+
+  const handleUpdateStatus = (formData: string) => {
+    mutate({ appointmentId: AppointmentHours, status: formData });
+  };
+
+  const handleDeleteAppointment = (formData: deleteAppointmentApiType) => {
+    deleteAppointment(formData)
+  }
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -70,17 +107,28 @@ export function AppointmentDetails() {
                 <p className="text-center font-bold">Detalles</p>
                 <p className="text-center">{data.details ? data.details : "no hay detalles"}</p>
                 <div className="flex justify-center gap-2 mt-4">
-                  <div className="bg-red-500 p-2 rounded-md cursor-pointer text-white hover:bg-red-700 transition-colors">
+                  <div 
+                    className="bg-red-500 p-2 rounded-md cursor-pointer text-white hover:bg-red-700 transition-colors"
+                    onClick={() => handleDeleteAppointment(data._id)}
+                    >
                     <MdDelete />
                   </div>
             
-                  <div className="bg-orange-500 p-2 rounded-md cursor-pointer text-white hover:bg-orange-600 transition-colors">
+                  <div 
+                    className="bg-orange-500 p-2 rounded-md cursor-pointer text-white hover:bg-orange-600 transition-colors"
+                    onClick={() => handleUpdateStatus(AppointmentStatus.CANCELED)}
+                    >
                     <MdCancelPresentation />
                   </div>
-                  <div className="bg-blue-500 p-2 rounded-md cursor-pointer text-white hover:bg-blue-700 transition-colors">
+                  <div 
+                    className="bg-blue-500 p-2 rounded-md cursor-pointer text-white hover:bg-blue-700 transition-colors"
+                    >
                     <FaRegEdit />
                   </div>
-                  <div className="bg-green-500 p-2 rounded-md cursor-pointer text-white hover:bg-green-700 transition-colors">
+                  <div 
+                    className="bg-green-500 p-2 rounded-md cursor-pointer text-white hover:bg-green-700 transition-colors"
+                    onClick={() => handleUpdateStatus(AppointmentStatus.COMPLETED)}
+                    >
                     <FaCheckSquare />
                   </div>
                 </div>

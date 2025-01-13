@@ -60,7 +60,7 @@ console.log(data)
           <PageTitle>Turnos de hoy</PageTitle>
         </PageHeader>
         <PageContent>
-          <h2 className="text-xl text-gray-500 mb-4">Cesar</h2>
+          <h2 className="text-xl text-gray-500 mb-4">{currentUser?.name}</h2>
           <div className="flex justify-center mx-auto flex-wrap gap-3 md:max-w-[1000px]">
             {timeSlots.map((slot, index) => {
               const appointmentData = getAppointmentName(slot);
@@ -82,7 +82,13 @@ console.log(data)
                 >
                   <span className="font-bold">{slot}</span>
                   {appointmentData ? (
-                    <span className="text-red-500 font-bold">{appointmentData.appointment.status === "canceled" ? "Libre" : appointmentData.firtName}</span>
+                    <span className={`font-bold ${
+                      appointmentData?.appointment.status === "completed" 
+                    ? "text-green-600 border-2"
+                    : appointmentData?.appointment.status === "canceled"
+                    ? "text-orange-600 border-2" 
+                    : "text-gray-400"
+                    } `}>{appointmentData.appointment.status === "canceled" ? "Libre" : appointmentData.firtName}</span>
                   ) : (
                     <span className="text-green-500 font-bold uppercase">Libre</span>
                   )}
