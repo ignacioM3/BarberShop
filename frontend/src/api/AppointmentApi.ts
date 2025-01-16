@@ -1,6 +1,6 @@
 import { isAxiosError } from "axios";
 import api from "../lib/axios";
-import { createAppointmentApiType, deleteAppointmentApiType, updateStatusAppointmentApiType } from "../types";
+import { createAppointmentApiType, deleteAppointmentApiType } from "../types";
 
 export async function getTodayAppointmentApi (branchId: string){
   try {
@@ -56,6 +56,18 @@ export async function deleteAppointmentApi(appointmentId: deleteAppointmentApiTy
   try {
     const url = `/appointment/${appointmentId}/delete`;
     const {data} = await api.delete<string>(url);
+    return data;
+  } catch (error) {
+    if (isAxiosError(error) && error.response) {
+      throw new Error(error.response.data.error);
+    }
+  }
+}
+
+export async function getAppointmentByDayApi({branchId, appointmentId}: {branchId: string, appointmentId: string}){
+  try {
+    const url = `/appointment/${branchId}/week/${appointmentId}`;
+    const {data} = await api(url);
     return data;
   } catch (error) {
     if (isAxiosError(error) && error.response) {

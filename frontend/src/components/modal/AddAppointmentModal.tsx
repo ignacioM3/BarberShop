@@ -7,19 +7,34 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { createAppointmentApi } from "../../api/AppointmentApi";
 import { createAppointmentForm } from "../../types";
 import { AppointmentStatus } from "../../types/appointment-status";
+import { getFormattedDates } from "../../utils/getFormatDay";
 
 
 
 
-export function AppointmentModal() {
+export function  AppointmentModal() {
     const navigate = useNavigate();
     const location = useLocation();
     const queryParams = new URLSearchParams(location.search);
     const time = queryParams.get('time')!
     const show = time ? true : false
     const {id} = useParams()
+    const day = queryParams.get("appointmentWeek")
     const branchId = id!
     const queryClient = useQueryClient();
+
+     const { formatForApi } = getFormattedDates(day);
+
+
+    const closeDetails = () => {
+        queryParams.delete("time");
+        if (!day) {
+          navigate(location.pathname, { replace: true });
+        } else {
+          navigate(`${location.pathname}?${queryParams.toString()}`, { replace: true });
+        }
+      };
+    
 
      const initialValues = {
         name: "",
@@ -37,8 +52,11 @@ export function AppointmentModal() {
         },
         onSuccess: (data) => {
             toast.success(data);
-            navigate(location.pathname, { replace: true })
+            closeDetails()
             queryClient.invalidateQueries({queryKey: ["getTodayAppointment", branchId]})
+            if(day){
+                queryClient.invalidateQueries({queryKey: ["getAppointmentDayWeek", day]})
+            }
             reset()
         }
     })
@@ -52,7 +70,7 @@ export function AppointmentModal() {
         const data = {
             ...formData,
             branchId: branchId,
-            day: new Date().toISOString().split('T')[0],
+            day: day ? formatForApi : new Date().toISOString().split('T')[0],
             timeSlot: time,
             price: 7000,
             manual: true,
@@ -64,7 +82,7 @@ export function AppointmentModal() {
     return (
         <div
             className={`${show ? 'fixed' : 'hidden'} bg-[#4b4b4b72] h-screen left-0 bottom-0 right-0`}
-            onClick={() => navigate(location.pathname, { replace: true })}
+            onClick={closeDetails}
         >
             <div className="w-full h-full flex items-center justify-center">
                 <form
@@ -181,7 +199,7 @@ export function AppointmentModal() {
                             type="button"
                             value="Cancelar"
                             className="bg-red-500 w-full py-2 mb-2 text-sm text-gray-100 uppercase font-bold rounded cursor-pointer hover:bg-red-600 transition-colors"
-                            onClick={() => navigate(location.pathname, { replace: true })}
+                            onClick={closeDetails}
                         />
                            <input
                             type="submit"

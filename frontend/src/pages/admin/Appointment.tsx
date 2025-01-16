@@ -52,9 +52,12 @@ export function Appointment() {
                             Turnos del dia
 
                         </Link>
-                        <div className="bg-gray-400 p-8 rounded-md cursor-pointer uppercase font-bold text-white hover:bg-gray-500 transition-colors w-full text-center md:max-w-[300px]">
+                        <Link 
+                            className="bg-gray-400 p-8 rounded-md cursor-pointer uppercase font-bold text-white hover:bg-gray-500 transition-colors w-full text-center md:max-w-[300px]"
+                            to={AppRoutes.AppointmentWeek.route(userBranch?._id)}
+                            >
                             <span>Turnos de la semana</span>
-                        </div>
+                        </Link>
                         <div className="bg-gray-400 p-8 rounded-md cursor-pointer uppercase font-bold text-white hover:bg-gray-500 transition-colors w-full text-center md:max-w-[300px]">
                             <span>Historial de turnos</span>
                         </div>

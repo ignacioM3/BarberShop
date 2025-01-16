@@ -22,7 +22,6 @@ export function AppointmentToday() {
   const queryParams = new URLSearchParams(location.search);
   const detailsAppointment = queryParams.get('detailsAppointment');
 
-
   const { data, isLoading, isError } = useQuery({
     queryFn: () => getTodayAppointmentApi(branchId),
     queryKey: ["getTodayAppointment", branchId],
@@ -30,7 +29,7 @@ export function AppointmentToday() {
   });
 
 
-console.log(data)
+
   if (isLoading) return <LoadingSpinner />;
   if (isError) return <h1>Falta implementar error</h1>;
   if (data) {
@@ -55,7 +54,7 @@ console.log(data)
     };
 
     return (
-      <PageContainer className="h-full">
+      <PageContainer>
         <PageHeader>
           <PageTitle>Turnos de hoy</PageTitle>
         </PageHeader>

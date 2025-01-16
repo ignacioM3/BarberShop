@@ -37,4 +37,9 @@ router.post("/:appointmentId/update-status",
 router.delete("/:appointmentId/delete", 
     param("appointmentId").isMongoId().withMessage("ID no válido"),
     AppointmentControllers.deleteAppointment)
+
+router.get("/:branchId/week/:appointmentDay",
+    param("branchId").isMongoId().withMessage("ID no válido"),
+    AppointmentControllers.getAppointmentByDay
+)
 export default router

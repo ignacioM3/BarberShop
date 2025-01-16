@@ -13,6 +13,16 @@ export class AppointmentControllers{
                 const error = new Error("Local no encontrado");
                 return res.status(404).json({ error: error.message });
               }
+            const findAppointmnet = await Appointment.findOne({
+                branchId: branch._id,
+                day: req.body.day,
+                timeSlot: req.body.timeSlot
+            });
+            
+            if(findAppointmnet){
+                const error = new Error("Turno no disponible en este horario");
+                return res.status(409).json({ error: error.message });
+            }
             const appointment = new Appointment(req.body);
             appointment.branchId = branch.id;
             appointment.manual = true;
@@ -36,10 +46,9 @@ export class AppointmentControllers{
             }
     
             const today = new Date();
-            const todayString = today.toISOString().split('T')[0]; 
-            console.log(todayString)
+            const todayString = today.toISOString().split('T')[0];
     
-            
+            console.log(todayString);
             const appointments = await Appointment.find({
                 branchId: branch._id,
                 day: todayString
@@ -136,4 +145,34 @@ export class AppointmentControllers{
             return res.status(500).json({ error: "Hubo un error en el servidor" });
         }
      }
+     static getAppointmentByDay = async (req: Request, res: Response) => {
+        const {appointmentDay, branchId} = req.params;
+        console.log(appointmentDay)
+        try {
+            const branch = await Branch.findById(branchId)
+            if (!branch) {
+                const error = new Error("Local no encontrado");
+                return res.status(404).json({ error: error.message });
+              }
+
+            const appointments = await Appointment.find({
+                branchId: branch._id,
+                day: appointmentDay
+            })
+            if(!appointments){
+                const error = new Error('Turno no encontrado');
+                return res.status(404).json({error: error.message});
+            }
+
+            if (!appointments.length) {
+                return res.status(200).json({ branch, appointments: [] });
+            }
+    
+            res.status(200).json({ branch, appointments });
+
+        } catch (error) {
+            return res.status(500).json({ error: "Hubo un error en el servidor" });
+        }
+     }
+     
 }

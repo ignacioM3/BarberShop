@@ -1,7 +1,6 @@
 import { useLocation, useNavigate, useParams } from "react-router-dom"
 import { MdDelete } from "react-icons/md";
 import { FaRegEdit } from "react-icons/fa";
-import { useEffect } from "react";
 import { FaWhatsapp } from "react-icons/fa";
 import { FaCheckSquare } from "react-icons/fa";
 import { FaInstagram } from "react-icons/fa6";
@@ -21,8 +20,18 @@ export function AppointmentDetails() {
   const branchId = id!
   const queryParams = new URLSearchParams(location.search);
   const AppointmentHours = queryParams.get('detailsAppointment')!
+  const day = queryParams.get("appointmentWeek")
   const show = AppointmentHours ? true : false
   const queryClient = useQueryClient();
+
+  const closeDetails = () => {
+    queryParams.delete("detailsAppointment");
+    if (!day) {
+      navigate(location.pathname, { replace: true });
+    } else {
+      navigate(`${location.pathname}?${queryParams.toString()}`, { replace: true });
+    }
+  };
 
   const { data, isLoading, isError } = useQuery({
     queryKey: ['appointment', AppointmentHours],
@@ -62,21 +71,7 @@ export function AppointmentDetails() {
     deleteAppointment(formData)
   }
 
-  useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === "Escape") {
-        navigate(location.pathname, { replace: true });
-      }
-    };
 
-    if (show) {
-      window.addEventListener("keydown", handleKeyDown);
-    }
-
-    return () => {
-      window.removeEventListener("keydown", handleKeyDown);
-    };
-  }, [show, navigate, location.pathname]);
 
 
   if (isError) return <h1>Falta implementar error</h1>
@@ -84,7 +79,7 @@ export function AppointmentDetails() {
   if (isLoading || data) return (
     <div
       className={`${show ? 'fixed' : 'hidden'} bg-[#4b4b4b72] h-screen left-0 bottom-0 right-0`}
-      onClick={() => navigate(location.pathname, { replace: true })}
+      onClick={closeDetails}
     >
       <div className="w-full h-full flex items-center justify-center mt-5 md:mt-0">
         <form
@@ -101,7 +96,6 @@ export function AppointmentDetails() {
                 <p className="flex justify-between font-bold">Servicio <span className="font-normal">{data.service}</span></p>
                 <p className="flex justify-between font-bold">Precio <span className="font-normal">${data.price}</span></p>
                 <p className="flex justify-between font-bold">Whatsapp <span className="font-normal flex items-center gap-2">{data.whatsapp ?<a className="flex items-center gap-2" href={`http://wa.me/549${data.whatsapp}/`} target="_blank"> <FaWhatsapp className="text-green-500 cursor-pointer text-xl" /> {data.whatsapp} </a>: "Sin whatsapp"}</span></p>
-                <p className="flex justify-between font-bold">Whatsapp <span className="font-normal flex items-center gap-2">{data.whatsapp ?<a className="flex items-center gap-2" href={`https://www.wa.me/${data.whastapp}/`} target="_blank"> <FaWhatsapp className="text-green-500 cursor-pointer text-xl" /> {data.whatsapp} </a>: "Sin whatsapp"}</span></p>
                 <p className="flex justify-between font-bold">Instagram <span className="font-normal">{data.instagram ? <a className="flex items-center gap-2" href={`https://www.instagram.com/${data.instagram}/`} target="_blank"><FaInstagram className="text-[#E1306C] cursor-pointer text-xl" /> {data.instagram}</a> : "Sin instagram"}</span></p>
                 <p className="flex justify-between font-bold">Turno <span className="font-normal">{data.manual ? "Manual" : "Online"}</span></p>
 

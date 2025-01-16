@@ -95,6 +95,20 @@ export const AppRoutes = {
         allowedRoles: [UserRole.ADMIN, UserRole.BARBER],
         page: async () => (await import('./pages/admin/AppointmentToday')).AppointmentToday,
         layout: adminLayoutImport
+    },
+    AppointmentWeek: {
+        route: (id?: string) => `/admin/appointment/${id?? ":id"}/week`,
+        requiresAuth: true,
+        allowedRoles: [UserRole.ADMIN, UserRole.BARBER],
+        page: async () => (await import('./pages/admin/AppointmentWeek')).AppointmentWeek,
+        layout: adminLayoutImport
+    },
+    AppointmentWeekDay: {
+        route: (day?:string, id?:string) => `/admin/appointment/${id?? ":id"}/week/${day?? ":day"}`,
+        requiresAuth: true,
+        allowedRoles: [UserRole.ADMIN, UserRole.BARBER],
+        page: async () => (await import('./pages/admin/AppointmentWeekDay')).AppointmentWeekDay,
+        layout: adminLayoutImport
     }
 
 } as const satisfies Record<string, RouterDefinition>;
