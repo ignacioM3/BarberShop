@@ -1,22 +1,23 @@
 import { useState } from "react";
-import { ListAddButton } from "../../components/styles/LinkButton";
-import { PageContainer } from "../../components/styles/PageContainer";
-import { PageHeader } from "../../components/styles/PageHeader";
-import { PageTitle } from "../../components/styles/PageTitle";
-import { PageContent } from "../../components/styles/PageContent";
+import { ListAddButton } from "../../../components/styles/LinkButton";
+import { PageContainer } from "../../../components/styles/PageContainer";
+import { PageHeader } from "../../../components/styles/PageHeader";
+import { PageTitle } from "../../../components/styles/PageTitle";
+import { PageContent } from "../../../components/styles/PageContent";
 import { useQuery } from "@tanstack/react-query";
-import { getAllBranchsApi } from "../../api/BranchApi";
-import LoadingSpinner from "../../components/LoadingSpinner";
+import { getAllBranchsApi } from "../../../api/BranchApi";
+import LoadingSpinner from "../../../components/styles/LoadingSpinner";
 import { MdOutlineEdit } from "react-icons/md";
 import { RiDeleteBin6Line } from "react-icons/ri";
-import { BranchListType } from "../../types";
+import { BranchListType } from "../../../types";
 import { Link, useNavigate } from "react-router-dom";
 import { IoPersonAddSharp } from "react-icons/io5";
-import { AppRoutes } from "../../routes";
+import { AppRoutes } from "../../../routes";
 
 export function BranchList() {
     const columns = ['Nombre', 'Dirreción', 'Barberos']
     const [open, setOpen] = useState(false)
+    console.log(open)
     const navigate = useNavigate()
 
 

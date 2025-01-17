@@ -1,13 +1,13 @@
 import { useForm } from "react-hook-form";
-import { TitleModal } from "./TitleModal";
+import { TitleModal } from "../TitleModal";
 import { toast } from "react-toastify";
-import ErrorLabel from "../styles/ErrorLabel";
+import ErrorLabel from "../../styles/ErrorLabel";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { createAppointmentApi } from "../../api/AppointmentApi";
-import { createAppointmentForm } from "../../types";
-import { AppointmentStatus } from "../../types/appointment-status";
-import { getFormattedDates } from "../../utils/getFormatDay";
+import { createAppointmentApi } from "../../../api/AppointmentApi";
+import { createAppointmentForm } from "../../../types";
+import { AppointmentStatus } from "../../../types/appointment-status";
+import { getFormattedDates } from "../../../utils/getFormatDay";
 
 
 

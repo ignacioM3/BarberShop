@@ -1,5 +1,5 @@
 import { useForm } from "react-hook-form"
-import ErrorMessage from "../../components/ErrorMessage"
+import ErrorMessage from "../../components/styles/ErrorMessage"
 import { useMutation } from "@tanstack/react-query"
 import { createAccountApi } from "../../api/AuthApi"
 import { toast } from "react-toastify";

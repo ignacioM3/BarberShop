@@ -5,7 +5,7 @@ import { useForm } from "react-hook-form";
 import { useMutation } from "@tanstack/react-query";
 import { toast } from "react-toastify";
 import { forgotPasswordApi } from "../../api/AuthApi";
-import ErrorMessage from "../../components/ErrorMessage";
+import ErrorMessage from "../../components/styles/ErrorMessage";
 import useAuth from "../../hooks/useAuth";
 
 

@@ -1,14 +1,14 @@
 import { useParams } from 'react-router-dom'
-import { PageContainer } from '../../components/styles/PageContainer';
-import { PageHeader } from '../../components/styles/PageHeader';
-import { PageTitle } from '../../components/styles/PageTitle';
+import { PageContainer } from '../../../components/styles/PageContainer';
+import { PageHeader } from '../../../components/styles/PageHeader';
+import { PageTitle } from '../../../components/styles/PageTitle';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { addBarberToBranch, getBarbersOutBranch, getBranchById, removeBarberToBranch } from '../../api/BranchApi';
-import LoadingSpinner from '../../components/LoadingSpinner';
-import { PageContent } from '../../components/styles/PageContent';
+import { addBarberToBranch, getBarbersOutBranch, getBranchById, removeBarberToBranch } from '../../../api/BranchApi';
+import LoadingSpinner from '../../../components/styles/LoadingSpinner';
+import { PageContent } from '../../../components/styles/PageContent';
 import { FaRegTrashCan } from "react-icons/fa6";
 import { IoMdPersonAdd } from "react-icons/io";
-import {ListBarberInBranch} from '../../types/index'
+import {ListBarberInBranch} from '../../../types/index'
 import { toast } from 'react-toastify';
 
 export function AddBarberToBranch() {

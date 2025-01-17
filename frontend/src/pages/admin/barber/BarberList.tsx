@@ -1,20 +1,20 @@
 import { useQuery } from "@tanstack/react-query";
-import { ListAddButton } from "../../components/styles/LinkButton";
-import { PageContainer } from "../../components/styles/PageContainer";
-import { PageContent } from "../../components/styles/PageContent";
-import { PageHeader } from "../../components/styles/PageHeader";
-import { PageTitle } from "../../components/styles/PageTitle";
-import { getBarberList } from "../../api/AuthApi";
-import LoadingSpinner from "../../components/LoadingSpinner";
-import { UserBarberListType } from "../../types";
+import { ListAddButton } from "../../../components/styles/LinkButton";
+import { PageContainer } from "../../../components/styles/PageContainer";
+import { PageContent } from "../../../components/styles/PageContent";
+import { PageHeader } from "../../../components/styles/PageHeader";
+import { PageTitle } from "../../../components/styles/PageTitle";
+import { getBarberList } from "../../../api/AuthApi";
+import LoadingSpinner from "../../../components/styles/LoadingSpinner";
+import { UserBarberListType } from "../../../types";
 import { MdBlock, MdOutlineEdit } from "react-icons/md";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { Pagination } from "../../components/Pagination";
-import { UserBarberModal } from "../../components/modal/UserBarberModal";
-import DeleteUserModal from "../../components/modal/DeleteUserModal";
-import { BlockUserModal } from "../../components/modal/BlockUserModal";
+import { Pagination } from "../../../components/styles/Pagination";
+import { CreateBarberModal } from "../../../components/modal/user/CreateBarberModal";
+import DeleteUserModal from "../../../components/modal/user/DeleteUserModal";
+import { BlockUserModal } from "../../../components/modal/user/BlockUserModal";
 
 export function BarberList() {
   const navigate = useNavigate()
@@ -110,7 +110,7 @@ export function BarberList() {
         />
       </PageContent>
 
-      <UserBarberModal
+      <CreateBarberModal
       open={open}
       setOpen={setOpen}
       />

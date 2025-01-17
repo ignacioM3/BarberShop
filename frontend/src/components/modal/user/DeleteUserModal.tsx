@@ -1,6 +1,6 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useLocation, useNavigate } from 'react-router-dom'
-import { deleteUserApi } from '../../api/AuthApi';
+import { deleteUserApi } from '../../../api/AuthApi';
 import { toast } from 'react-toastify';
 
 export default function DeleteUserModal() {

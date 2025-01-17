@@ -5,12 +5,12 @@ import { FaWhatsapp } from "react-icons/fa";
 import { FaCheckSquare } from "react-icons/fa";
 import { FaInstagram } from "react-icons/fa6";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import LoadingSpinner from "../LoadingSpinner";
-import { deleteAppointmentApi, getAppointmentByIdApi, updateStatusAppointmentApi } from "../../api/AppointmentApi";
+import LoadingSpinner from "../../styles/LoadingSpinner";
+import { deleteAppointmentApi, getAppointmentByIdApi, updateStatusAppointmentApi } from "../../../api/AppointmentApi";
 import { MdCancelPresentation } from "react-icons/md";
 import { toast } from "react-toastify";
-import { AppointmentStatus } from "../../types/appointment-status";
-import { deleteAppointmentApiType } from "../../types";
+import { AppointmentStatus } from "../../../types/appointment-status";
+import { deleteAppointmentApiType } from "../../../types";
 
 
 export function AppointmentDetails() {

@@ -1,14 +1,14 @@
 import { useLocation, useNavigate, useParams } from "react-router-dom"
 import { useQuery } from "@tanstack/react-query";
-import { getAppointmentByDayApi } from "../../api/AppointmentApi";
-import LoadingSpinner from "../../components/LoadingSpinner";
-import { PageContent } from "../../components/styles/PageContent";
-import { generateTimeSlots } from "../../utils/generateTime";
-import useAuth from "../../hooks/useAuth";
-import { Appointment } from "../../types";
-import { AppointmentDetails } from "../../components/modal/AppointmentDetails";
-import { AppointmentModal } from "../../components/modal/AddAppointmentModal";
-import { getFormattedDates } from "../../utils/getFormatDay";
+import { getAppointmentByDayApi } from "../../../api/AppointmentApi";
+import LoadingSpinner from "../../../components/styles/LoadingSpinner";
+import { PageContent } from "../../../components/styles/PageContent";
+import { generateTimeSlots } from "../../../utils/generateTime";
+import useAuth from "../../../hooks/useAuth";
+import { Appointment } from "../../../types";
+import { AppointmentDetails } from "../../../components/modal/appointment/AppointmentDetails";
+import { AppointmentModal } from "../../../components/modal/appointment/AddAppointmentModal";
+import { getFormattedDates } from "../../../utils/getFormatDay";
 
 export function AppointmentWeekDay() {
   const { id } = useParams()

@@ -5,7 +5,7 @@ import { useForm } from "react-hook-form";
 import { useMutation } from "@tanstack/react-query";
 import { requestConfirmationCodeApi } from "../../api/AuthApi";
 import { toast } from "react-toastify";
-import ErrorMessage from "../../components/ErrorMessage";
+import ErrorMessage from "../../components/styles/ErrorMessage";
 
 
 export function RequestConfirmationCode() {

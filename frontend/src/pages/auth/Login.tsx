@@ -5,7 +5,7 @@ import { UserLoginForm } from "../../types";
 import { useMutation } from "@tanstack/react-query";
 import { authLogin } from "../../api/AuthApi";
 import { toast } from "react-toastify";
-import ErrorMessage from "../../components/ErrorMessage";
+import ErrorMessage from "../../components/styles/ErrorMessage";
 import useAuth from "../../hooks/useAuth";
 
 

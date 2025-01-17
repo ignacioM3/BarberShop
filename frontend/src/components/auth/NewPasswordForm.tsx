@@ -5,7 +5,7 @@ import { useMutation } from "@tanstack/react-query"
 import { updatePasswordWithTokenApi } from "../../api/AuthApi"
 import { toast } from "react-toastify"
 import { AppRoutes } from "../../routes"
-import ErrorMessage from "../ErrorMessage"
+import ErrorMessage from "../styles/ErrorMessage"
 
 type NewPasswordFormProps = {
     token: string

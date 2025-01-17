@@ -1,17 +1,17 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
-import { createBarberApi } from "../../api/BarberApi";
-import { UserCreateForm } from "../../types";
-import ErrorMessage from "../ErrorMessage";
-import { TitleModal } from "./TitleModal";
+import { createBarberApi } from "../../../api/BarberApi";
+import { UserCreateForm } from "../../../types";
+import ErrorMessage from "../../styles/ErrorMessage";
+import { TitleModal } from "../TitleModal";
 
 interface UserBarberModalProps {
     open: boolean;
     setOpen: (open: boolean) => void;
 }
 
-export function UserBarberModal({ open, setOpen }: UserBarberModalProps) {
+export function CreateBarberModal({ open, setOpen }: UserBarberModalProps) {
     const initialValues = {
         name: "",
         number: "",

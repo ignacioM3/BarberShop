@@ -1,16 +1,16 @@
-import { PageContainer } from "../../components/styles/PageContainer";
-import { PageHeader } from "../../components/styles/PageHeader";
-import { PageTitle } from "../../components/styles/PageTitle";
-import { PageContent } from "../../components/styles/PageContent";
-import { AppointmentDetails } from "../../components/modal/AppointmentDetails";
+import { PageContainer } from "../../../components/styles/PageContainer";
+import { PageHeader } from "../../../components/styles/PageHeader";
+import { PageTitle } from "../../../components/styles/PageTitle";
+import { PageContent } from "../../../components/styles/PageContent";
+import { AppointmentDetails } from "../../../components/modal/appointment/AppointmentDetails";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
-import { AppointmentModal } from "../../components/modal/AddAppointmentModal";
+import { AppointmentModal } from "../../../components/modal/appointment/AddAppointmentModal";
 import { useQuery } from "@tanstack/react-query";
-import LoadingSpinner from "../../components/LoadingSpinner";
-import { getTodayAppointmentApi } from "../../api/AppointmentApi";
-import useAuth from "../../hooks/useAuth";
-import { generateTimeSlots } from "../../utils/generateTime";
-import { Appointment } from "../../types";
+import LoadingSpinner from "../../../components/styles/LoadingSpinner";
+import { getTodayAppointmentApi } from "../../../api/AppointmentApi";
+import useAuth from "../../../hooks/useAuth";
+import { generateTimeSlots } from "../../../utils/generateTime";
+import { Appointment } from "../../../types";
 
 export function AppointmentToday() {
   const navigate = useNavigate();

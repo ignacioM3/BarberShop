@@ -7,7 +7,7 @@ import { FaHome } from "react-icons/fa";
 import { FaUserGroup } from "react-icons/fa6";
 import { AppRoutes } from '../routes';
 import { UserRole } from '../types/use-role'
-import { Burger } from './Burger'
+import { Burger } from './styles/Burger'
 import { IoIosBusiness } from "react-icons/io";
 import { useState } from 'react'
 import { FaDollarSign } from "react-icons/fa";

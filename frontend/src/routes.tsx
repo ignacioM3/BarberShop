@@ -58,56 +58,56 @@ export const AppRoutes = {
         route: () => "/admin/users",
         requiresAuth: true,
         allowedRoles: [UserRole.ADMIN],
-        page: async () => (await import ('./pages/admin/UserList')).UserList,
+        page: async () => (await import ('./pages/admin/user/UserList')).UserList,
         layout: adminLayoutImport
     },
     barberListAdmin: {
         route: () => "/admin/barber",
         requiresAuth: true,
         allowedRoles: [UserRole.ADMIN],
-        page: async () => (await import('./pages/admin/BarberList')).BarberList,
+        page: async () => (await import('./pages/admin/barber/BarberList')).BarberList,
         layout: adminLayoutImport
     },
     branchListAdmin: {
         route: () => "/admin/branch",
         requiresAuth: true,
         allowedRoles: [UserRole.ADMIN],
-        page: async () => (await import('./pages/admin/BranchList')).BranchList,
+        page: async () => (await import('./pages/admin/branch/BranchList')).BranchList,
         layout: adminLayoutImport
     },
     AddBarberToBranchAdmin: {
         route: (id? : string) => `/admin/branch/${id?? ":id"}/add-barber`,
         requiresAuth: true,
         allowedRoles: [UserRole.ADMIN],
-        page: async () => (await import('./pages/admin/AddBarberToBranch')).AddBarberToBranch,
+        page: async () => (await import('./pages/admin/branch/AddBarberToBranch')).AddBarberToBranch,
         layout: adminLayoutImport
     },
     Appointment: {
         route: () => `/admin/appointment`,
         requiresAuth: true,
         allowedRoles: [UserRole.ADMIN, UserRole.BARBER],
-        page: async () => (await import('./pages/admin/Appointment')).Appointment,
+        page: async () => (await import('./pages/admin/appointment/Appointment')).Appointment,
         layout: adminLayoutImport
     },
     AppointmentToday:{
         route: (id?: string) => `/admin/appointment/${id?? ":id"}/today`,
         requiresAuth: true,
         allowedRoles: [UserRole.ADMIN, UserRole.BARBER],
-        page: async () => (await import('./pages/admin/AppointmentToday')).AppointmentToday,
+        page: async () => (await import('./pages/admin/appointment/AppointmentToday')).AppointmentToday,
         layout: adminLayoutImport
     },
     AppointmentWeek: {
         route: (id?: string) => `/admin/appointment/${id?? ":id"}/week`,
         requiresAuth: true,
         allowedRoles: [UserRole.ADMIN, UserRole.BARBER],
-        page: async () => (await import('./pages/admin/AppointmentWeek')).AppointmentWeek,
+        page: async () => (await import('./pages/admin/appointment/AppointmentWeek')).AppointmentWeek,
         layout: adminLayoutImport
     },
     AppointmentWeekDay: {
         route: (day?:string, id?:string) => `/admin/appointment/${id?? ":id"}/week/${day?? ":day"}`,
         requiresAuth: true,
         allowedRoles: [UserRole.ADMIN, UserRole.BARBER],
-        page: async () => (await import('./pages/admin/AppointmentWeekDay')).AppointmentWeekDay,
+        page: async () => (await import('./pages/admin/appointment/AppointmentWeekDay')).AppointmentWeekDay,
         layout: adminLayoutImport
     }
 

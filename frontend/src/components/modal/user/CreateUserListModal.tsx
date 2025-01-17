@@ -1,23 +1,22 @@
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useMutation } from "@tanstack/react-query";
 import { useForm } from "react-hook-form";
-import { createUserApi } from "../../api/AuthApi";
+import { createUserApi } from "../../../api/AuthApi";
 import { toast } from "react-toastify";
-import ErrorLabel from "../styles/ErrorLabel";
-import {  UserCreateForm } from "../../types";
+import ErrorLabel from "../../styles/ErrorLabel";
+import {  UserCreateForm } from "../../../types";
 
 interface UserModalInterface {
     open: boolean;
     setOpen: (open: boolean) => void;
 }
 
-export default function UserModal({ open, setOpen }: UserModalInterface) {
+export default function CreateUserListModal({ open, setOpen }: UserModalInterface) {
     const initialValues = {
         name: "",
         number: "",
         password: "",
         email: ""
     }
-    const queryClient = useQueryClient()
 
     const { register, handleSubmit, reset, formState: { errors } } = useForm(
         { defaultValues: initialValues }

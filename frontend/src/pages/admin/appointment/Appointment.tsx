@@ -1,15 +1,15 @@
 
-import { PageContainer } from "../../components/styles/PageContainer";
-import { PageHeader } from "../../components/styles/PageHeader";
-import { PageTitle } from "../../components/styles/PageTitle";
-import { PageContent } from "../../components/styles/PageContent";
+import { PageContainer } from "../../../components/styles/PageContainer";
+import { PageHeader } from "../../../components/styles/PageHeader";
+import { PageTitle } from "../../../components/styles/PageTitle";
+import { PageContent } from "../../../components/styles/PageContent";
 import { Link } from "react-router-dom";
-import { AppRoutes } from "../../routes";
-import useAuth from "../../hooks/useAuth";
-import LoadingSpinner from "../../components/LoadingSpinner";
-import { getAllBranchsApi } from "../../api/BranchApi";
+import { AppRoutes } from "../../../routes";
+import useAuth from "../../../hooks/useAuth";
+import LoadingSpinner from "../../../components/styles/LoadingSpinner";
+import { getAllBranchsApi } from "../../../api/BranchApi";
 import { useQuery } from "@tanstack/react-query";
-import { UserRole } from "../../types/use-role";
+import { UserRole } from "../../../types/use-role";
 
 
 export function Appointment() {

@@ -1,21 +1,21 @@
 import { useEffect, useState } from "react";
-import UserModal from "../../components/modal/UserListModal";
-import { ListAddButton } from "../../components/styles/LinkButton";
-import { PageContainer } from "../../components/styles/PageContainer";
-import { PageContent } from "../../components/styles/PageContent";
-import { PageHeader } from "../../components/styles/PageHeader";
-import { PageTitle } from "../../components/styles/PageTitle";
+import UserModal from "../../../components/modal/user/CreateUserListModal";
+import { ListAddButton } from "../../../components/styles/LinkButton";
+import { PageContainer } from "../../../components/styles/PageContainer";
+import { PageContent } from "../../../components/styles/PageContent";
+import { PageHeader } from "../../../components/styles/PageHeader";
+import { PageTitle } from "../../../components/styles/PageTitle";
 import { MdOutlineEdit } from "react-icons/md";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import { useQuery } from "@tanstack/react-query";
-import { getUserList } from "../../api/AuthApi";
-import LoadingSpinner from "../../components/LoadingSpinner";
-import { UserListType } from "../../types";
-import DeleteUserModal from "../../components/modal/DeleteUserModal";
+import { getUserList } from "../../../api/AuthApi";
+import LoadingSpinner from "../../../components/styles/LoadingSpinner";
+import { UserListType } from "../../../types";
+import DeleteUserModal from "../../../components/modal/user/DeleteUserModal";
 import { useLocation, useNavigate } from "react-router-dom";
 import { MdBlock } from "react-icons/md";
-import { Pagination } from "../../components/Pagination";
-import { BlockUserModal } from "../../components/modal/BlockUserModal";
+import { Pagination } from "../../../components/styles/Pagination";
+import { BlockUserModal } from "../../../components/modal/user/BlockUserModal";
 
 
 export function UserList() {
