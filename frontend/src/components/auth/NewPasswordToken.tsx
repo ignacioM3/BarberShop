@@ -33,7 +33,7 @@ export function NewPasswordToken({token, setToken, setValidToken}: NewPasswordTo
   return (
     <>
         <form
-          className="space-y-8 p-10 rounded-lg bg-white mt-10"
+          className="space-y-8 p-10 rounded-lg mt-10 shadow-md bg-gray-100 max-w-[650px] lg:max-w-[450px] mx-auto"
         >
             <label className="font-normal text-2xl text-center block mb-4">
                 Código de 6 dígitos
@@ -52,7 +52,7 @@ export function NewPasswordToken({token, setToken, setValidToken}: NewPasswordTo
         <nav className="mt-10 flex flex-col space-y-4">
                 <Link
                     to={AppRoutes.forgotPassword.route()}
-                    className="text-center text-gray-300 font-normal hover:text-gray-600 transition-colors"
+                    className="text-center text-gray-400 font-normal hover:text-gray-600 transition-colors"
                 >
                     Solicitar un nuevo Código
                 </Link>

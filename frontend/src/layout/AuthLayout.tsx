@@ -22,7 +22,6 @@ export function AuthLayout({children}: PropsWithChildren) {
         pauseOnHover={false}
         pauseOnFocusLoss={false}
       />
-      <Footer />
     </>
   )
 }

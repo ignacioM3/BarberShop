@@ -12,7 +12,7 @@ import useAuth from "../../hooks/useAuth";
 export function ForgoPassword() {
   const {currentUser} = useAuth();
     
-  if(!currentUser) return <Navigate to={AppRoutes.home.route()}/>
+  if(currentUser) return <Navigate to={AppRoutes.home.route()}/>
   const initialValues : ForgotPasswordForm = {
     email: ""
   }
@@ -33,7 +33,7 @@ export function ForgoPassword() {
   })
   const handleForgotPassword = (formData: ForgotPasswordForm) => mutate(formData);
   return (
-    <div>
+    <div className="md:mt-[100px] mt-[100px]">
         <h1 className="text-4xl font-black text-center lg:text-2xl">Reestablecer password</h1>
         <p className="text-2xl font-light mt-5 text-center lg:text-xl lg:mt-2">
         ¿Olvdiaste tu password? coloca tu email {""}

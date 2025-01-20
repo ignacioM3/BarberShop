@@ -47,7 +47,7 @@ export function NewPasswordForm({token}: NewPasswordFormProps) {
         <>
             <form
                 onSubmit={handleSubmit(handleNewPassword)}
-                className="space-y-8 p-10 rounded-lg bg-white mt-10 border-gray-300 border w-[400px] mx-auto"
+                className="space-y-8 p-10 rounded-lg bg-gray-100 shadow-md mt-10 border-gray-300 border w-[400px] mx-auto"
                 noValidate
             >
 
@@ -94,7 +94,7 @@ export function NewPasswordForm({token}: NewPasswordFormProps) {
                 <input
                     type="submit"
                     value="Establecer Password"
-                    className="bg-gray-600 hover:bg-gray-700 w-full p-2  text-white font-black  text-xl cursor-pointer mt-4 rounded-md"
+                    className="bg-gray-600 hover:bg-gray-700 w-full p-2  text-white font-black  text-xl cursor-pointer mt-4 rounded-md transition-colors"
                 />
             </form>
 
