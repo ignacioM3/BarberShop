@@ -1,6 +1,7 @@
 import type { Request, Response } from "express";
 import { userRole } from "../models/RoleUser";
 import User from "../models/User";
+import bcrypt from "bcrypt";
 
 export class UserControllers {
   static getUsers = async (req: Request, res: Response) => {
@@ -67,7 +68,7 @@ export class UserControllers {
   static getUserById = async (req: Request, res: Response) => {
     const { userId } = req.params;
     try {
-      const user = await User.findById(userId).select("id name email");
+      const user = await User.findById(userId).select("id name email instagram number");
       if (!user) {
         const error = new Error("Usuario no encontrado");
         return res.status(404).json({ error: error.message });
@@ -103,12 +104,16 @@ export class UserControllers {
       const error = new Error("Usuario no encontrado");
       return res.status(404).json({ error: error.message });
     }
-    if (req.user.role !== userRole.admin || req.user.id !== findUser.id) {
+    if (req.user.role !== userRole.admin) {
       const error = new Error("Acción no valida");
       return res.status(404).json({ error: error.message });
     }
-    //faltan mas datos a medida que crezca la app
+
     findUser.name = req.body.name;
+    findUser.number = req.body.number;
+    findUser.instagram = req.body.instagram;
+    console.log(req.body.instagram)
+
     await findUser.save();
     res.send("Usuario Actualizado");
   };

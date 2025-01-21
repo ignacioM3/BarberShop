@@ -40,6 +40,14 @@ router.get('/info/:userId',
     UserControllers.getUserById
 )
 
+router.put('/:userId',
+    param('userId').isMongoId().withMessage('ID no valido'),
+    body('name').notEmpty().withMessage('El nombre no puede estar vacio'),
+    handleInputErrors,
+    UserControllers.updateUser
+
+)
+
 router.get('/list-barber', UserControllers.getBarbers)
 
 

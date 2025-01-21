@@ -45,6 +45,7 @@ export function UserList() {
     if (isLoading) {
         return <LoadingSpinner />
     }
+    console.log(data)
 
 
     if (isError) return <h1>Falta Implementar error</h1>
@@ -62,7 +63,7 @@ export function UserList() {
                     Agregar Usuario
                 </ListAddButton>
             </PageHeader>
-            <PageContent >
+            <PageContent>
                 <div className="flex items-center justify-center">
                     <table className="w-full text-sm  text-left  rtl:text-right border border-gray-400 shadow-lg max-w-[1000px]">
                         <thead className="text-xs text-black uppercase border border-gray-400 text-center">
@@ -89,12 +90,18 @@ export function UserList() {
                                     data.users.map((row: UserListType, rowIndex: number) => (
                                         <tr key={rowIndex} className="border border-gray-400 text-center">
                                             <td className="md:px-6 py-4">{row.name}</td>
-                                            <td className="px-6 py-4 hidden md:table-cell">{row.instagram ? row.instagram : "falta"}</td>
-                                            <td className="px-6 py-4 hidden md:table-cell">{row.number}</td>
+                                            <td className="px-6 py-4 hidden md:table-cell">{row.instagram ? row.instagram : "- - -"}</td>
+                                            <td className="px-6 py-4 hidden md:table-cell">{row.number ? row.number : "- - -"}</td>
                                             <td className="md:px-6 py-4">{row.confirmed ? 'si' : 'no'}</td>
                                             <td className="px-6 py-4 hidden md:table-cell">{row.haircuts}</td>
                                             <td className="px-6 py-4 flex items-center gap-2 text-xl">
-                                                <button className="border border-gray-700 p-1 md:p-2 rounded hover:bg-gray-400 hover:text-white hover:border-gray-400 transition-colors">
+                                                <button 
+                                                    className="border border-gray-700 p-1 md:p-2 rounded hover:bg-gray-400 hover:text-white hover:border-gray-400 transition-colors"
+                                                    onClick={() => {
+                                                        navigate(location.pathname + `?editUser=${row._id}`)
+                                                        setOpen(true)
+                                                    }}
+                                                    >
                                                     <MdOutlineEdit />
                                                 </button>
                                                 <button
@@ -132,7 +139,6 @@ export function UserList() {
                 />
             <DeleteUserModal />
             <BlockUserModal />
-
         </PageContainer>
     )
 }

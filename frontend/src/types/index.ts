@@ -51,7 +51,7 @@ export const barberSchema = z.object({
 });
 
 // --- User Schema ---
-const userSchema = z.object({
+export const userSchema = z.object({
   _id: z.string(),
   name: z.string(),
   email: z.string().email(),
@@ -69,6 +69,8 @@ export type User = z.infer<typeof userSchema>;
 // --- User Form Types ---
 export type UserListType = Pick<User, 'email' | 'name' | 'confirmed' | 'role' | '_id' | 'haircuts' | 'instagram' | 'number' | 'blocked'>;
 export type UserCreateForm = Pick<User, 'name' | 'email' | 'password'>;
+export type UserUpdateAdmin = Pick<User, 'name' | 'instagram' | 'number'  | '_id'>
+export type UserUpdateAdminForm = Omit<UserUpdateAdmin, 'number' | '_id'> & { number?: string };
 
 export type UserBarberListType = {
   _id: string;
