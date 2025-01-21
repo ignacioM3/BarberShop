@@ -36,22 +36,22 @@ export function BlockUserModal() {
         <div className="w-full h-full flex items-center justify-center">
 
         <form
-            className="bg-white w-[300px] text-center rounded-md shadow-sm p-5"
+            className="bg-white text-center rounded-md shadow-sm p-5"
             onClick={(e) => e.stopPropagation()}
             onSubmit={handleSubmit}
         >
             <h2 className='text-xl font-bold'>¿Quiere {msg ? "desbloquear" : "bloquear"} a este usuario?</h2>
             <div className='flex gap-2 justify-center mt-4'>
                     <input 
-                        type="submit" 
+                        type="button"
                         className={`${msg ? "bg-green-400 hover:bg-green-700 " : "bg-red-500 hover:bg-red-800 "} cursor-pointer text-white px-4 py-2 rounded-sm  transition-colors`}
-                        value={`${msg ? "Desbloquear" : "Bloquear"}`}
+                        value="Cancelar"
+                        onClick={() => navigate(location.pathname, { replace: true })}
                         />
                     <input 
-                        type="button" 
-                        value="Cancelar"
-                        className={`${!msg ? "bg-green-400 hover:bg-green-700 " : "bg-red-500 hover:bg-red-800 "} cursor-pointer text-white px-4 py-2 rounded-sm  transition-colors`}
-                        onClick={() => navigate(location.pathname, { replace: true })}
+                        type="submit" 
+                        value={`${msg ? "Desbloquear" : "Bloquear"}`}
+                        className={`${!msg ? "bg-green-500 hover:bg-green-700 " : "bg-red-500 hover:bg-red-800 "} cursor-pointer text-white px-4 py-2 rounded-sm  transition-colors`}
                     />
                 </div>
         </form>

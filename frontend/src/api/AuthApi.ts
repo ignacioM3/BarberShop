@@ -12,6 +12,8 @@ import {
   UserLogged,
   UserLoginForm,
   UserRegistrationForm,
+  userSchema,
+  UserUpdateAdmin,
 } from "../types";
 
 export async function createAccountApi(formData: UserRegistrationForm) {
@@ -189,3 +191,31 @@ export async function blockUserById(id: User['_id']) {
     }
   }
 }
+
+export async function updateUserAdmin(formData: UserUpdateAdmin){
+  try {
+    const url = `/users/${formData._id}`
+    const {data} = await api.put<string>(url, formData)
+    return data
+  } catch (error) {
+    if(isAxiosError(error) && error.response){
+      throw new Error(error.response.data.error);
+    }
+  }
+}
+
+export async function getUserById(id: User['_id']){
+  try {
+    const url = `/users/info/${id}`
+    const {data} = await api.get(url)
+     const response = userSchema.safeParse(data);
+       if (response.success) {
+        return response.data;
+      }
+    return data
+  } catch (error) {
+    if(isAxiosError(error) && error.response){
+      throw new Error(error.response.data.error);
+    }
+  }
+} 
