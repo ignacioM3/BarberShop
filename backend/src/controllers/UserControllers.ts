@@ -1,7 +1,7 @@
 import type { Request, Response } from "express";
 import { userRole } from "../models/RoleUser";
 import User from "../models/User";
-import bcrypt from "bcrypt";
+import bcrypt from 'bcrypt';
 
 export class UserControllers {
   static getUsers = async (req: Request, res: Response) => {
@@ -112,7 +112,7 @@ export class UserControllers {
     findUser.name = req.body.name;
     findUser.number = req.body.number;
     findUser.instagram = req.body.instagram;
-    console.log(req.body.instagram)
+   
 
     await findUser.save();
     res.send("Usuario Actualizado");
@@ -133,7 +133,11 @@ export class UserControllers {
 
     try {
       const user = new User(req.body);
+      const salt = await bcrypt.genSalt(10);
+      user.password = await bcrypt.hash(req.body.password, salt);
+      user.confirmed = true;
       user.role = userRole.barber;
+      
       await user.save();
 
       res.send("Usuario Creado Correctamente" );
@@ -160,4 +164,39 @@ export class UserControllers {
     res.send("Usuario Bloqueado")
 
   }
+
+  static createUser = async (req: Request, res: Response) => {
+    const { email } = req.body;
+    const findUser = await User.findOne({ email });
+    if (findUser) {
+      const error = new Error("Usuario ya registrado");
+      return res.status(400).json({ error: error.message });
+    }
+
+    if (req.user.role !== userRole.admin && req.user.role !== userRole.barber) {
+      const error = new Error("Acción no valida");
+      return res.status(404).json({ error: error.message });
+    }
+
+    try {
+
+     
+
+
+      const user = new User(req.body);
+      user.role = userRole.client;
+      user.confirmed = true;
+      const salt = await bcrypt.genSalt(10);
+      user.password = await bcrypt.hash(req.body.password, salt);
+      
+      await user.save();
+
+      res.send("Usuario Creado Correctamente" );
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
 }
+
+

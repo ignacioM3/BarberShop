@@ -45,8 +45,17 @@ router.put('/:userId',
     body('name').notEmpty().withMessage('El nombre no puede estar vacio'),
     handleInputErrors,
     UserControllers.updateUser
-
 )
+
+router.post('/create-user',
+    body('name').notEmpty().withMessage('El nombre no puede estar vacio'),
+    body('email').isEmail().withMessage('Email no es válido'),
+    body('password').isLength({min: 8}).withMessage('El password debe tener al menos 8 caracteres'),
+    handleInputErrors,
+    UserControllers.createUser
+)
+
+
 
 router.get('/list-barber', UserControllers.getBarbers)
 

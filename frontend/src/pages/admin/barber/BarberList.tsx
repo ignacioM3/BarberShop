@@ -9,15 +9,20 @@ import LoadingSpinner from "../../../components/styles/LoadingSpinner";
 import { UserBarberListType } from "../../../types";
 import { MdBlock, MdOutlineEdit } from "react-icons/md";
 import { RiDeleteBin6Line } from "react-icons/ri";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { Pagination } from "../../../components/styles/Pagination";
 import { CreateBarberModal } from "../../../components/modal/user/CreateBarberModal";
 import DeleteUserModal from "../../../components/modal/user/DeleteUserModal";
 import { BlockUserModal } from "../../../components/modal/user/BlockUserModal";
+import { EditBarberModal } from "../../../components/modal/user/EditBarberModal";
 
 export function BarberList() {
   const navigate = useNavigate()
+  const location = useLocation();
+  const queryParams = new URLSearchParams(location.search);
+  const edit = queryParams.get("editUser")
+
   const columns = ['Nombre', 'Número', 'Sucursal', "Activo"];
   const [open, setOpen] = useState(false)
   const [currentPage, setCurrentPage] = useState<number>(1);
@@ -79,7 +84,10 @@ export function BarberList() {
                                             <td className="px-6 py-4">{row.branch ? row.branch.name : 'No asignado'}</td>
                                                <td className="px-6 py-4">{row.confirmed ? 'si' : 'no'}</td>
                                             <td className="px-6 py-4 flex items-center gap-2 text-xl">
-                                                <button className="border border-gray-700 p-2 rounded hover:bg-gray-400 hover:text-white hover:border-none transition-colors">
+                                                <button 
+                                                  className="border border-gray-700 p-2 rounded hover:bg-gray-400 hover:text-white hover:border-none transition-colors"
+                                                  onClick={() => navigate(location.pathname + `?editUser=${row._id}`)}
+                                                  >
                                                     <MdOutlineEdit />
                                                 </button>
                                                 <button
@@ -114,6 +122,7 @@ export function BarberList() {
       open={open}
       setOpen={setOpen}
       />
+     {edit &&  <EditBarberModal />}
       <DeleteUserModal />
       <BlockUserModal />
     </PageContainer>

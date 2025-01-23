@@ -182,16 +182,17 @@ export function CreateBarberModal({ open, setOpen }: UserBarberModalProps) {
                     </div>
                     <div className="flex gap-4 mt-4">
                         <input
-                            type="submit"
-                            className="bg-green-500 w-full text-sm py-2 mb-2 text-gray-100 uppercase font-bold rounded cursor-pointer hover:bg-green-600 transition-colors"
-                            value="Crear Usuario"
-                        />
-                        <input
                             type="button"
                             value="Cancelar"
                             className="bg-red-500 w-full py-2 mb-2 text-sm text-gray-100 uppercase font-bold rounded cursor-pointer hover:bg-red-600 transition-colors"
                             onClick={() => setOpen(false)}
                         />
+                        <input
+                            type="submit"
+                            className="bg-green-500 w-full text-sm py-2 mb-2 text-gray-100 uppercase font-bold rounded cursor-pointer hover:bg-green-600 transition-colors"
+                            value="Crear Usuario"
+                        />
+
                     </div>
                 </form>
             </div>

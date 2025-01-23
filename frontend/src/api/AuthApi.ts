@@ -156,7 +156,7 @@ export async function getBarberList(page: number){
 
 export async function createUserApi(formData: UserCreateForm) {
   try {
-    const url = "/users/create-barber";
+    const url = "/users/create-user";
 
     const {data} = await api.post<string>(url, formData);
     return data;
@@ -208,7 +208,9 @@ export async function getUserById(id: User['_id']){
   try {
     const url = `/users/info/${id}`
     const {data} = await api.get(url)
+    
      const response = userSchema.safeParse(data);
+     console.log(response)
        if (response.success) {
         return response.data;
       }
