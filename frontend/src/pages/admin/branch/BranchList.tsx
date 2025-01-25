@@ -13,6 +13,7 @@ import { BranchListType } from "../../../types";
 import { Link, useNavigate } from "react-router-dom";
 import { IoPersonAddSharp } from "react-icons/io5";
 import { AppRoutes } from "../../../routes";
+import { DeleteBranchModal } from "../../../components/modal/branch/DeleteBranchModal";
 
 export function BranchList() {
     const columns = ['Nombre', 'Dirreción', 'Barberos']
@@ -79,7 +80,7 @@ export function BranchList() {
                                                 </button>
                                                 <button
                                                     className="border border-red-500 p-1 md:p-2 rounded text-red-500 hover:bg-red-500 hover:text-white transition-colors hover:border-none"
-                                                    onClick={() => navigate(location.pathname + `?deleteProject=${row._id}`)}
+                                                    onClick={() => navigate(location.pathname + `?deleteBranch=${row._id}`)}
                                                 >
                                                     <RiDeleteBin6Line />
                                                 </button>
@@ -93,6 +94,8 @@ export function BranchList() {
                     </table>
                 </div>
             </PageContent>
+
+            <DeleteBranchModal />
         </PageContainer>
     )
 }

@@ -8,13 +8,15 @@ import LoadingSpinner from '../../../components/styles/LoadingSpinner';
 import { PageContent } from '../../../components/styles/PageContent';
 import { FaRegTrashCan } from "react-icons/fa6";
 import { IoMdPersonAdd } from "react-icons/io";
-import {ListBarberInBranch} from '../../../types/index'
+import {Branch, ListBarberInBranch, UserBarberListType} from '../../../types/index'
 import { toast } from 'react-toastify';
+import { useState } from 'react';
 
 export function AddBarberToBranch() {
   const { id } = useParams()
   const branchId = id!
   const queryClient = useQueryClient()
+  const [loadingBarber, setLoadingBarber] = useState<string | null>(null)
 
 
   const { data, isLoading, isError } = useQuery({
@@ -38,6 +40,21 @@ export function AddBarberToBranch() {
   const {mutate: addBarber} = useMutation({
     mutationFn: addBarberToBranch,
     retry: false,
+    onMutate: async (variables) => {
+      await queryClient.cancelQueries({queryKey: ['getBranchById', branchId]});
+
+      const previousData = queryClient.getQueryData(['getBranchById', branchId]);
+      
+      const selectedBarber = barbers?.find((barber: UserBarberListType) => barber._id === variables.barberId);
+
+      queryClient.setQueryData(['getBranchById', branchId], (old: Branch) => ({
+        ...old,
+        barbers: [...old.barbers, { _id: variables.barberId, name: selectedBarber?.name }],
+      }));
+  
+      return { previousData };
+
+    },
     onError: (error) => {
       toast.error(error.message)
     },
@@ -48,8 +65,20 @@ export function AddBarberToBranch() {
     }
   })
 
-  const handleSubmit = (id: string) => removeBarber({barberId: id, branchId})
-  const handleAddSubmit = (id: string) => addBarber({barberId: id, branchId})
+  const handleSubmit = (id: string) => {
+    setLoadingBarber(id);
+    removeBarber({ barberId: id, branchId }, {
+      onSettled: () => setLoadingBarber(null),
+    });
+  }
+  const handleAddSubmit = (id: string) => {
+    setLoadingBarber(id);
+
+    addBarber({ barberId: id, branchId }, {
+      onSettled: () => setLoadingBarber(null),
+    });
+    
+  }
 
   const { data: barbers, isLoading: isLoadingBarber } = useQuery({
     queryKey: ['getBarbersOutBranch'],
@@ -108,8 +137,9 @@ export function AddBarberToBranch() {
                     <div 
                     className='border text-xl border-green-400 p-2 rounded-md cursor-pointer hover:bg-green-400  text-green-400 hover:text-white transition-colors '
                     onClick={() =>handleAddSubmit(barber._id)}
+
                     >
-                    <IoMdPersonAdd />
+                         <IoMdPersonAdd />
                     </div>
                 </div>
                   

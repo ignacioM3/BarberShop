@@ -73,3 +73,16 @@ export async function getBranchById(branchId: string){
     }
   }
 }
+
+export async function deleteBranchByIdApi(branchId: string){
+  try {
+    const url = `/branch/${branchId}`;
+    const {data} = await api.delete<string>(url);
+    console.log(data)
+    return data
+  } catch (error) {
+    if(isAxiosError(error) && error.response){
+      throw new Error(error.response.data.error);
+    }
+  }
+}

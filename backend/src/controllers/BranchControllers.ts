@@ -128,4 +128,15 @@ export class BranchControllers {
       console.log(error)
     }
   }
+
+  static deleteBranch = async (req: Request, res: Response) => {
+    
+    if (req.user.role !== userRole.admin) {
+      const error = new Error("Acción no valida");
+      return res.status(404).json({ error: error.message });
+    }
+
+    await req.branch.deleteOne();
+    res.send("Sucursal eliminada con exito")
+  }
 }

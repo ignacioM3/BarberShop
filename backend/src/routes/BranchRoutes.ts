@@ -32,5 +32,9 @@ router.delete('/:branchId/remove-barber/:barberId',
     BranchControllers.removeBarberToBranch
 )
 
+router.delete('/:branchId',
+    handleInputErrors,
+    BranchControllers.deleteBranch
+)
 
 export default router;
