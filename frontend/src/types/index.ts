@@ -135,6 +135,7 @@ export type BranchListType = Pick<Branch, '_id' | 'address' | 'name' | 'barbers'
 export type getDetailsBranch = Pick<Branch, '_id' | 'address' | 'barbers' | 'name'>
 export type BarberOutBranch = Pick<User, '_id' | 'name'>
 export type ListBarberInBranch = Pick<User, '_id' | 'name'>
+export type formDataCreateBranch = Pick <Branch, 'address' | 'name' | 'close' | 'open'>
 
 
 // Appointment Schema

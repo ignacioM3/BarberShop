@@ -1,6 +1,6 @@
 import { isAxiosError } from "axios";
 import api from "../lib/axios";
-import { branchSchema,  getBranchListSchema } from "../types";
+import { branchSchema,  formDataCreateBranch,  getBranchListSchema } from "../types";
 
 export async function getAllBranchsApi() {
   try {
@@ -64,7 +64,6 @@ export async function getBranchById(branchId: string){
 
    const response = branchSchema.safeParse(data);
    if (response.success) {
-    console.log(response.data)
     return response.data;
   }
   } catch (error) {
@@ -81,6 +80,18 @@ export async function deleteBranchByIdApi(branchId: string){
     console.log(data)
     return data
   } catch (error) {
+    if(isAxiosError(error) && error.response){
+      throw new Error(error.response.data.error);
+    }
+  }
+}
+
+export async function createBranchApi(form: formDataCreateBranch){
+  try {
+    const url = `/branch/create-branch`
+    const {data} = await api.post<string>(url, form)
+    return data;
+  }  catch (error) {
     if(isAxiosError(error) && error.response){
       throw new Error(error.response.data.error);
     }

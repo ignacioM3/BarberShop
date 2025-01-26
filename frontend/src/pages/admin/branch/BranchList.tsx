@@ -14,6 +14,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { IoPersonAddSharp } from "react-icons/io5";
 import { AppRoutes } from "../../../routes";
 import { DeleteBranchModal } from "../../../components/modal/branch/DeleteBranchModal";
+import { CreateBranchModal } from "../../../components/modal/branch/CreateBranchModal";
 
 export function BranchList() {
     const columns = ['Nombre', 'Dirreción', 'Barberos']
@@ -70,16 +71,16 @@ export function BranchList() {
 
                                             <td className="px-6 py-4 flex items-center gap-2 text-xl">
                                                 <Link to={AppRoutes.AddBarberToBranchAdmin.route(row._id)}
-                                                    className="border border-blue-500 p-1 md:p-2 rounded text-blue-500 hover:bg-blue-500 hover:text-white transition-colors hover:border-none"
+                                                    className="border border-blue-500 p-1 md:p-2 rounded text-blue-500 hover:bg-blue-500 hover:text-white transition-colors"
                                                    
                                                 >
                                                     <IoPersonAddSharp />
                                                 </Link>
-                                                <button className="border border-gray-700 p-1 md:p-2 rounded hover:bg-gray-400 hover:text-white hover:border-none transition-colors">
+                                                <button className="border border-gray-400 p-1 md:p-2 rounded hover:bg-gray-400 hover:text-white hover:border-none transition-colors">
                                                     <MdOutlineEdit />
                                                 </button>
                                                 <button
-                                                    className="border border-red-500 p-1 md:p-2 rounded text-red-500 hover:bg-red-500 hover:text-white transition-colors hover:border-none"
+                                                    className="border border-red-500 p-1 md:p-2 rounded text-red-500 hover:bg-red-500 hover:text-white transition-colors "
                                                     onClick={() => navigate(location.pathname + `?deleteBranch=${row._id}`)}
                                                 >
                                                     <RiDeleteBin6Line />
@@ -94,7 +95,10 @@ export function BranchList() {
                     </table>
                 </div>
             </PageContent>
-
+            <CreateBranchModal 
+                open={open}
+                setOpen={setOpen}
+            />
             <DeleteBranchModal />
         </PageContainer>
     )
