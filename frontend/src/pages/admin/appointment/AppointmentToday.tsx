@@ -56,7 +56,7 @@ export function AppointmentToday() {
     return (
       <PageContainer>
         <PageHeader>
-          <PageTitle>Turnos de hoy</PageTitle>
+          <PageTitle>Turnos de hoy - {data.branch.name}</PageTitle>
         </PageHeader>
         <PageContent>
           <h2 className="text-xl text-gray-500 mb-4">{currentUser?.name}</h2>

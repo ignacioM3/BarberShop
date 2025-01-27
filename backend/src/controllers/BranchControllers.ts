@@ -28,7 +28,7 @@ export class BranchControllers {
   };
 
   static getBranchs = async (req: Request, res: Response) => {
-    if (req.user.role !== userRole.admin) {
+    if (req.user.role !== userRole.admin && req.user.role !== userRole.barber) {
       const error = new Error("Acción no Válida");
       return res.status(404).json({ error: error.message });
     }
