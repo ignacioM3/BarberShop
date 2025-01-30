@@ -161,3 +161,29 @@ export type createAppointmentForm = Pick<Appointment, 'name' | 'instagram' | 'wh
 export type createAppointmentApiType = Pick<Appointment,  'day' | 'timeSlot' | 'price' | 'manual' | 'status' | 'service' | 'name' | 'instagram' | 'whatsapp' | 'details'>;
 export type updateStatusAppointmentApiType = Pick<Appointment, 'status'>;
 export type deleteAppointmentApiType = Pick<Appointment, '_id'>;
+
+
+/* Profit */
+/* Get profit schema */
+export const getProfitSchema = z.array(
+  z.object({
+    branchId: z.string(),
+    branchName: z.string(),
+    totalProfit: z.number(),
+    appointments: z.array(
+      z.object({
+        _id: z.string(),
+        barberId: z.string(),
+        day: z.string(),
+        manual: z.boolean(),
+        price: z.number(),
+        service: z.string(),
+        status: z.string(),
+      })
+    ),
+  })
+);
+
+export type profitSchemaType = z.infer<typeof getProfitSchema >
+export type getProfitByMonthFormData = {month: string, year:string}
+export type profitAppointment = Omit<Appointment, "barberId" | 'timeSlot' | 'instagram' | 'whatsapp' | 'details' | 'branchId'>

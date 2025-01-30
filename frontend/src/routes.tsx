@@ -109,6 +109,13 @@ export const AppRoutes = {
         allowedRoles: [UserRole.ADMIN, UserRole.BARBER],
         page: async () => (await import('./pages/admin/appointment/AppointmentWeekDay')).AppointmentWeekDay,
         layout: adminLayoutImport
+    },
+    ProfitHome: {
+        route: () => `/admin/profit`,
+        requiresAuth: true,
+        allowedRoles: [UserRole.ADMIN],
+        page: async () => (await import('./pages/admin/profit/ProfitPage')).ProfitPage,
+        layout: adminLayoutImport
     }
 
 } as const satisfies Record<string, RouterDefinition>;

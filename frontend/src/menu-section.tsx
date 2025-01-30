@@ -93,7 +93,7 @@ export const menuSection: MenuSection[] = [
             {
                 label: "Ganancias",
                 icon: <TbMoneybag />, 
-                to: "/dashboard/ganancias",
+                to: AppRoutes.ProfitHome.route(),
                 role: [UserRole.ADMIN]
             },
             
