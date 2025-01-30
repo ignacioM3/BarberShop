@@ -21,3 +21,22 @@ export async function getProfitByMonth({month, year}: getProfitByMonthFormData){
         }
     }
 }
+
+
+export async function getProfitByYear(year : string){
+    try {
+        const url = `/profit/by-year`
+        const {data} = await api(url, {
+            params: {
+                year: year 
+            }
+        })
+
+        console.log(data)
+        return data;
+    } catch (error) {
+        if(isAxiosError(error) && error.response){
+            throw new Error(error.response.data.error)
+        }
+    }
+}

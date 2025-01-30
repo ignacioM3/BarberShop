@@ -15,5 +15,10 @@ router.get(
     ProfitControllers.getAllProfit
 );
 
+router.get('/by-year',
+    query('year').isInt({ min: 2000 }).withMessage('El año es inválido'),
+    ProfitControllers.getMonthlyProfit
+)
+
 
 export default router

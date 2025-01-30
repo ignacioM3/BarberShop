@@ -1,10 +1,26 @@
 import { profitAppointment } from "../types";
 
+type ProfitData = {
+  totalProfit: number;
+  branchId: string;
+  branchName: string;
+  month: number;
+};
+
+
 interface DataProps{
     labels: string[];
     cant: number[];
     label?: string;
 }
+
+type Dataset = {
+  label: string;
+  data: number[];
+  borderColor: string;
+  backgroundColor: string;
+  tension: number;
+};
 
 export const sumServicesByBranch = (appointments: profitAppointment[]) => {
   const totals = { claritos: 0, global: 0, corte: 0 };
@@ -61,3 +77,31 @@ export const getRandomColor = () => {
     pointBorderColor: "#fff",
   };
 };
+
+export function transformProfitData(profitData: ProfitData[]): Dataset[] {
+  // Agrupar datos por branchId
+  const branchesMap = new Map<string, { name: string; data: number[] }>();
+
+  // Inicializar cada sucursal con un array de 12 meses en 0
+  profitData.forEach(({ branchId, branchName }) => {
+      if (!branchesMap.has(branchId)) {
+          branchesMap.set(branchId, { name: branchName, data: Array(12).fill(0) });
+      }
+  });
+
+  // Asignar los valores de ganancias en el mes correspondiente
+  profitData.forEach(({ branchId, month, totalProfit }) => {
+      const branch = branchesMap.get(branchId);
+      if (branch) {
+          branch.data[month - 1] = totalProfit; // Meses en índice 0-11
+      }
+  });
+
+  // Convertir Map a array de datasets
+  return Array.from(branchesMap.entries()).map(([branchId, { name, data }]) => ({
+      label: `Ganancias ${name}`,
+      data,
+      ...getRandomColor(),
+      tension: 0.4,
+  }));
+}

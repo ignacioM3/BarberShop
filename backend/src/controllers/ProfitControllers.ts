@@ -59,4 +59,64 @@ export class ProfitControllers {
             return res.status(500).json({ error: 'Ocurrió un error al procesar la solicitud.' });
         }
     };
+
+    static getMonthlyProfit = async (req: Request, res: Response) => {
+        try {
+            const { year } = req.query;
+
+            if (!year) {
+                return res.status(400).json({ error: 'Se requiere el parámetro year' });
+            }
+
+            const profits = await Appointment.aggregate([
+                {
+                    $match: {
+                        status: "completed",
+                        day: {
+                            $gte: `${year}-01-01`,
+                            $lte: `${year}-12-31`,
+                        },
+                    },
+                },
+                {
+                    $group: {
+                        _id: {
+                            branchId: "$branchId",
+                            month: { $month: { $dateFromString: { dateString: "$day" } } }
+                        },
+                        totalProfit: { $sum: "$price" },
+                    },
+                },
+                {
+                    $lookup: {
+                        from: "branches", 
+                        localField: "_id.branchId",
+                        foreignField: "_id",
+                        as: "branchInfo",
+                    },
+                },
+                {
+                    $unwind: "$branchInfo",
+                },
+                {
+                    $project: {
+                        _id: 0,
+                        branchId: "$_id.branchId",
+                        branchName: "$branchInfo.name",
+                        month: "$_id.month",
+                        totalProfit: 1,
+                    },
+                },
+                {
+                    $sort: { month: 1 } // Ordenar por mes ascendente
+                }
+            ]);
+
+            return res.status(200).json(profits);
+            
+        } catch (error) {
+            console.error('Error al obtener las ganancias:', error);
+            return res.status(500).json({ error: 'Ocurrió un error al procesar la solicitud.' });
+        }
+    }
 }

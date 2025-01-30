@@ -13,7 +13,6 @@ import { LineChart } from "../../../components/chart/LineChart";
 export function ProfitPage() {
   const [month, setMonth] = useState("1");
   const year = new Date().getFullYear().toString();
-  console.log(month)
 
   const { data, isLoading, isError } = useQuery({
     queryFn: () => getProfitByMonth({
