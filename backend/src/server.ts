@@ -5,6 +5,7 @@ import morgan from 'morgan';
 import authRoutes from './routes/AuthRoutes'
 import userRoutes from './routes/UserRoutes'
 import branchRoutes from './routes/BranchRoutes'
+import profitRoutes from './routes/ProfitRoutes'
 import appointmentRoutes from './routes/AppointmentRoutes'
 import cors from 'cors'
 import { corsConfig } from './config/cors';
@@ -25,5 +26,6 @@ app.use('/api/auth', authRoutes)
 app.use('/api/users', userRoutes)
 app.use('/api/branch', branchRoutes)
 app.use('/api/appointment', appointmentRoutes)
+app.use('/api/profit', profitRoutes)
 
 export default app

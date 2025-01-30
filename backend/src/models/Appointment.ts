@@ -60,6 +60,7 @@ export const appointmentSchema: Schema = new Schema({
     service: {
         type: String,
         required: true,
+        enum: ['corte', 'claritos', 'global']
     },
     price: {
         type: Number,

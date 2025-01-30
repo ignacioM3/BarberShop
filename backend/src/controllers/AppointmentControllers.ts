@@ -147,7 +147,6 @@ export class AppointmentControllers{
      }
      static getAppointmentByDay = async (req: Request, res: Response) => {
         const {appointmentDay, branchId} = req.params;
-        console.log(appointmentDay)
         try {
             const branch = await Branch.findById(branchId)
             if (!branch) {

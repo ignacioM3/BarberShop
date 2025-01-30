@@ -4,6 +4,7 @@ import { body, param } from 'express-validator';
 import { handleInputErrors } from '../middleware/validation';
 import { authenticate } from '../middleware/auth';
 import { appointmentStatus } from '../models/AppointmentStatus';
+import { ProfitControllers } from '../controllers/ProfitControllers';
 
 const router = express.Router();
 router.use(authenticate)
@@ -26,20 +27,25 @@ router.get("/:branchId/today",
 
 router.get("/:appointmentId", 
     param("appointmentId").isMongoId().withMessage("ID no válido"),
+    handleInputErrors,
     AppointmentControllers.getAppointmentById)
 
 router.post("/:appointmentId/update-status",
     param("appointmentId").isMongoId().withMessage("ID no válido"),
     body("status").isIn([appointmentStatus.canceled, appointmentStatus.completed]).withMessage("Estado no válido"),
+    handleInputErrors,
     AppointmentControllers.updateStatusAppointment
 )
 
 router.delete("/:appointmentId/delete", 
     param("appointmentId").isMongoId().withMessage("ID no válido"),
+    handleInputErrors,
     AppointmentControllers.deleteAppointment)
 
 router.get("/:branchId/week/:appointmentDay",
     param("branchId").isMongoId().withMessage("ID no válido"),
+    handleInputErrors,
     AppointmentControllers.getAppointmentByDay
 )
+
 export default router
