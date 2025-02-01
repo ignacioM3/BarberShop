@@ -28,6 +28,7 @@ export function LineChart() {
         retry: false
     })
 
+    if(isError)  return <h1>falta implementar error</h1>
     if(isLoading) return <LoadingSpinner />
     const datasets = transformProfitData(dataApi);
     const data = {

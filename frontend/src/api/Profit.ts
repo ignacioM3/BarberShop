@@ -32,7 +32,6 @@ export async function getProfitByYear(year : string){
             }
         })
 
-        console.log(data)
         return data;
     } catch (error) {
         if(isAxiosError(error) && error.response){

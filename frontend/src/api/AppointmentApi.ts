@@ -30,6 +30,7 @@ export async function getAppointmentByIdApi (appointmentId: string){
 
 export async function createAppointmentApi ({branchId, formData}: {branchId: string, formData: createAppointmentApiType}){
   try {
+    console.log(formData)
     const url = `/appointment/${branchId}/create-appointment`;
     const {data} = await api.post<string>(url, formData);
     return data;

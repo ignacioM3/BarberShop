@@ -16,6 +16,7 @@ export class AppointmentControllers{
             const findAppointmnet = await Appointment.findOne({
                 branchId: branch._id,
                 day: req.body.day,
+                barberId: req.body.barberId,
                 timeSlot: req.body.timeSlot
             });
             
@@ -26,7 +27,7 @@ export class AppointmentControllers{
             const appointment = new Appointment(req.body);
             appointment.branchId = branch.id;
             appointment.manual = true;
-            appointment.barberId = req.user.id;
+            appointment.barberId = req.body.barberId;
             appointment.status = "booked";
             
             await appointment.save()
@@ -48,7 +49,6 @@ export class AppointmentControllers{
             const today = new Date();
             const todayString = today.toISOString().split('T')[0];
     
-            console.log(todayString);
             const appointments = await Appointment.find({
                 branchId: branch._id,
                 day: todayString
@@ -148,7 +148,7 @@ export class AppointmentControllers{
      static getAppointmentByDay = async (req: Request, res: Response) => {
         const {appointmentDay, branchId} = req.params;
         try {
-            const branch = await Branch.findById(branchId)
+            const branch = await Branch.findById(branchId).populate('barbers')
             if (!branch) {
                 const error = new Error("Local no encontrado");
                 return res.status(404).json({ error: error.message });

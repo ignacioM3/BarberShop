@@ -19,7 +19,8 @@ export function  AppointmentModal() {
     const time = queryParams.get('time')!
     const show = time ? true : false
     const {id} = useParams()
-    const day = queryParams.get("appointmentWeek")
+    const day = queryParams.get("appointmentWeek");
+    const barberId = queryParams.get('barberId')!
     const branchId = id!
     const queryClient = useQueryClient();
 
@@ -73,6 +74,7 @@ export function  AppointmentModal() {
             day: day ? formatForApi : new Date().toISOString().split('T')[0],
             timeSlot: time,
             price: 7000,
+            barberId,
             manual: true,
             status: AppointmentStatus.BOOKED,
         }

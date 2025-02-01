@@ -158,7 +158,7 @@ const appointmentSchema = z.object({
 
 export type Appointment = z.infer<typeof appointmentSchema>;
 export type createAppointmentForm = Pick<Appointment, 'name' | 'instagram' | 'whatsapp' | 'details' | 'service'>;
-export type createAppointmentApiType = Pick<Appointment,  'day' | 'timeSlot' | 'price' | 'manual' | 'status' | 'service' | 'name' | 'instagram' | 'whatsapp' | 'details'>;
+export type createAppointmentApiType = Pick<Appointment,  'day' | 'timeSlot' | 'price' | 'manual' | 'status' | 'service' | 'name' | 'instagram' | 'whatsapp' | 'details' | 'barberId'>;
 export type updateStatusAppointmentApiType = Pick<Appointment, 'status'>;
 export type deleteAppointmentApiType = Pick<Appointment, '_id'>;
 

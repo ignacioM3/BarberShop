@@ -84,12 +84,12 @@ export const menuSection: MenuSection[] = [
                 to: AppRoutes.Appointment.route(),
                 role: [UserRole.ADMIN, UserRole.BARBER]
             },
-            {
+           /*  {
                 label: "Mis Turnos",
                 icon: <IoCalendarNumberOutline />, 
                 to: "falta",
                 role: [UserRole.BARBER, UserRole.ADMIN] 
-            },
+            }, */
             {
                 label: "Ganancias",
                 icon: <TbMoneybag />, 

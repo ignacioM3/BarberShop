@@ -34,7 +34,7 @@ export function AppointmentDetails() {
   };
 
   const { data, isLoading, isError } = useQuery({
-    queryKey: ['appointment', AppointmentHours],
+    queryKey: ['getTodayAppointment', branchId],
     queryFn: () => getAppointmentByIdApi(AppointmentHours),
     retry: false
   })
@@ -47,7 +47,8 @@ export function AppointmentDetails() {
     onSuccess: (data) => {
       toast.success(data)
       queryClient.invalidateQueries({queryKey: ["getTodayAppointment", branchId]})
-      navigate(location.pathname, {replace: true})
+      queryClient.invalidateQueries({queryKey: ["getAppointmentDayWeek", day]})
+      closeDetails()
     }
   })
 
@@ -59,7 +60,8 @@ export function AppointmentDetails() {
     onSuccess: () => {
       toast.success("Eliminado correctamente")
       queryClient.invalidateQueries({queryKey: ["getTodayAppointment", branchId]})
-      navigate(location.pathname, {replace: true})
+      queryClient.invalidateQueries({queryKey: ["getAppointmentDayWeek", day]})
+      closeDetails()
     }
   })
 

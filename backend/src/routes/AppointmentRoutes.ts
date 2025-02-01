@@ -11,6 +11,7 @@ router.use(authenticate)
 
 router.post("/:branchId/create-appointment",
     param("branchId").isMongoId().withMessage("ID no válido"),
+    body('barberId').isMongoId().withMessage('ID no válido'),
     body("name").notEmpty().withMessage("El nombre no puede estar vacio"),
     body("timeSlot").notEmpty().withMessage("Debe ingresar el horario"),
     body("day").notEmpty().withMessage("Debe ingresar el dia del turno"),
