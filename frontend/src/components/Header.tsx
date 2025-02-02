@@ -1,4 +1,3 @@
-
 import { FaUser } from 'react-icons/fa'
 import { Link } from 'react-router-dom'
 import useAuth from '../hooks/useAuth'
@@ -18,7 +17,6 @@ import { IoIosLogOut } from "react-icons/io";
 
 export function Header() {
   const { currentUser, logoutUser } = useAuth()
-  console.log(currentUser)
 
   const [clicked, setClicked] = useState(false)
   const [clicked2, setClicked2] = useState(false)

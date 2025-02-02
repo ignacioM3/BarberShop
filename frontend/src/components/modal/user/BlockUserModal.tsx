@@ -44,14 +44,14 @@ export function BlockUserModal() {
             <div className='flex gap-2 justify-center mt-4'>
                     <input 
                         type="button"
-                        className={`${msg ? "bg-green-400 hover:bg-green-700 " : "bg-red-500 hover:bg-red-800 "} cursor-pointer text-white px-4 py-2 rounded-sm  transition-colors`}
+                        className={` bg-red-500 hover:bg-red-800 cursor-pointer text-white px-4 py-2 rounded-sm  transition-colors`}
                         value="Cancelar"
                         onClick={() => navigate(location.pathname, { replace: true })}
                         />
                     <input 
                         type="submit" 
                         value={`${msg ? "Desbloquear" : "Bloquear"}`}
-                        className={`${!msg ? "bg-green-500 hover:bg-green-700 " : "bg-red-500 hover:bg-red-800 "} cursor-pointer text-white px-4 py-2 rounded-sm  transition-colors`}
+                        className={`bg-green-500 hover:bg-green-700  cursor-pointer text-white px-4 py-2 rounded-sm  transition-colors`}
                     />
                 </div>
         </form>

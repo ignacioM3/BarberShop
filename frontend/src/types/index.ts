@@ -58,7 +58,7 @@ export const userSchema = z.object({
   confirmed: z.boolean(),
   haircuts: z.number(),
   instagram: z.string().optional(),
-  number: z.number().optional(),
+  number: z.number().optional().nullable(),
   password: z.string(),
   blocked: z.boolean().optional(),
   role: z.enum([UserRole.ADMIN, UserRole.BARBER, UserRole.CLIENT] as const),
@@ -75,6 +75,7 @@ export type UserUpdateAdminForm = Omit<UserUpdateAdmin, 'number' | '_id'> & { nu
 export type UserBarberListType = {
   _id: string;
   name: string;
+  number?: number;
   role: string;
   confirmed: boolean;
   blocked?: boolean;
@@ -95,6 +96,7 @@ export const getBarberListSchema = z.object({
   users: z.array(
     z.object({
       _id: z.string(),
+      number: z.number().optional(),
       name: z.string(),
       confirmed: z.boolean(),
       blocked: z.boolean().optional(),

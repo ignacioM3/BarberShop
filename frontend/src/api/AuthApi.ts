@@ -126,7 +126,7 @@ export async function getUserList(page: number) {
   try {
     const url = `/users/list-user?page=${page}`
     const { data } = await api(url);
-    console.log(data)
+    
     const response = getUserListSchema.safeParse(data);
     if (response.success) {
       return response.data;

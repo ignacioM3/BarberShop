@@ -70,7 +70,7 @@
 
 
 .bg{
-  position: absolute;
+  position: fixed;
   background-color: #ffffff;
   width: 50%;
   margin-top: 70px;

@@ -98,7 +98,7 @@ export function transformProfitData(profitData: ProfitData[]): Dataset[] {
   });
 
   // Convertir Map a array de datasets
-  return Array.from(branchesMap.entries()).map(([branchId, { name, data }]) => ({
+  return Array.from(branchesMap.entries()).map(([, { name, data }]) => ({
       label: `Ganancias ${name}`,
       data,
       ...getRandomColor(),

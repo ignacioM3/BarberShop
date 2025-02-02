@@ -11,7 +11,9 @@ import { SelectMonth } from "../../../components/chart/SelectMonth";
 import { LineChart } from "../../../components/chart/LineChart";
 
 export function ProfitPage() {
-  const [month, setMonth] = useState("1");
+  const getMonth = (new Date().getMonth() + 1).toString();
+  const [month, setMonth] = useState(getMonth);
+
   const year = new Date().getFullYear().toString();
 
   const { data, isLoading, isError } = useQuery({

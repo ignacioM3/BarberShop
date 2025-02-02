@@ -3,8 +3,8 @@ import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 import { createBarberApi } from "../../../api/BarberApi";
 import { UserCreateForm } from "../../../types";
-import ErrorMessage from "../../styles/ErrorMessage";
 import { TitleModal } from "../TitleModal";
+import ErrorLabel from "../../styles/ErrorLabel";
 
 interface UserBarberModalProps {
     open: boolean;
@@ -58,9 +58,14 @@ export function CreateBarberModal({ open, setOpen }: UserBarberModalProps) {
                     <div className="my-2">
                         <label
                             htmlFor="name"
-                            className="uppercase text-gray-600 block font-bold"
+                            className="uppercase text-gray-600 font-bold flex justify-between items-center"
                         >
                             nombre
+                            {errors.name && (
+                            <ErrorLabel>
+                                {errors.name.message}
+                            </ErrorLabel>
+                        )}
                         </label>
                         <input
                             {...register("name", {
@@ -71,18 +76,20 @@ export function CreateBarberModal({ open, setOpen }: UserBarberModalProps) {
                             className="w-full mt-2 p-2 border rounded-md bg-gray-100"
                             placeholder="Ingresa el Nombre"
                         />
-                        {errors.name && (
-                            <ErrorMessage>
-                                {errors.name.message}
-                            </ErrorMessage>
-                        )}
                     </div>
                     <div className="my-2">
                         <label
                             htmlFor="number"
-                            className="uppercase text-gray-600 block font-bold"
+                            className="uppercase text-gray-600 font-bold flex justify-between items-center"
                         >
                             Número
+                            {
+                            errors.number && (
+                                <ErrorLabel>
+                                    {errors.number?.message}
+                                </ErrorLabel>
+                            )
+                        }
                         </label>
                         <input
                             {
@@ -95,20 +102,21 @@ export function CreateBarberModal({ open, setOpen }: UserBarberModalProps) {
                             className="w-full mt-2 p-2 border rounded-md bg-gray-100"
                             placeholder="Ingresa el Numero"
                         />
-                        {
-                            errors.number && (
-                                <ErrorMessage>
-                                    {errors.number?.message}
-                                </ErrorMessage>
-                            )
-                        }
+                       
                     </div>
                     <div className="my-2">
                         <label
                             htmlFor="email"
-                            className="uppercase text-gray-600 block font-bold"
+                            className="uppercase text-gray-600 font-bold flex justify-between items-center"
                         >
                             Email
+                            {
+                            errors.email && (
+                                <ErrorLabel>
+                                    {errors.email?.message}
+                                </ErrorLabel>
+                            )
+                        }
                         </label>
                         <input
                             {
@@ -125,20 +133,21 @@ export function CreateBarberModal({ open, setOpen }: UserBarberModalProps) {
                             className="w-full mt-2 p-2 border rounded-md bg-gray-100"
                             placeholder="Ingresa el email"
                         />
-                        {
-                            errors.email && (
-                                <ErrorMessage>
-                                    {errors.email?.message}
-                                </ErrorMessage>
-                            )
-                        }
+                      
                     </div>
                     <div className="my-2">
                         <label
                             htmlFor="password"
-                            className="uppercase text-gray-600 block font-bold"
+                            className="uppercase text-gray-600 font-bold flex justify-between items-center"
                         >
                             Password
+                            {
+                            errors.password && (
+                                <ErrorLabel>
+                                    {errors.password?.message}
+                                </ErrorLabel>
+                            )
+                        }
                         </label>
                         <input
                             {
@@ -151,24 +160,21 @@ export function CreateBarberModal({ open, setOpen }: UserBarberModalProps) {
                             id="password"
                             placeholder="Ingresa el password"
                         />
-                        {
-                            errors.password && (
-                                <ErrorMessage>
-                                    {errors.password?.message}
-                                </ErrorMessage>
-                            )
-                        }
+               
                     </div>
                     <div className="my-2">
                         <label
                             htmlFor="password_confirmation"
-                            className="uppercase text-gray-600 block font-bold"
+                            className="uppercase text-gray-600 font-bold flex justify-between items-center"
                         >
                             Repeti el password
+                            {errors.password_confirmation && (
+                            <ErrorLabel className="text-[13px]">{errors.password_confirmation.message}</ErrorLabel>
+                        )}
                         </label>
                         <input
                             {...register("password_confirmation", {
-                                required: "Repetir Password es obligatorio",
+                                required: "Password Incorrecto",
                                 validate: value => value === password || 'Los Passwords no son iguales'
                             })}
                             type="password"
@@ -176,9 +182,7 @@ export function CreateBarberModal({ open, setOpen }: UserBarberModalProps) {
                             id="password_confirmation"
                             placeholder="Repita el password"
                         />
-                        {errors.password_confirmation && (
-                            <ErrorMessage>{errors.password_confirmation.message}</ErrorMessage>
-                        )}
+                     
                     </div>
                     <div className="flex gap-4 mt-4">
                         <input

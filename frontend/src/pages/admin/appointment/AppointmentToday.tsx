@@ -60,7 +60,7 @@ export function AppointmentToday() {
           <PageTitle>Turnos de hoy - {data.branch.name}</PageTitle>
         </PageHeader>
         <PageContent>
-          {data.branch.barbers.map((barberAppointment: UserListType, index: string) => (
+          {data.branch.barbers.length > 0 ? data.branch.barbers.map((barberAppointment: UserListType, index: string) => (
             <div key={index}>
               <h2 className="text-xl text-gray-500 mb-4">{barberAppointment.name}</h2>
               <div className="flex justify-center mx-auto flex-wrap gap-3 md:max-w-[1000px]">
@@ -97,7 +97,7 @@ export function AppointmentToday() {
                 })}
               </div>
             </div>
-          ))}
+          )): <h1 className="text-center text-gray-500 font-bold md:text-2xl mt-5">No hay barberos agregados a esta sucursal</h1>}
         </PageContent>
         {detailsAppointment && <AppointmentDetails />}
 

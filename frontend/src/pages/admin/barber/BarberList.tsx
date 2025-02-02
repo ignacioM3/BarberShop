@@ -24,6 +24,7 @@ export function BarberList() {
   const edit = queryParams.get("editUser")
 
   const columns = ['Nombre', 'Número', 'Sucursal', "Activo"];
+  const columnsMobile = ['Nombre', 'Sucursa']
   const [open, setOpen] = useState(false)
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [total, setTotal] = useState<number>(0)
@@ -67,7 +68,14 @@ export function BarberList() {
                             <tr>
                                 {
                                     columns.map((col, index) => (
-                                        <th key={index} scope="col" className="px-6 py-3">
+                                        <th key={index} scope="col" className="px-6 py-3 hidden md:table-cell">
+                                            {col}
+                                        </th>
+                                    ))
+                                }
+                                 {
+                                    columnsMobile.map((col, index) => (
+                                        <th key={index} scope="col" className="px-5 py-2 md:hidden">
                                             {col}
                                         </th>
                                     ))
@@ -80,9 +88,9 @@ export function BarberList() {
                                     data.users.map((row: UserBarberListType, rowIndex: number) => (
                                         <tr key={rowIndex} className="border border-gray-400 text-center">
                                             <td className="px-6 py-4">{row.name}</td>
-                                            <td className="px-6 py-4">{row.role}</td>
+                                            <td className="px-6 py-4 hidden md:table-cell">{row.number ? row.number : "-"}</td>
                                             <td className="px-6 py-4">{row.branch ? row.branch.name : 'No asignado'}</td>
-                                               <td className="px-6 py-4">{row.confirmed ? 'si' : 'no'}</td>
+                                               <td className="px-6 py-4 hidden md:table-cell">{row.confirmed ? 'si' : 'no'}</td>
                                             <td className="px-6 py-4 flex items-center gap-2 text-xl">
                                                 <button 
                                                   className="border border-gray-700 p-2 rounded hover:bg-gray-400 hover:text-white hover:border-none transition-colors"
@@ -97,7 +105,7 @@ export function BarberList() {
                                                     <RiDeleteBin6Line />
                                                 </button>
                                                 <button 
-                                                      className={`border border-blue-500 ${row.blocked ? "bg-blue-500 text-white" : "" } p-1 md:p-2 rounded text-blue-500 hover:bg-blue-500 hover:text-white transition-colors `}
+                                                      className={`border border-blue-500 ${row.blocked ? "bg-blue-500 text-white" : "" } p-2 rounded text-blue-500 hover:bg-blue-500 hover:text-white transition-colors `}
                                                      onClick={() => navigate(location.pathname + `?blockUserId=${row._id}&${row.blocked && "block=true"}`)}
                                                 >
                                                     <MdBlock />

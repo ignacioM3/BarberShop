@@ -17,7 +17,7 @@ export function AddBarberToBranch() {
   const branchId = id!
   const queryClient = useQueryClient()
   const [loadingBarber, setLoadingBarber] = useState<string | null>(null)
-
+console.log(loadingBarber)
 
   const { data, isLoading, isError } = useQuery({
     queryFn: () => getBranchById(branchId),

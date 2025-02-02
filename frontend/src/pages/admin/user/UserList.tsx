@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import UserModal from "../../../components/modal/user/CreateUserListModal";
+import { CreateUserListModal } from "../../../components/modal/user/CreateUserListModal";
 import { ListAddButton } from "../../../components/styles/LinkButton";
 import { PageContainer } from "../../../components/styles/PageContainer";
 import { PageContent } from "../../../components/styles/PageContent";
@@ -45,7 +45,7 @@ export function UserList() {
     if (isLoading) {
         return <LoadingSpinner />
     }
-    console.log(data)
+
 
 
     if (isError) return <h1>Falta Implementar error</h1>
@@ -133,7 +133,7 @@ export function UserList() {
 
    
             </PageContent>
-            <UserModal
+            <CreateUserListModal
                     open={open}
                     setOpen={setOpen}
                 />

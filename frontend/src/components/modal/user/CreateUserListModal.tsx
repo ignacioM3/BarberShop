@@ -12,7 +12,7 @@ interface UserModalInterface {
     setOpen: (open: boolean) => void;
 }
 
-export default function CreateUserListModal({ open, setOpen }: UserModalInterface) {
+export function CreateUserListModal({ open, setOpen }: UserModalInterface) {
     const location = useLocation();
     const navigate = useNavigate();
     const queryClient = useQueryClient()
@@ -74,6 +74,8 @@ export default function CreateUserListModal({ open, setOpen }: UserModalInterfac
         },
         onSuccess: (data) => {
             toast.success(data)
+            queryClient.invalidateQueries({queryKey: ['getUsers']})
+            navigate(location.pathname, { replace: true })
             setOpen(false)
             reset()
         }

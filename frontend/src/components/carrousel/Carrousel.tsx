@@ -60,6 +60,7 @@ export function Carrousel() {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isMobileWidth, setIsMobileWidth] = useState(false);
   const [slides, setSlides] = useState<BannerImages[]>(Img);
+  console.log(setSlides)
 
   const slidesDesktop = slides.filter((e) => e.mobile === false)
   const slidesMobile = slides.filter((e) => e.mobile === true )
