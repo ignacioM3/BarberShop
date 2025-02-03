@@ -167,3 +167,9 @@
   } 
 }
 
+
+.bg-image{
+  background-image: url('../public/bg.png');
+  background-size:cover;
+  background-repeat: no-repeat;
+}
