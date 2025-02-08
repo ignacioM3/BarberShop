@@ -20,7 +20,8 @@ export function AppointmentDetails() {
   const branchId = id!
   const queryParams = new URLSearchParams(location.search);
   const AppointmentHours = queryParams.get('detailsAppointment')!
-  const day = queryParams.get("appointmentWeek")
+  const appointmentWeek = queryParams.get("appointmentWeek")
+  const day = appointmentWeek ? appointmentWeek : new Date().getDate()
   const show = AppointmentHours ? true : false
   const queryClient = useQueryClient();
 
@@ -38,6 +39,9 @@ export function AppointmentDetails() {
     queryFn: () => getAppointmentByIdApi(AppointmentHours),
     retry: false
   })
+
+
+  console.log(data)
 
   const {mutate} = useMutation({
     mutationFn: updateStatusAppointmentApi,

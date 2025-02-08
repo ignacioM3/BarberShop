@@ -11,9 +11,9 @@ export function AuthLayout({children}: PropsWithChildren) {
 
 
   return (
-    <>
+    <div className="min-h-screen bg-cover flex flex-col " style={{ backgroundImage: "url('/bg-smoke.svg')" }}>
     <Header />
-      <div className='mt-[70px] md:mt-[62px]'>
+      <div className='mt-[70px] md:mt-[0px]'>
         {children}
       </div>
 
@@ -21,6 +21,6 @@ export function AuthLayout({children}: PropsWithChildren) {
         pauseOnHover={false}
         pauseOnFocusLoss={false}
       />
-    </>
+    </div>
   )
 }

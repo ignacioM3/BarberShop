@@ -26,13 +26,11 @@ export function AppointmentToday() {
     retry: false,
   });
 
-  console.log(data)
-
 
   if (isLoading) return <LoadingSpinner />;
   if (isError) return <h1>Falta implementar error</h1>;
   if (data) {
-    const timeSlots = generateTimeSlots(data.branch.open, data.branch.close, 30);
+    const timeSlots = generateTimeSlots(data.branch.open, data.branch.close, 30); 
 
     
     const getAppointmentName = (slot: string, barberId: string) => {

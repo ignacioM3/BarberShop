@@ -28,31 +28,31 @@ export function Header() {
 
   return (
     <>  
-      <header className='flex h-[70px] md:h-auto justify-between p-3 lg:py-0 border-b-2 bg-white shadow-sm items-center fixed w-full z-[100] top-0 rounded-b-md'>
-        <Burger clicked={clicked} handleClick={handleClick} />
+      <header className='flex h-[70px] md:h-auto justify-between p-3 lg:py-0 bg-[#ae9961dd] shadow-sm items-center fixed w-full z-[100] top-0 rounded-b-md'>
+        <Burger clicked={clicked} handleClick={handleClick} className='burger-white' />
         <Link to={AppRoutes.home.route()}>
-          <img className='w-[70px] h-[60px] lg:w-[80px]' src="/logo.jpg" alt="" />
+          <img className='w-[70px] h-[60px] lg:w-[80px] bg-cover' src="/logo2.png" alt="" />
         </Link>
-        <div className='hidden md:flex gap-5 flex-grow items-center justify-center'>
-          <Link to={AppRoutes.home.route()} className='font-bold hover:bg-gray-500 p-3 rounded-md text-gray-600 hover:text-white transition-colors'>Inicio</Link>
-          <Link to={AppRoutes.login.route()} className='font-bold hover:bg-gray-500 p-3 rounded-md text-gray-600 hover:text-white transition-colors'>Nosotros</Link>
-          <Link to={AppRoutes.login.route()} className='font-bold hover:bg-gray-500 p-3 rounded-md text-gray-600 hover:text-white transition-colors'>Sucursales</Link>
-          <Link to={AppRoutes.login.route()} className='font-bold hover:bg-gray-500 p-3 rounded-md text-gray-600 hover:text-white transition-colors'>Precios</Link>
+        <div className='hidden md:flex gap-5 flex-grow items-center justify-center '>
+          <Link to={AppRoutes.home.route()} className='font-bold hover:bg-amber-200 p-3 rounded-md text-gray-600 transition-colors'>Inicio</Link>
+          <Link to={AppRoutes.login.route()} className='font-bold hover:bg-amber-200 p-3 rounded-md text-gray-600 transition-colors'>Nosotros</Link>
+          <Link to={AppRoutes.login.route()} className='font-bold hover:bg-amber-200 p-3 rounded-md text-gray-600 transition-colors'>Sucursales</Link>
+          <Link to={AppRoutes.login.route()} className='font-bold hover:bg-amber-200 p-3 rounded-md text-gray-600 transition-colors'>Precios</Link>
         </div>
         {
           currentUser ?
             <div className='flex gap-1 items-center justify-center cursor-pointer '>
               {
                 (currentUser.role === UserRole.ADMIN || currentUser.role === UserRole.BARBER) && (
-                  <Link to={AppRoutes.homeAdmin.route()} className='hidden md:block font-bold mr-3 bg-gray-500 py-2 px-3 text-white rounded-sm shadow-md hover:bg-gray-600 transition-colors'>
+                  <Link to={AppRoutes.homeAdmin.route()} className='hidden md:block font-bold mr-3 py-2 px-3 text-green-100 shadow-md hover:bg-gray-400 transition-colors border rounded-md'>
                     Admin
                   </Link>
                 )
               }
-              <span className='font-bold uppercase hidden md:block'>{currentUser.name}</span>
+              <span className='font-bold uppercase hidden md:block '>{currentUser.name}</span>
               <FaUser className='text-3xl cursor-pointer' onClick={handlePerfil} />
               <button
-                        className="items-center gap-2 p-3 h-full pr-4 rounded hover:bg-gray-200 transition-colors hidden md:flex"
+                        className="items-center gap-2 p-3 h-full pr-4 rounded hover:bg-amber-200 transition-colors hidden md:flex"
                         onClick={logoutUser}
                     >
                         Salir
@@ -79,11 +79,11 @@ export function Header() {
 
 
       </header>
-      <div className={`${clicked && "active"} bg flex flex-col md:hidden `}>
-        <Link to={AppRoutes.home.route()} className='flex items-center gap-2 p-2 hover:bg-gray-500 hover:text-white text-gray-600 hover:font-bold'><FaHome />Inicio</Link>
-        <Link to={AppRoutes.login.route()} className='flex items-center gap-2 p-2 hover:bg-gray-500 hover:text-white text-gray-600 hover:font-bold'><FaUserGroup />Nosotros</Link>
-        <Link to={AppRoutes.login.route()} className='flex items-center gap-2 p-2 hover:bg-gray-500 hover:text-white text-gray-600 hover:font-bold'><IoIosBusiness />Sucursales</Link>
-        <Link to={AppRoutes.login.route()} className='flex items-center gap-2 p-2 hover:bg-gray-500 hover:text-white text-gray-600 hover:font-bold'><FaDollarSign />Precios</Link>
+      <div className={`${clicked && "active"} bg flex flex-col md:hidden`}>
+        <Link to={AppRoutes.home.route()} className='flex items-center gap-2 p-2 hover:bg-gray-500 hover:text-white text-gray-100 font-bold'><FaHome />Inicio</Link>
+        <Link to={AppRoutes.login.route()} className='flex items-center gap-2 p-2 hover:bg-gray-500 hover:text-white text-gray-100 font-bold'><FaUserGroup />Nosotros</Link>
+        <Link to={AppRoutes.login.route()} className='flex items-center gap-2 p-2 hover:bg-gray-500 hover:text-white text-gray-100 font-bold'><IoIosBusiness />Sucursales</Link>
+        <Link to={AppRoutes.login.route()} className='flex items-center gap-2 p-2 hover:bg-gray-500 hover:text-white text-gray-100 font-bold'><FaDollarSign />Precios</Link>
        
 
       </div>

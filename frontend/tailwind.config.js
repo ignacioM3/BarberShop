@@ -2,7 +2,11 @@
 export default {
   content: ["index.html", "./src/**/*.{tsx, ts, js, jsx}"],
   theme: {
-    extend: {},
+    extend: {
+      fontFamily: {
+        india: ["Indie Flower", "serif"]
+      }
+    },
   },
   plugins: [
   ],

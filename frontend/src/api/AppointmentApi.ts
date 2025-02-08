@@ -19,6 +19,7 @@ export async function getAppointmentByIdApi (appointmentId: string){
   try {
     const url = `/appointment/${appointmentId}`;
     const {data} = await api(url);
+    console.log(data)
     return data;
 
   } catch (error) {

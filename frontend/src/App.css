@@ -68,10 +68,14 @@
   top: 13px;
 }
 
+.burger-white span{
+  background-color: white;
+}
+
 
 .bg{
   position: fixed;
-  background-color: #ffffff;
+  background-color: #ae9961dd;
   width: 50%;
   margin-top: 70px;
   z-index: 1;
@@ -136,6 +140,15 @@
   background-color: #357998;
   border-radius: 100%;
   animation: sk-chase-dot-before 2.0s infinite ease-in-out both; 
+}
+
+
+.background-blur {
+  background-image: url('/bg-desktop.webp'), linear-gradient(to bottom, transparent, rgba(0, 0, 0, 0.5));
+  background-size: cover;
+  background-position: center;
+  min-height: 100vh;
+  position: relative;
 }
 
 .sk-chase-dot:nth-child(1) { animation-delay: -1.1s; }

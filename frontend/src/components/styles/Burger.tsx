@@ -1,15 +1,16 @@
 
 interface BurgerInterface {
     handleClick: () => void;
-    clicked: boolean
+    clicked: boolean;
+    className?: string;
 }
 
 
-export function Burger({ handleClick, clicked }: BurgerInterface) {
+export function Burger({ handleClick, clicked, className="" }: BurgerInterface) {
 
     return (
         <div 
-            className={`icon nav-icon-5 ${clicked ? "open" : ''} md:hidden`}
+            className={`icon nav-icon-5 ${clicked ? "open" : ''} md:hidden ${className}`}
             onClick={handleClick}
             >
             <span></span>

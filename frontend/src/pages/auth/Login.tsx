@@ -37,20 +37,20 @@ export default function Login() {
     return <Navigate to={AppRoutes.home.route()}/>
   }
   return (
-    <div className="my-5 mt-[100px] ">
-      <h1 className="text-center text-4xl font-black ">Iniciar Sesión</h1>
-      <p className="text-2xl font-light mt-5 text-center lg:text-xl lg:mt-2">
+    <div className="my-5 mt-[100px]">
+      <h1 className="text-center text-4xl font-black text-white ">Iniciar Sesión</h1>
+      <p className="text-2xl font-light mt-5 text-center lg:text-xl lg:mt-2 text-white">
         Bienvenido a tu Barberia{" "}
-        <span className="text-gray-500 font-bold">llenando el siguiente formulario</span>
+        <span className="text-gray-200 font-bold">llenando el siguiente formulario</span>
       </p>
       <form
         onSubmit={handleSubmit(handleLogin)}
-        className="p-10 max-w-[650px] md:mx-auto  bg-gray-100 mx-4 mt-5 shadow-md rounded-sm  lg:max-w-[450px]"
+        className="p-10 max-w-[650px] md:mx-auto   mx-4 mt-5 shadow-md rounded-sm  lg:max-w-[450px]"
       >
         <div className="flex flex-col gap-5 lg:gap-3 mb-3">
           <label
             htmlFor="email"
-            className="font-normal text-2xl lg:text-xl"
+            className="font-normal text-2xl lg:text-xl text-white"
           >Email</label>
           <input
             {
@@ -77,7 +77,7 @@ export default function Login() {
         </div>
         <div className="flex flex-col gap-5 lg:gap-3 mb-3">
           <label
-            className="font-normal text-2xl lg:text-xl"
+            className="font-normal text-2xl lg:text-xl text-white"
             htmlFor="password"
           >Password</label>
           <input
@@ -109,15 +109,15 @@ export default function Login() {
       >
         <Link
           to={AppRoutes.register.route()}
-          className="text-center text-gray-500 font-normal"
+          className="text-center text-gray-200 font-normal"
         >
-          ¿No tienes cuenta? <span className="text-gray-500 font-bold">Crea una</span>
+          ¿No tienes cuenta? <span className="text-gray-300 font-bold">Crea una</span>
         </Link>
         <Link
           to={AppRoutes.forgotPassword.route()}
-          className="text-center text-gray-500 font-normal"
+          className="text-center text-gray-200 font-normal"
         >
-          ¿Olvidaste tu contraseña? <span className="text-gray-500 font-bold">Restablecer</span>
+          ¿Olvidaste tu contraseña? <span className="text-gray-300 font-bold">Restablecer</span>
         </Link>
       </nav>
     </div>
