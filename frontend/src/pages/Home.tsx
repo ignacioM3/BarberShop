@@ -1,4 +1,6 @@
 import { FaCalendarCheck } from "react-icons/fa";
+import BlurText from "../components/bits/BlurText";
+import ShinyText from "../components/bits/ShinyText";
 
 export function Home() {
   return (
@@ -10,9 +12,14 @@ export function Home() {
       >
         {/* Título */}
         <div className="bg-[#a98729b5] text-center rounded-md py-14 w-[300px] absolute top-[150px] left-1/2 transform -translate-x-1/2">
-          <h3 className="text-4xl font-india text-white font-bold uppercase">
-            Veni Cambia tu estilo con nosotros
-          </h3>
+          <BlurText 
+          text="Veni cambia tu estulo con nostros"
+          delay={125}
+          animateBy="words"
+          direction="top"
+        className="text-4xl font-india text-white font-bold uppercase"
+          />
+
         </div>
 
         {/* Div en el medio de la parte inferior */}
@@ -24,7 +31,9 @@ export function Home() {
           </h1>
           <div className="flex items-center justify-center gap-2 bg-gray-400 w-fit p-4 rounded-md cursor-pointer mx-auto text-white font-bold shadow-md hover:bg-gray-600 transition-colors">
             <FaCalendarCheck />
-            <button>Reservar Turno</button>
+            <button>
+              <ShinyText text="Reservar Turno" disabled={false} speed={3}/>
+            </button>
           </div>
         </div>
       </div>
@@ -47,13 +56,19 @@ export function Home() {
           </h1>
           <div className="flex items-center justify-center gap-2 bg-gray-400 w-fit p-4 rounded-md cursor-pointer mx-auto text-white font-bold shadow-md hover:bg-gray-600 transition-colors">
             <FaCalendarCheck />
-            <button>Reservar Turno</button>
+            <button>
+            <ShinyText text="Reservar Turno"/>
+            </button>
           </div>
         </div>
         <div className="bg-[#a98729b5] text-center rounded-lg py-14 w-[300px] ">
-          <h3 className="text-4xl font-india text-white font-bold uppercase">
-            Veni Cambia tu estilo con nosotros
-          </h3>
+          <BlurText 
+          text="Veni cambia tu estulo con nostros"
+          delay={125}
+          animateBy="words"
+          direction="top"
+        className="text-4xl font-india text-white font-bold uppercase"
+          />
         </div>
 
 

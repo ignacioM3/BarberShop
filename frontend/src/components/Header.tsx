@@ -94,14 +94,14 @@ export function Header() {
           {currentUser.role === UserRole.ADMIN && (
              <Link to={AppRoutes.homeAdmin.route()} className='flex items-center justify-end gap-2 p-2 hover:bg-gray-500 hover:text-white text-green-600 bg-green-300 font-bold'>Admin<FaUserGroup /></Link>
           )}
-           <Link to={AppRoutes.home.route()} className='flex items-center justify-end gap-2 p-2 hover:bg-gray-500 hover:text-white text-gray-600 hover:font-bold'>Perfil<FaRegUser className='font-bold'/></Link>
-           <Link to={""} className='flex items-center justify-end gap-2 p-2 hover:bg-gray-500 hover:text-white text-gray-600 hover:font-bold'>Configuracion<FaCog /></Link>
-           <button onClick={logoutUser}  className='flex items-center justify-end gap-2 p-2 hover:bg-gray-500 hover:text-white text-gray-600 hover:font-bold'>Cerrar Sesión<IoIosLogOut className='font-bold text-xl' /></button>
+           <Link to={AppRoutes.home.route()} className='flex items-center justify-end gap-2 p-2 text-gray-300 font-bold'>Perfil<FaRegUser className='font-bold'/></Link>
+           <Link to={AppRoutes.home.route()} className='flex items-center justify-end gap-2 p-2 text-gray-300 font-bold'>Ajustes<FaCog className='font-bold'/></Link>
+           <button onClick={logoutUser}  className='flex items-center justify-end gap-2 p-2 text-gray-300 font-bold'>Cerrar Sesión<IoIosLogOut className='font-bold text-xl' /></button>
           </>
         ) : (
           <>
-           <Link to={AppRoutes.register.route()} className='flex items-center justify-end gap-2 p-2 hover:bg-gray-500 hover:text-white text-gray-600 hover:font-bold'>Registrarse<FaRegUser className='font-bold'/></Link>
-           <Link to={AppRoutes.login.route()} className='flex items-center justify-end gap-2 p-2 hover:bg-gray-500 hover:text-white text-gray-600 hover:font-bold'>Iniciar Sesión<RiLoginBoxLine  className='font-bold text-xl' /></Link>
+           <Link to={AppRoutes.register.route()} className='flex items-center justify-end gap-2 p-2 text-gray-300 font-bold'>Registrarse<FaRegUser className='font-bold'/></Link>
+           <Link to={AppRoutes.login.route()} className='flex items-center justify-end gap-2 p-2 text-gray-300 font-bold'>Iniciar Sesión<RiLoginBoxLine  className='font-bold text-xl' /></Link>
           </>
         )
        }

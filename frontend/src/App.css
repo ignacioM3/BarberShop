@@ -80,7 +80,6 @@
   margin-top: 70px;
   z-index: 1;
   top: -800px;
-  border: 1px solid #ccc;
   border-radius: 0 0 10px 10px;
   transition: all .6s ease-in-out;
 }
@@ -186,3 +185,4 @@
   background-size:cover;
   background-repeat: no-repeat;
 }
+
