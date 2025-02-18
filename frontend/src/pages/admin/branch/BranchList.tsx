@@ -14,12 +14,10 @@ import { Link, useNavigate } from "react-router-dom";
 import { IoPersonAddSharp } from "react-icons/io5";
 import { AppRoutes } from "../../../routes";
 import { DeleteBranchModal } from "../../../components/modal/branch/DeleteBranchModal";
-import { CreateBranchModal } from "../../../components/modal/branch/CreateBranchModal";
 
 export function BranchList() {
     const columns = ['Nombre', 'Dirreción', 'Barberos']
     const [open, setOpen] = useState(false)
-    console.log(open)
     const navigate = useNavigate()
 
 
@@ -41,7 +39,7 @@ export function BranchList() {
                     Sucursales
                 </PageTitle>
                 <ListAddButton
-                    onClick={() => setOpen(true)}
+                    onClick={ () => navigate(AppRoutes.createBranchAdmin.route())}
                 >
                     Agregar Sucursal
                 </ListAddButton>
@@ -62,7 +60,7 @@ export function BranchList() {
                         </thead>
                         <tbody>
                             {
-                                data ? (
+                                data.length > 0 ? (
                                     data.map((row: BranchListType, rowIndex: number) => (
                                         <tr key={rowIndex} className="border border-gray-400 text-center">
                                             <td className="md:px-6 py-4">{row.name}</td>
@@ -95,10 +93,6 @@ export function BranchList() {
                     </table>
                 </div>
             </PageContent>
-            <CreateBranchModal 
-                open={open}
-                setOpen={setOpen}
-            />
             <DeleteBranchModal />
         </PageContainer>
     )

@@ -83,6 +83,16 @@
   border-radius: 0 0 10px 10px;
   transition: all .6s ease-in-out;
 }
+.bgAdmin{
+  position: fixed;
+  background-color: white;
+  width: 50%;
+  margin-top: 70px;
+  z-index: 1;
+  top: -800px;
+  border-radius: 0 0 10px 10px;
+  transition: all .6s ease-in-out;
+}
 
 .bgWidth{
   width: 40%;

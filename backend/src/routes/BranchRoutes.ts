@@ -12,6 +12,7 @@ router.param("branchId", BranchExists)
 router.post('/create-branch',
     body('name').notEmpty().withMessage('El nombre puede estar vació'),
     body('address').notEmpty().withMessage('La dirreción no puede estar vacia'),
+    body('prices').notEmpty().withMessage("Debe ingresar los precios"),
     handleInputErrors,
     BranchControllers.createBranch);
 

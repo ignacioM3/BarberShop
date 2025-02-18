@@ -4,7 +4,6 @@ export interface Itoken extends Document{
     token:string
     user: Types.ObjectId;
     createdAt: Date;
-
 }
 
 const tokenSchema: Schema = new Schema({

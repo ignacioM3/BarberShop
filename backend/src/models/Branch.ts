@@ -1,4 +1,5 @@
 import mongoose, { Schema, Types, Document } from 'mongoose'
+import { ServiceType, serviceType } from './Service';
 
 export interface IBranch extends Document{
     barbers: Types.ObjectId[];
@@ -6,6 +7,7 @@ export interface IBranch extends Document{
     address: string;
     open: string,   
     close: string,
+    prices: [{service: ServiceType;  price: number}]
 }
 
 const branchSchema: Schema = new Schema({
@@ -28,7 +30,20 @@ const branchSchema: Schema = new Schema({
     close: {
         type: String,
         match: /^([01]\d|2[0-3]):([0-5]\d)$/,
-    }
+    },
+    prices: [
+        {
+            service: {
+                type: String,
+                enum: Object.values(serviceType),
+                required: true
+            },
+            price: {
+                type: Number,
+                required: true
+            }
+        }
+    ]
 })
 
 const Branch = mongoose.model<IBranch>('Branch', branchSchema);

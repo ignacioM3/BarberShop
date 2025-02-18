@@ -9,9 +9,9 @@ export interface IUser extends Document{
     confirmed: boolean,
     role: UserRole,
     haircuts: number,
-    number: number,
+    number?: number,
     blocked: boolean,
-    instagram: string,
+    instagram?: string,
     branch: PopulatedDoc<IBranch & Document>
 }
 

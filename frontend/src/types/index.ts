@@ -38,6 +38,12 @@ export const branchSchema = z.object({
     name: z.string().optional()
    })
   ),
+  prices: z.array(
+    z.object({
+      service: z.string(),
+      price: z.number()
+    })
+  )
 });
 
 // --- Barber Schema ---
@@ -137,7 +143,13 @@ export type BranchListType = Pick<Branch, '_id' | 'address' | 'name' | 'barbers'
 export type getDetailsBranch = Pick<Branch, '_id' | 'address' | 'barbers' | 'name'>
 export type BarberOutBranch = Pick<User, '_id' | 'name'>
 export type ListBarberInBranch = Pick<User, '_id' | 'name'>
-export type formDataCreateBranch = Pick <Branch, 'address' | 'name' | 'close' | 'open'>
+export type formDataCreateBranch = Pick<Branch, 'address' | 'name' | 'close' | 'open'> & {
+  claritos: number;
+  corte: number;
+  global: number;
+};
+
+export type FormDataCreateBranchApi = Pick<Branch, 'name' | "address" | "close" | 'open' | 'prices'>
 
 
 // Appointment Schema

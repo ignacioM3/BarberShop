@@ -8,6 +8,7 @@ export class BranchControllers {
     const { address, name } = req.body;
     const findAdress = await Branch.findOne({ address });
     const findName = await Branch.findOne({ name });
+    
     if (findAdress || findName) {
       const error = new Error("Local ya registrado");
       return res.status(400).json({ error: error.message });

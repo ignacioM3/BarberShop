@@ -86,7 +86,7 @@ export function AdminLayout({ children }: PropsWithChildren) {
                         </button>
                     </div>
                 </header>
-                <div className={`${clicked && "activeAdmin"} bg flex flex-col item md:hidden `}>
+                <div className={`${clicked && "activeAdmin"} bgAdmin flex flex-col item md:hidden `}>
                     {
                         menuSection.map((section, index) => (
                             <section key={index}>

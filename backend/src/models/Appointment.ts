@@ -1,4 +1,6 @@
 import mongoose, {Document,  Schema, Types } from "mongoose";
+import { AppointmentStatus, appointmentStatus } from "./AppointmentStatus";
+import { ServiceType, serviceType } from "./Service";
 
 export interface IAppointment extends Document{
     userId?: Types.ObjectId;
@@ -6,13 +8,13 @@ export interface IAppointment extends Document{
     branchId: Types.ObjectId;
     barberId: Types.ObjectId;
     timeSlot: string;
-    status: string;
+    status: AppointmentStatus;
     details: string;
     day: string;
     manual: boolean;
     instagram?: string;
     whatsapp?: number;
-    service: string;
+    service: ServiceType;
     price: number;
 }
 
@@ -46,7 +48,7 @@ export const appointmentSchema: Schema = new Schema({
     status: {
         required: true,
         type: String,
-        enum: ['available', "booked", "canceled", "completed"]
+        enum: Object.values(appointmentStatus)
     },
     details: {
         type: String,
@@ -60,7 +62,7 @@ export const appointmentSchema: Schema = new Schema({
     service: {
         type: String,
         required: true,
-        enum: ['corte', 'claritos', 'global']
+        enum: Object.values(serviceType)
     },
     price: {
         type: Number,
