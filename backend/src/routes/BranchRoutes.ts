@@ -27,7 +27,14 @@ router.post("/:branchId/add-barber",
     body('id').isMongoId().withMessage('ID inválido'),
     handleInputErrors,
     BranchControllers.addBarberToBranch)
-
+router.put('/:branchId/edit',
+    body('name').notEmpty().withMessage('El nombre puede estar vació'),
+    body('address').notEmpty().withMessage('La dirreción no puede estar vacia'),
+    body('prices').notEmpty().withMessage("Debe ingresar los precios"),
+    param('branchId').isMongoId().withMessage('ID no válido'),
+    handleInputErrors, 
+    BranchControllers.updateBranch)
+    
 router.delete('/:branchId/remove-barber/:barberId', 
     handleInputErrors,
     BranchControllers.removeBarberToBranch

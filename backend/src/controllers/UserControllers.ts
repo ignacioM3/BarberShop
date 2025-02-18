@@ -179,10 +179,6 @@ export class UserControllers {
     }
 
     try {
-
-     
-
-
       const user = new User(req.body);
       user.role = userRole.client;
       user.confirmed = true;

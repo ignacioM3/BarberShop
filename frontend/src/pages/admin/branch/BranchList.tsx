@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { ListAddButton } from "../../../components/styles/LinkButton";
 import { PageContainer } from "../../../components/styles/PageContainer";
 import { PageHeader } from "../../../components/styles/PageHeader";
@@ -17,10 +16,7 @@ import { DeleteBranchModal } from "../../../components/modal/branch/DeleteBranch
 
 export function BranchList() {
     const columns = ['Nombre', 'Dirreción', 'Barberos']
-    const [open, setOpen] = useState(false)
     const navigate = useNavigate()
-
-
 
     const { data, isError, isLoading } = useQuery({
         queryKey: ['getBranchs'],
@@ -66,7 +62,6 @@ export function BranchList() {
                                             <td className="md:px-6 py-4">{row.name}</td>
                                             <td className="md:px-6 py-4">{row.address}</td>
                                             <td className="md:px-6 py-4">{row.barbers.length}</td>
-
                                             <td className="px-6 py-4 flex items-center gap-2 text-xl">
                                                 <Link to={AppRoutes.AddBarberToBranchAdmin.route(row._id)}
                                                     className="border border-blue-500 p-1 md:p-2 rounded text-blue-500 hover:bg-blue-500 hover:text-white transition-colors"
@@ -74,7 +69,10 @@ export function BranchList() {
                                                 >
                                                     <IoPersonAddSharp />
                                                 </Link>
-                                                <button className="border border-gray-400 p-1 md:p-2 rounded hover:bg-gray-400 hover:text-white hover:border-none transition-colors">
+                                                <button 
+                                                    className="border border-gray-400 p-1 md:p-2 rounded hover:bg-gray-400 hover:text-white hover:border-none transition-colors"
+                                                    onClick={() => navigate(AppRoutes.editBranchAdmin.route(row._id))}
+                                                    >
                                                     <MdOutlineEdit />
                                                 </button>
                                                 <button

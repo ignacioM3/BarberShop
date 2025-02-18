@@ -98,3 +98,14 @@ export async function createBranchApi(form: FormDataCreateBranchApi) {
     handleApiError(error);
   }
 }
+
+
+export async function updateBranchApi({dataForm, branchId}: {dataForm: FormDataCreateBranchApi, branchId: string}){
+  try {
+    const url = `/branch/${branchId}/edit`
+    const {data} = await api.put<string>(url, dataForm)
+    return data
+  } catch (error) {
+    handleApiError(error);
+  }
+}

@@ -82,6 +82,13 @@ export const AppRoutes = {
         page: async () => (await (import('./pages/admin/branch/CreateBranch'))).CreateBranch,
         layout: adminLayoutImport
     },
+    editBranchAdmin: {
+        route: (id? : string) => `/admin/branch/${id?? ":id"}/edit`,
+        requiresAuth: true,
+        allowedRoles: [UserRole.ADMIN],
+        page: async () => (await import('./pages/admin/branch/EditBranch')).EditBranch,
+        layout: adminLayoutImport
+    },
     AddBarberToBranchAdmin: {
         route: (id? : string) => `/admin/branch/${id?? ":id"}/add-barber`,
         requiresAuth: true,

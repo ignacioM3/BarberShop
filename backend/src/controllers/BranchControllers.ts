@@ -8,7 +8,7 @@ export class BranchControllers {
     const { address, name } = req.body;
     const findAdress = await Branch.findOne({ address });
     const findName = await Branch.findOne({ name });
-    
+
     if (findAdress || findName) {
       const error = new Error("Local ya registrado");
       return res.status(400).json({ error: error.message });
@@ -35,7 +35,7 @@ export class BranchControllers {
     }
 
     try {
-      const listBranch = await Branch.find({}).populate('barbers');
+      const listBranch = await Branch.find({}).populate("barbers");
       res.json(listBranch);
     } catch (error) {
       console.log(error);
@@ -45,7 +45,7 @@ export class BranchControllers {
   static getBranchById = async (req: Request, res: Response) => {
     const { branchId } = req.params;
     try {
-      const branch = await Branch.findById(branchId).populate('barbers');
+      const branch = await Branch.findById(branchId).populate("barbers");
       if (!branch) {
         const error = new Error("Local no encontrado");
         return res.status(404).json({ error: error.message });
@@ -73,71 +73,97 @@ export class BranchControllers {
         return res.status(401).json({ error: error.message });
       }
 
-      if(req.branch.barbers.some(barber => barber.toString() === findBarber.id.toString())){
-        const error = new Error('El barbero ya existe en el local');
-        return res.status(409).json({error: error.message})
+      if (
+        req.branch.barbers.some(
+          (barber) => barber.toString() === findBarber.id.toString()
+        )
+      ) {
+        const error = new Error("El barbero ya existe en el local");
+        return res.status(409).json({ error: error.message });
       }
 
       req.branch.barbers.push(findBarber.id);
-      findBarber.branch = req.branch.id
+      findBarber.branch = req.branch.id;
 
-      await Promise.allSettled([findBarber.save(), req.branch.save()])
-      res.send('Barbero agregado correctamente');
-      
+      await Promise.allSettled([findBarber.save(), req.branch.save()]);
+      res.send("Barbero agregado correctamente");
     } catch (error) {
-        console.log(error)
+      console.log(error);
     }
   };
 
   static removeBarberToBranch = async (req: Request, res: Response) => {
     try {
-      const {barberId} = req.params;
+      const { barberId } = req.params;
       const findBarber = await User.findById(barberId);
       if (!findBarber) {
         const error = new Error("Usuario no encontrado");
         return res.status(404).json({ error: error.message });
       }
 
-      if(!req.branch.barbers.some(barber => barber.toString() === findBarber.id.toString())){
-        const error = new Error('El barbero no existe en el local');
-        return res.status(409).json({error: error.message})
+      if (
+        !req.branch.barbers.some(
+          (barber) => barber.toString() === findBarber.id.toString()
+        )
+      ) {
+        const error = new Error("El barbero no existe en el local");
+        return res.status(409).json({ error: error.message });
       }
-      
 
-      req.branch.barbers = req.branch.barbers.filter(barber => barber._id.toString() !== barberId)
+      req.branch.barbers = req.branch.barbers.filter(
+        (barber) => barber._id.toString() !== barberId
+      );
       findBarber.branch = null;
-      await Promise.allSettled([req.branch.save(), findBarber.save()])
-      res.send('Barbero eliminado correctamente del local')
+      await Promise.allSettled([req.branch.save(), findBarber.save()]);
+      res.send("Barbero eliminado correctamente del local");
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
-  }
+  };
 
-  static getBarberOutBranch = async(req: Request, res: Response) => {
+  static getBarberOutBranch = async (req: Request, res: Response) => {
     try {
       const barbers = await User.find({
         role: userRole.barber,
-        branch: null
-      })
+        branch: null,
+      });
 
-      if(!barbers){
-        const error = new Error('No hay barberos sin sucursal asignada')
-        return res.status(404).json({error: error.message})
+      if (!barbers) {
+        const error = new Error("No hay barberos sin sucursal asignada");
+        return res.status(404).json({ error: error.message });
       }
-      res.json(barbers)
+      res.json(barbers);
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
-  }
+  };
 
   static deleteBranch = async (req: Request, res: Response) => {
-    
     if (req.user.role !== userRole.admin) {
       const error = new Error("Acción no valida");
       return res.status(404).json({ error: error.message });
     }
 
     await req.branch.deleteOne();
-    res.send("Sucursal eliminada con exito")
-  }
+    res.send("Sucursal eliminada con exito");
+  };
+
+  static updateBranch = async (req: Request, res: Response) => {
+    if (req.user.role !== userRole.admin) {
+      const error = new Error("Acción no valida");
+      return res.status(404).json({ error: error.message });
+    }
+
+    try {
+      const branchUpdated = await req.branch.updateOne(req.body);
+      if (branchUpdated.modifiedCount === 0) {
+        return res.status(400).json({ error: "No se realizaron cambios" });
+      }
+
+      return res.send("Sucursal actualizada correctamente")
+      
+    } catch (error) {
+      return res.status(500).json({ error: "Error al actualizar la sucursal" });
+    }
+  };
 }

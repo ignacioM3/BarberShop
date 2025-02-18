@@ -33,6 +33,7 @@ const branchSchema: Schema = new Schema({
     },
     prices: [
         {
+            _id: false,
             service: {
                 type: String,
                 enum: Object.values(serviceType),
