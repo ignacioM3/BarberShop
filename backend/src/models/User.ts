@@ -55,6 +55,7 @@ const userSchema: Schema = new Schema({
     },
     number: {
         type: Number,
+        default: undefined
     },
     branch: {
         type: Types.ObjectId,

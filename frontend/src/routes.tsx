@@ -68,6 +68,13 @@ export const AppRoutes = {
         page: async () => (await import('./pages/admin/barber/BarberList')).BarberList,
         layout: adminLayoutImport
     },
+    createBarberAdmin: {
+        route: () => "/admin/barber/create",
+        requiresAuth: true,
+        allowedRoles: [UserRole.ADMIN],
+        page: async () => (await import('./pages/admin/barber/CreateBarber')).CreateBarber,
+        layout: adminLayoutImport
+    },
     branchListAdmin: {
         route: () => "/admin/branch",
         requiresAuth: true,

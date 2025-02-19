@@ -27,7 +27,7 @@ export function CreateBranch() {
     global: 0
   }
 
-  const { register, handleSubmit, formState: { errors } } = useForm({
+  const { register, handleSubmit, formState: { errors }, reset } = useForm({
     defaultValues: initialValues
   })
 
@@ -39,7 +39,11 @@ export function CreateBranch() {
     onSuccess: (data) => {
       toast.success(data);
       queryClient.invalidateQueries({ queryKey: ['getBranchs'] })
-      navigate(AppRoutes.branchListAdmin.route())
+      reset()
+      
+      setTimeout(() => {
+        navigate(AppRoutes.branchListAdmin.route());
+      }, 2000)
 
     }
 
@@ -70,7 +74,7 @@ export function CreateBranch() {
       <PageContent className="flex items-center justify-center mb-20">
         <form
         onSubmit={handleSubmit(handleSubmitForm)}
-          className="bg-white shadow-md max-w-[650px] w-full rounded-md p-7 mt-4"
+        className="bg-white shadow-md max-w-[650px] w-full rounded-md p-7 mt-4"
         >
           <TitleModal className="mb-4">Nueva Sucursal</TitleModal>
           <div className="md:flex justify-between gap-3">

@@ -12,20 +12,16 @@ import { RiDeleteBin6Line } from "react-icons/ri";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { Pagination } from "../../../components/styles/Pagination";
-import { CreateBarberModal } from "../../../components/modal/user/CreateBarberModal";
 import DeleteUserModal from "../../../components/modal/user/DeleteUserModal";
 import { BlockUserModal } from "../../../components/modal/user/BlockUserModal";
-import { EditBarberModal } from "../../../components/modal/user/EditBarberModal";
+import { AppRoutes } from "../../../routes";
 
 export function BarberList() {
   const navigate = useNavigate()
   const location = useLocation();
-  const queryParams = new URLSearchParams(location.search);
-  const edit = queryParams.get("editUser")
 
   const columns = ['Nombre', 'Número', 'Sucursal', "Activo"];
   const columnsMobile = ['Nombre', 'Sucursa']
-  const [open, setOpen] = useState(false)
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [total, setTotal] = useState<number>(0)
   const usersPerPage = 6;
@@ -43,6 +39,7 @@ export function BarberList() {
     }
   }, [data]);
 
+  console.log(data)
   if (isLoading) {
     return <LoadingSpinner />
   }
@@ -55,69 +52,69 @@ export function BarberList() {
           Barberos
         </PageTitle>
         <ListAddButton
-          onClick={() => setOpen(true)}
+          onClick={() => navigate(AppRoutes.createBarberAdmin.route())}
         >
           Agregar Barbero
         </ListAddButton>
       </PageHeader>
       <PageContent>
 
-      <div className="flex items-center justify-center">
-                    <table className="w-full text-sm  text-left  rtl:text-right border border-gray-400 shadow-lg max-w-[1000px]">
-                        <thead className="text-xs text-black uppercase border border-gray-400 text-center">
-                            <tr>
-                                {
-                                    columns.map((col, index) => (
-                                        <th key={index} scope="col" className="px-6 py-3 hidden md:table-cell">
-                                            {col}
-                                        </th>
-                                    ))
-                                }
-                                 {
-                                    columnsMobile.map((col, index) => (
-                                        <th key={index} scope="col" className="px-5 py-2 md:hidden">
-                                            {col}
-                                        </th>
-                                    ))
-                                }
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {
-                                data.totalUsers ? (
-                                    data.users.map((row: UserBarberListType, rowIndex: number) => (
-                                        <tr key={rowIndex} className="border border-gray-400 text-center">
-                                            <td className="px-6 py-4">{row.name}</td>
-                                            <td className="px-6 py-4 hidden md:table-cell">{row.number ? row.number : "-"}</td>
-                                            <td className="px-6 py-4">{row.branch ? row.branch.name : 'No asignado'}</td>
-                                               <td className="px-6 py-4 hidden md:table-cell">{row.confirmed ? 'si' : 'no'}</td>
-                                            <td className="px-6 py-4 flex items-center gap-2 text-xl">
-                                                <button 
-                                                  className="border border-gray-700 p-2 rounded hover:bg-gray-400 hover:text-white hover:border-none transition-colors"
-                                                  onClick={() => navigate(location.pathname + `?editUser=${row._id}`)}
-                                                  >
-                                                    <MdOutlineEdit />
-                                                </button>
-                                                <button
-                                                    className="border border-red-500 p-2 rounded text-red-500 hover:bg-red-500 hover:text-white transition-colors hover:border-none"
-                                                    onClick={() => navigate(location.pathname + `?deleteUser=${row._id}`)}
-                                                >
-                                                    <RiDeleteBin6Line />
-                                                </button>
-                                                <button 
-                                                      className={`border border-blue-500 ${row.blocked ? "bg-blue-500 text-white" : "" } p-2 rounded text-blue-500 hover:bg-blue-500 hover:text-white transition-colors `}
-                                                     onClick={() => navigate(location.pathname + `?blockUserId=${row._id}&${row.blocked && "block=true"}`)}
-                                                >
-                                                    <MdBlock />
-                                                </button>
-                                            </td>
-                                        </tr>
-                                    ))
-                                ) : <tr><td colSpan={4} className="text-center p-3">No hay usuarios</td></tr>
-                            }
-                        </tbody>
-                    </table>
-                </div>
+        <div className="flex items-center justify-center">
+          <table className="w-full text-sm  text-left  rtl:text-right border border-gray-400 shadow-lg max-w-[1000px]">
+            <thead className="text-xs text-black uppercase border border-gray-400 text-center">
+              <tr>
+                {
+                  columns.map((col, index) => (
+                    <th key={index} scope="col" className="px-6 py-3 hidden md:table-cell">
+                      {col}
+                    </th>
+                  ))
+                }
+                {
+                  columnsMobile.map((col, index) => (
+                    <th key={index} scope="col" className="px-5 py-2 md:hidden">
+                      {col}
+                    </th>
+                  ))
+                }
+              </tr>
+            </thead>
+            <tbody>
+              {
+                data.totalUsers ? (
+                  data.users.map((row: UserBarberListType, rowIndex: number) => (
+                    <tr key={rowIndex} className="border border-gray-400 text-center">
+                      <td className="px-6 py-4">{row.name}</td>
+                      <td className="px-6 py-4 hidden md:table-cell">{row.number ? row.number : "-"}</td>
+                      <td className="px-6 py-4">{row.branch ? row.branch.name : 'No asignado'}</td>
+                      <td className="px-6 py-4 hidden md:table-cell">{row.confirmed ? 'si' : 'no'}</td>
+                      <td className="px-6 py-4 flex items-center gap-2 text-xl">
+                        <button
+                          className="border border-gray-700 p-2 rounded hover:bg-gray-400 hover:text-white hover:border-none transition-colors"
+                          onClick={() => navigate(location.pathname + `?editUser=${row._id}`)}
+                        >
+                          <MdOutlineEdit />
+                        </button>
+                        <button
+                          className="border border-red-500 p-2 rounded text-red-500 hover:bg-red-500 hover:text-white transition-colors hover:border-none"
+                          onClick={() => navigate(location.pathname + `?deleteUser=${row._id}`)}
+                        >
+                          <RiDeleteBin6Line />
+                        </button>
+                        <button
+                          className={`border border-blue-500 ${row.blocked ? "bg-blue-500 text-white" : ""} p-2 rounded text-blue-500 hover:bg-blue-500 hover:text-white transition-colors `}
+                          onClick={() => navigate(location.pathname + `?blockUserId=${row._id}&${row.blocked && "block=true"}`)}
+                        >
+                          <MdBlock />
+                        </button>
+                      </td>
+                    </tr>
+                  ))
+                ) : <tr><td colSpan={4} className="text-center p-3">No hay usuarios</td></tr>
+              }
+            </tbody>
+          </table>
+        </div>
         <Pagination
           usersPerPage={usersPerPage}
           totalUsers={total}
@@ -125,12 +122,6 @@ export function BarberList() {
           onPageChange={(page) => setCurrentPage(page)}
         />
       </PageContent>
-
-      <CreateBarberModal
-      open={open}
-      setOpen={setOpen}
-      />
-     {edit &&  <EditBarberModal />}
       <DeleteUserModal />
       <BlockUserModal />
     </PageContainer>

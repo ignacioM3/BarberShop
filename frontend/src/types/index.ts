@@ -81,7 +81,7 @@ export type UserUpdateAdminForm = Omit<UserUpdateAdmin, 'number' | '_id'> & { nu
 export type UserBarberListType = {
   _id: string;
   name: string;
-  number?: number;
+  number?: number | null;
   role: string;
   confirmed: boolean;
   blocked?: boolean;
@@ -102,8 +102,9 @@ export const getBarberListSchema = z.object({
   users: z.array(
     z.object({
       _id: z.string(),
-      number: z.number().optional(),
+      number: z.number().nullable().optional(),
       name: z.string(),
+      instagram: z.string().optional(),
       confirmed: z.boolean(),
       blocked: z.boolean().optional(),
       role: z.enum([UserRole.ADMIN, UserRole.BARBER, UserRole.CLIENT] as const),
@@ -148,6 +149,15 @@ export type formDataCreateBranch = Pick<Branch, 'address' | 'name' | 'close' | '
   corte: number;
   global: number;
 };
+
+export type CreateBarberForm = {
+  name: string;
+  numero?: number;
+  email: string;
+  password: string;
+  password_confirmation: string
+}
+
 
 export type FormDataCreateBranchApi = Pick<Branch, 'name' | "address" | "close" | 'open' | 'prices'>
 

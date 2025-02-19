@@ -142,6 +142,7 @@ export async function getBarberList(page: number){
   try {
     const url = `/users/list-barber?page=${page}`;
     const {data} = await api(url);
+
     const response = getBarberListSchema.safeParse(data);
     if(response.success){
       return response.data
@@ -210,7 +211,6 @@ export async function getUserById(id: User['_id']){
     const {data} = await api.get(url)
     
      const response = userSchema.safeParse(data);
-     console.log(response)
        if (response.success) {
         return response.data;
       }
