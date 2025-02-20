@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
@@ -17,9 +17,10 @@ import { formDataCreateBranch } from "../../../types";
 export function EditBranch() {
     const navigate = useNavigate();
     const queryClient = useQueryClient()
+      const [hasEdited, setHasEdited] = useState(false);
     const { id } = useParams();
     const branchId = id!;
-    const { data, isLoading } = useQuery({
+    const { data, isLoading, isError } = useQuery({
         queryKey: ['editBranch', branchId],
         retry: false,
         queryFn: () => getBranchById(branchId)
@@ -31,6 +32,16 @@ export function EditBranch() {
             toast.error(error.message)
         },
         onSuccess: (data) => {
+            setHasEdited(true)
+            reset({
+                name: "",
+                address: "",
+                open: "",
+                close: "",
+                claritos: 0,
+                corte:  0,
+                global:  0,
+            })
             toast.success(data)
             queryClient.invalidateQueries({queryKey: ['getBranchs']})
             setTimeout(() => {
@@ -63,7 +74,7 @@ export function EditBranch() {
 
 
     useEffect(() => {
-        if (data) {
+        if (data && !hasEdited) {
             reset({
                 name: data.name,
                 address: data.address,
@@ -74,7 +85,7 @@ export function EditBranch() {
                 global: prices?.global || 0
             });
         }
-    }, [data, reset]);
+    }, [data, reset, hasEdited]);
 
     const handleSubmitForm = (dataForm: formDataCreateBranch) => {
         const data = {
@@ -94,6 +105,9 @@ export function EditBranch() {
 
         mutate(data)
     };
+
+
+    if(isError) return <h1>falta implementar error</h1>
     if (isLoading) return <LoadingSpinner />;
 
     return (

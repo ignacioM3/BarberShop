@@ -47,7 +47,6 @@ export function CreateBarber() {
   const password = watch('password')
 
   const handleCreate = (formData: CreateBarberForm) => {
-    console.log(formData)
     mutate(formData)
   }
   return (

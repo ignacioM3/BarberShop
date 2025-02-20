@@ -8,7 +8,6 @@ import { PageTitle } from "../../../components/styles/PageTitle";
 import { MdOutlineEdit } from "react-icons/md";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import { useQuery } from "@tanstack/react-query";
-import { getUserList } from "../../../api/AuthApi";
 import LoadingSpinner from "../../../components/styles/LoadingSpinner";
 import { UserListType } from "../../../types";
 import DeleteUserModal from "../../../components/modal/user/DeleteUserModal";
@@ -16,6 +15,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { MdBlock } from "react-icons/md";
 import { Pagination } from "../../../components/styles/Pagination";
 import { BlockUserModal } from "../../../components/modal/user/BlockUserModal";
+import { getUserList } from "../../../api/UserApi";
 
 
 export function UserList() {

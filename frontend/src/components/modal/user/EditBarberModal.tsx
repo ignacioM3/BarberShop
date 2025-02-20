@@ -1,13 +1,13 @@
 import { useLocation, useNavigate } from "react-router-dom"
 import { TitleModal } from "../TitleModal";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { getUserById, updateUserAdmin } from "../../../api/AuthApi";
 import LoadingSpinner from "../../styles/LoadingSpinner";
 import { useForm } from "react-hook-form";
 import ErrorLabel from "../../styles/ErrorLabel";
 import { useEffect } from "react";
 import { toast } from "react-toastify";
 import { UserUpdateAdminForm } from "../../../types";
+import { getUserById, updateUserAdmin } from "../../../api/UserApi";
 
 export function EditBarberModal() {
     const navigate = useNavigate()

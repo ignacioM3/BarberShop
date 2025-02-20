@@ -1,12 +1,12 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useForm } from "react-hook-form";
-import { createUserApi, getUserById, updateUserAdmin } from "../../../api/AuthApi";
 import { toast } from "react-toastify";
 import ErrorLabel from "../../styles/ErrorLabel";
 import { UserCreateForm, UserUpdateAdminForm } from "../../../types";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import LoadingSpinner from "../../styles/LoadingSpinner";
+import { createUserApi, getUserById, updateUserAdmin } from "../../../api/UserApi";
 interface UserModalInterface {
     open: boolean;
     setOpen: (open: boolean) => void;

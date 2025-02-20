@@ -4,7 +4,6 @@ import { PageContainer } from "../../../components/styles/PageContainer";
 import { PageContent } from "../../../components/styles/PageContent";
 import { PageHeader } from "../../../components/styles/PageHeader";
 import { PageTitle } from "../../../components/styles/PageTitle";
-import { getBarberList } from "../../../api/AuthApi";
 import LoadingSpinner from "../../../components/styles/LoadingSpinner";
 import { UserBarberListType } from "../../../types";
 import { MdBlock, MdOutlineEdit } from "react-icons/md";
@@ -15,6 +14,7 @@ import { Pagination } from "../../../components/styles/Pagination";
 import DeleteUserModal from "../../../components/modal/user/DeleteUserModal";
 import { BlockUserModal } from "../../../components/modal/user/BlockUserModal";
 import { AppRoutes } from "../../../routes";
+import { getBarberList } from "../../../api/BarberApi";
 
 export function BarberList() {
   const navigate = useNavigate()
@@ -38,8 +38,6 @@ export function BarberList() {
       setTotal(data.totalUsers)
     }
   }, [data]);
-
-  console.log(data)
   if (isLoading) {
     return <LoadingSpinner />
   }
@@ -91,7 +89,7 @@ export function BarberList() {
                       <td className="px-6 py-4 flex items-center gap-2 text-xl">
                         <button
                           className="border border-gray-700 p-2 rounded hover:bg-gray-400 hover:text-white hover:border-none transition-colors"
-                          onClick={() => navigate(location.pathname + `?editUser=${row._id}`)}
+                          onClick={() => navigate(AppRoutes.editBarberAdmin.route(row._id))}
                         >
                           <MdOutlineEdit />
                         </button>

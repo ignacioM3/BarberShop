@@ -99,23 +99,29 @@ export class UserControllers {
 
   static updateUser = async (req: Request, res: Response) => {
     const { userId } = req.params;
-    const findUser = await User.findById(userId);
-    if (!findUser) {
-      const error = new Error("Usuario no encontrado");
-      return res.status(404).json({ error: error.message });
-    }
-    if (req.user.role !== userRole.admin) {
-      const error = new Error("Acción no valida");
-      return res.status(404).json({ error: error.message });
-    }
 
-    findUser.name = req.body.name;
-    findUser.number = req.body.number;
-    findUser.instagram = req.body.instagram;
-   
 
-    await findUser.save();
-    res.send("Usuario Actualizado");
+    try {
+      const findUser = await User.findById(userId);
+      if (!findUser) {
+        const error = new Error("Usuario no encontrado");
+        return res.status(404).json({ error: error.message });
+      }
+      if (req.user.role !== userRole.admin) {
+        const error = new Error("Acción no valida");
+        return res.status(404).json({ error: error.message });
+      }
+     
+  
+      const userUpdated = await findUser.updateOne(req.body);
+      if(userUpdated.modifiedCount === 0){
+        return res.status(400).json({ error: "No se realizaron cambios" });
+      }
+      
+      res.send("Usuario Actualizado");
+    } catch (error) {
+      return res.status(500).json({ error: "Error al actualizar barbero" });
+    }
   };
 
   static createUserBarber = async (req: Request, res: Response) => {

@@ -149,6 +149,7 @@ export type formDataCreateBranch = Pick<Branch, 'address' | 'name' | 'close' | '
   corte: number;
   global: number;
 };
+export type editBarberForm = Pick<User, 'name' | 'number' | 'email'>
 
 export type CreateBarberForm = {
   name: string;

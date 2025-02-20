@@ -1,7 +1,7 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useLocation, useNavigate } from "react-router-dom"
 import { toast } from "react-toastify";
-import { blockUserById } from "../../../api/AuthApi";
+import { blockUserById } from "../../../api/UserApi";
 
 export function BlockUserModal() {
     const location = useLocation();

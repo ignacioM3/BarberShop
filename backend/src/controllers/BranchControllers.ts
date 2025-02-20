@@ -60,8 +60,7 @@ export class BranchControllers {
   static addBarberToBranch = async (req: Request, res: Response) => {
     try {
       const { id } = req.body;
-
-      //find barber
+      
       const findBarber = await User.findById(id);
       if (!findBarber) {
         const error = new Error("Usuario no encontrado");
