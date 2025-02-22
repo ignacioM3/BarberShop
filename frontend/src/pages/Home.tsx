@@ -1,8 +1,12 @@
 import { FaCalendarCheck } from "react-icons/fa";
 import BlurText from "../components/bits/BlurText";
 import ShinyText from "../components/bits/ShinyText";
+import { useNavigate } from "react-router-dom";
+import { AppRoutes } from "../routes";
 
 export function Home() {
+  const navigate = useNavigate();
+
   return (
     <>
       {/* Mobile */}
@@ -29,9 +33,13 @@ export function Home() {
           <h1 className="text-center text-2xl font-bold text-gray-300">
             Turno Online:
           </h1>
-          <div className="flex items-center justify-center gap-2 bg-gray-400 w-fit p-4 rounded-md cursor-pointer mx-auto text-white font-bold shadow-md hover:bg-gray-600 transition-colors">
+          <div 
+            className="flex items-center justify-center gap-2 bg-gray-400 w-fit p-4 rounded-md cursor-pointer mx-auto text-white font-bold shadow-md hover:bg-gray-600 transition-colors"
+            onClick={() => navigate(AppRoutes.selectBranchAppointment.route())}
+            >
             <FaCalendarCheck />
-            <button>
+            <button
+            >
               <ShinyText text="Reservar Turno" disabled={false} speed={3}/>
             </button>
           </div>
@@ -54,7 +62,10 @@ export function Home() {
           <h1 className="text-center text-2xl font-bold text-gray-300">
             Turno Online:
           </h1>
-          <div className="flex items-center justify-center gap-2 bg-gray-400 w-fit p-4 rounded-md cursor-pointer mx-auto text-white font-bold shadow-md hover:bg-gray-600 transition-colors">
+          <div 
+            className="flex items-center justify-center gap-2 bg-gray-400 w-fit p-4 rounded-md cursor-pointer mx-auto text-white font-bold shadow-md hover:bg-gray-600 transition-colors"
+            onClick={() => navigate(AppRoutes.selectBranchAppointment.route())}
+            >
             <FaCalendarCheck />
             <button>
             <ShinyText text="Reservar Turno"/>

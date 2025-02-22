@@ -77,3 +77,5 @@ export async function getAppointmentByDayApi({branchId, appointmentId}: {branchI
     }
   }
 }
+
+

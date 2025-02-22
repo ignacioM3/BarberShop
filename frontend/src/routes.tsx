@@ -46,6 +46,16 @@ export const AppRoutes = {
         page: async () => (await import('./pages/auth/NewPassword')).NewPassword,
         layout: appLayoutImport
     },
+    selectBranchAppointment: {
+        route: () => "/appointment/branch",
+        page: async () => (await import('./pages/appointment/SelectBranchAppointment')).SelectBranchAppointment,
+        layout: appLayoutImport
+    },
+    selectTimeAndBarberAppointment: {
+        route: (id?: string) => `/apointment/branch/${id?? ':id'}/time`,
+        page: async () => (await import('./pages/appointment/SelecetTimeAndBarber')).SelecetTimeAndBarber,
+        layout: appLayoutImport
+    },
     //admin pages
     homeAdmin: {
         route: () => "/admin/dashboard",

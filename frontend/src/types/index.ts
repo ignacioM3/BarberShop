@@ -212,3 +212,9 @@ export const getProfitSchema = z.array(
 export type profitSchemaType = z.infer<typeof getProfitSchema >
 export type getProfitByMonthFormData = {month: string, year:string}
 export type profitAppointment = Omit<Appointment, "barberId" | 'timeSlot' | 'instagram' | 'whatsapp' | 'details' | 'branchId'>
+
+
+
+type ValuePiece = Date | null;
+
+export type Value = ValuePiece | [ValuePiece, ValuePiece];
