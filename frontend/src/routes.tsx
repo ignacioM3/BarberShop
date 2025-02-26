@@ -49,11 +49,19 @@ export const AppRoutes = {
     selectBranchAppointment: {
         route: () => "/appointment/branch",
         page: async () => (await import('./pages/appointment/SelectBranchAppointment')).SelectBranchAppointment,
+        allowedRoles: [UserRole.ADMIN, UserRole.BARBER, UserRole.CLIENT],
         layout: appLayoutImport
     },
-    selectTimeAndBarberAppointment: {
+    selectTimeAppointment: {
         route: (id?: string) => `/apointment/branch/${id?? ':id'}/time`,
-        page: async () => (await import('./pages/appointment/SelecetTimeAndBarber')).SelecetTimeAndBarber,
+        page: async () => (await import('./pages/appointment/SelecetTime')).SelecetTime,
+        allowedRoles: [UserRole.ADMIN, UserRole.BARBER, UserRole.CLIENT],
+        layout: appLayoutImport
+    },
+    selectBarberAppointment: {
+        route: (id?: string) => `/appointment/branch/${id?? ':id'}/barber`,
+        page: async () => (await import('./pages/appointment/SelectBarber')).SelectBarber,
+        allowedRoles: [UserRole.ADMIN, UserRole.BARBER, UserRole.CLIENT],
         layout: appLayoutImport
     },
     //admin pages

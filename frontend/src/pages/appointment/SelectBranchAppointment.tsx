@@ -41,7 +41,7 @@ export function SelectBranchAppointment() {
       toast.error("Debe seleccionar un dia")
     }else{
       const formattedDate = (value as Date).toISOString().split('T')[0].split('-').reverse().join('-');
-      navigate(AppRoutes.selectTimeAndBarberAppointment.route(branchId) + `?day=${formattedDate}`)
+      navigate(AppRoutes.selectTimeAppointment.route(branchId) + `?day=${formattedDate}`)
     }
   }
   if(isError) return <h1>falta implementar error</h1>

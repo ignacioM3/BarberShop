@@ -21,7 +21,7 @@ export function AppointmentWeekDay() {
 
   const { formatForApi, formattedDate } = getFormattedDates(day);
 
-
+  console.log(formatForApi)
   const { data, isLoading, isError } = useQuery({
     queryFn: () => getAppointmentByDayApi({ branchId, appointmentId: formatForApi }),
     queryKey: ["getAppointmentDayWeek", day],
