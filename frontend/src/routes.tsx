@@ -64,6 +64,12 @@ export const AppRoutes = {
         allowedRoles: [UserRole.ADMIN, UserRole.BARBER, UserRole.CLIENT],
         layout: appLayoutImport
     },
+    resumenAppointment: {
+        route: (id?: string) => `/appointment/branch/${id?? ':id'}/resumen`,
+        page: async () => (await import('./pages/appointment/ResumenAppointment')).ResumenAppointment,
+        allowedRoles: [UserRole.ADMIN, UserRole.BARBER, UserRole.CLIENT],
+        layout: appLayoutImport
+    },
     //admin pages
     homeAdmin: {
         route: () => "/admin/dashboard",
