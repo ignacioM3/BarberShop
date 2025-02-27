@@ -8,15 +8,24 @@ import Carousel from "../../components/bits/Carousel";
 import { CiShop } from "react-icons/ci";
 import { useState } from "react";
 import { CalendarReact } from "../../components/styles/CalendarReact";
-import { Value } from "../../types";
+import { Branch, Value } from "../../types";
 import { useNavigate } from "react-router-dom";
 import { AppRoutes } from "../../routes";
 import { toast } from "react-toastify";
+import useAppointment from "../../hooks/useAppointment";
 
 
 export function SelectBranchAppointment() {
   const navigate = useNavigate()
-  const [branchId, setBranchId] = useState("")
+  const [branchId, setBranchIdState] = useState("")
+  const {setAppointment, setBranch} = useAppointment()
+
+  const setBranchCarrousel = (data: Branch) => {
+    console.log("Seleccionado:", data);
+    setBranch(data);
+    setBranchIdState(data._id);  
+  };
+
 
   const today = new Date()
   const [value, onChange] = useState<Value>(null);
@@ -35,13 +44,13 @@ export function SelectBranchAppointment() {
     queryKey: ['getAllBranchAppointment']
   })
 
-
   const handleNext = () => {
     if(!value){
       toast.error("Debe seleccionar un dia")
     }else{
       const formattedDate = (value as Date).toISOString().split('T')[0].split('-').reverse().join('-');
-      navigate(AppRoutes.selectTimeAppointment.route(branchId) + `?day=${formattedDate}`)
+      setAppointment({day: formattedDate})
+      navigate(AppRoutes.selectTimeAppointment.route(branchId))
     }
   }
   if(isError) return <h1>falta implementar error</h1>
@@ -60,9 +69,10 @@ export function SelectBranchAppointment() {
                 autoplay={true}
                 autoplayDelay={3000}
                 pauseOnHover={true}
-                setBranchId={setBranchId}
+                setBranchCarrousel={setBranchCarrousel}
                 loop={true}
-                items={data.map(branch => ({
+                items={data.map((branch: Branch) => ({
+                  branch: branch,
                   name: branch.name,
                   address: branch.address,
                   _id: branch._id,

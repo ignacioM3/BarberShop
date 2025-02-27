@@ -2,7 +2,6 @@ import api from "../lib/axios";
 import {
   branchSchema,
   FormDataCreateBranchApi,
-  getBranchListSchema,
 } from "../types";
 import { handleApiError } from "./handleErrorApi";
 
@@ -10,11 +9,7 @@ export async function getAllBranchsApi() {
   try {
     const url = "/branch/get-branchs";
     const { data } = await api(url);
-    const response = getBranchListSchema.safeParse(data);
-
-    if (response.success) {
-      return response.data;
-    }
+  return data
   } catch (error) {
     handleApiError(error);
   }

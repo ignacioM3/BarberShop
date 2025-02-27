@@ -6,18 +6,18 @@ import { getAppointmentByDayApi } from "../../api/AppointmentApi";
 import LoadingSpinner from "../../components/styles/LoadingSpinner";
 import { generateTimeSlots } from "../../utils/generateTime";
 import { useEffect, useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import { AppRoutes } from "../../routes";
+import useAppointment from "../../hooks/useAppointment";
 
 export function SelecetTime() {
-  const branchId = "67b4088ad19544573d94fe24";
-  const location = useLocation()
+  const {id} = useParams();
+  const branchId = id!
+  const {appointment, setAppointment} = useAppointment()
   const navigate = useNavigate()
-  const queryParams = new URLSearchParams(location.search)
-  const day = queryParams.get('day')!
-  const shortDate = day?.split("-").slice(0, 2).join("-");
 
+  const shortDate = appointment.day?.split("-").slice(0, 2).join("-");
   const [timeSlots, setTimeSlots] = useState<string[]>([])
   const [timeSelect, setTimeSelect] = useState('')
 
@@ -30,7 +30,6 @@ export function SelecetTime() {
   useEffect(() => {
     if (data) {
       setTimeSlots(generateTimeSlots(data.branch.open, data.branch.close, 30));
-
     }
   }, [data]);
 
@@ -39,8 +38,8 @@ export function SelecetTime() {
       toast.error("Debe seleccionar un horario")
       return
     }
-
-    navigate(AppRoutes.selectBarberAppointment.route(branchId) + `?time=${timeSelect}`)
+    setAppointment({time: timeSelect})
+    navigate(AppRoutes.selectBarberAppointment.route(branchId))
   }
 
   if (isError) return <h1>Falta Implementar error</h1>

@@ -4,12 +4,16 @@ import { PageContent } from "../../components/styles/PageContent";
 import { PageTitle } from "../../components/styles/PageTitle";
 import { TbBrandCashapp } from "react-icons/tb";
 import { BiErrorAlt } from "react-icons/bi";
+import useAppointment from "../../hooks/useAppointment";
 
 export function ResumenAppointment() {
     const navigate = useNavigate();
+    const {appointment, branch} = useAppointment()
     const handleNext = () => {
-
+        
     }
+
+    console.log(appointment)
     return (
         <PageContainer>
             <PageContent className="md:mt-10">
@@ -24,27 +28,31 @@ export function ResumenAppointment() {
                     <hr className="mb-3"/>
                     <div className="flex gap-2 mb-2 justify-between">
                         <span className="font-bold text-gray-500">Local:</span>
-                        <span className="text-gray-700">BarberNico</span>
+                        <span className="text-gray-700">{branch?.name}</span>
                     </div>
                     <div className="flex gap-2 mb-2 justify-between">
                         <span className="font-bold text-gray-500">Horario:</span>
-                        <span className="text-gray-700">10:30</span>
+                        <span className="text-gray-700">{appointment.time}</span>
+                    </div>
+                    <div className="flex gap-2 mb-2 justify-between">
+                        <span className="font-bold text-gray-500">Dia:</span>
+                        <span className="text-gray-700">{appointment.day}</span>
                     </div>
                     <div className="flex gap-2 mb-2 justify-between">
                         <span className="font-bold text-gray-500">Dirreción:</span>
-                        <span className="text-gray-700">Francia 4070</span>
+                        <span className="text-gray-700">{branch?.address}</span>
                     </div>
                     <div className="flex gap-2 mb-2 justify-between">
                         <span className="font-bold text-gray-500">Barbero:</span>
-                        <span className="text-gray-700">Barbero A</span>
+                        <span className="text-gray-700">{appointment.barberName}</span>
                     </div>
                     <div className="flex gap-2 mb-2 justify-between">
                         <span className="font-bold text-gray-500">Servicio:</span>
-                        <span className="text-gray-700">Claritos</span>
+                        <span className="text-gray-700">{appointment.service}</span>
                     </div>
                     <div className="flex gap-2 mb-2 justify-between">
                         <span className="font-bold text-gray-500">Precio:</span>
-                        <span className="text-gray-700">$25000</span>
+                        <span className="text-gray-700">${appointment.price}</span>
                     </div>
                    
                 </div>

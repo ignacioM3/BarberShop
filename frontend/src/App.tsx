@@ -2,12 +2,15 @@ import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom'
 import { AuthProvider } from './context/AuthProvider'
 import { routeList } from './routes'
 import { LazyComponentLoader } from './routes/lazy-component-loader';
+import { AppointmentProvider } from './context/AppointmentProvider';
 
 
 export default function router() {
   return (
     <BrowserRouter>
       <AuthProvider>
+        <AppointmentProvider>
+          
         <Routes>
           {routeList.map((route, index) => {
             if (route.redirect) {
@@ -40,6 +43,8 @@ export default function router() {
             );
           })}
         </Routes>
+        
+        </AppointmentProvider>
       </AuthProvider>
     </BrowserRouter>
   )

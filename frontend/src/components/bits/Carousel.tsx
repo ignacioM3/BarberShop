@@ -1,12 +1,7 @@
 import { useEffect, useState, useRef } from "react";
 import { motion, PanInfo, useMotionValue, useTransform } from "framer-motion";
-import {
-    FiCircle,
-    FiCode,
-    FiLayers,
-    FiLayout,
-} from "react-icons/fi";
-import { CiShop } from "react-icons/ci";
+
+import { Branch } from "../../types";
 
 export interface CarouselItem {
     name: string;
@@ -14,51 +9,20 @@ export interface CarouselItem {
     _id: string;
     icon: JSX.Element;
     img?: string;
+    branch: Branch;
 }
 
 export interface CarouselProps {
-    items?: CarouselItem[];
+    items: CarouselItem[];
     baseWidth?: number;
     autoplay?: boolean;
     autoplayDelay?: number;
     pauseOnHover?: boolean;
     loop?: boolean;
     round?: boolean;
-    setBranchId: (t: string) => void
+    setBranchCarrousel: (t: Branch) => void
 }
 
-const DEFAULT_ITEMS: CarouselItem[] = [
-    {
-        name: "Text Animations",
-        address: "Cool text animations for your projects.",
-        _id: "1",
-        icon: <CiShop className="h-[16px] w-[16px] text-white font-bold" />,
-    },
-    {
-        name: "Animations",
-        address: "Smooth animations for your projects.",
-        _id: "2",
-        icon: <FiCircle className="h-[16px] w-[16px] text-white" />,
-    },
-    {
-        name: "Components",
-        address: "Reusable components for your projects.",
-        _id: "3",
-        icon: <FiLayers className="h-[16px] w-[16px] text-white" />,
-    },
-    {
-        name: "Backgrounds",
-        address: "Beautiful backgrounds and patterns for your projects.",
-        _id: "4",
-        icon: <FiLayout className="h-[16px] w-[16px] text-white" />,
-    },
-    {
-        name: "Common UI",
-        address: "Common UI components are coming soon!",
-        _id: "5",
-        icon: <FiCode className="h-[16px] w-[16px] text-white" />,
-    },
-];
 
 const DRAG_BUFFER = 0;
 const VELOCITY_THRESHOLD = 500;
@@ -66,13 +30,13 @@ const GAP = 16;
 const SPRING_OPTIONS = { type: "spring", stiffness: 300, damping: 30 };
 
 export default function Carousel({
-    items = DEFAULT_ITEMS,
+    items,
     baseWidth = 300,
     autoplay = false,
     autoplayDelay = 3000,
     pauseOnHover = false,
     loop = false,
-    setBranchId,
+    setBranchCarrousel,
     round = false,
 }: CarouselProps): JSX.Element {
     const containerPadding = 16;
@@ -234,7 +198,9 @@ export default function Carousel({
                                 </div>
                                 <button 
                                     className="px-2 text-white rounded-md bg-gray-600 hover:bg-gray-500 transition-colors"
-                                    onClick={() => setBranchId(item._id)}
+                                    onClick={() => {
+                                        setBranchCarrousel(item.branch);
+                                      }}
                                     >Seleccionar</button>
                             </div>
                         </motion.div>

@@ -11,6 +11,7 @@ import { useQuery } from "@tanstack/react-query";
 import { UserRole } from "../../../types/use-role";
 import { useState } from "react";
 import { AppointmentSelected } from "../../../components/admin/AppointmentSelected";
+import { Branch } from "../../../types";
 
 
 export function Appointment() {
@@ -35,7 +36,7 @@ export function Appointment() {
                 <PageContent>
                     {!branchId && (
                         <div className="flex flex-col md:flex-row items-center justify-center gap-4">
-                            {data ? data.map((branch, index) => (
+                            {data ? data.map((branch: Branch, index: string) => (
                                 <div
                                     key={index}
                                     onClick={() => setBranchId(branch._id)}
@@ -54,7 +55,7 @@ export function Appointment() {
 
     }
     if (currentUser?.role === UserRole.BARBER) {
-        const userBranch = data?.find(branch =>
+        const userBranch = data?.find((branch: Branch) =>
             branch.barbers.some(barber => barber._id === currentUser?._id)
         );
 
