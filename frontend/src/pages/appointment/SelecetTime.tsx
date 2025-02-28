@@ -10,6 +10,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import { AppRoutes } from "../../routes";
 import useAppointment from "../../hooks/useAppointment";
+import { formattedDateForApi } from "../../utils/getFormatDay";
 
 export function SelecetTime() {
   const {id} = useParams();
@@ -18,13 +19,14 @@ export function SelecetTime() {
   const navigate = useNavigate()
 
   const shortDate = appointment.day?.split("-").slice(0, 2).join("-");
+  const dateForApi = formattedDateForApi(appointment.day)
   const [timeSlots, setTimeSlots] = useState<string[]>([])
   const [timeSelect, setTimeSelect] = useState('')
-
+  
 
   const { data, isLoading, isError } = useQuery({
-    queryFn: () => getAppointmentByDayApi({ branchId, appointmentId: "2025-02-28" }),
-    queryKey: ["getAppointmentDayWeek", shortDate],
+    queryFn: () => getAppointmentByDayApi({ branchId, appointmentId:dateForApi }),
+    queryKey: ["getAppointmentDayWeek", dateForApi],
     retry: false
   })
   useEffect(() => {

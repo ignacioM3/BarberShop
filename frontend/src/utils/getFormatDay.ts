@@ -17,3 +17,12 @@ export function getFormattedDates(day: string | null): {
 
   return { formatForApi, formattedDate };
 }
+
+
+export function formattedDateForApi  (date: string | undefined) {
+  if(!date){
+    return ""
+  }
+  const [day, month, year ] = date.split('-');
+  return `${year}-${month}-${day}`;
+}

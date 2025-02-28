@@ -41,6 +41,7 @@ const AppointmentProvider = ({children}: {children: React.ReactNode}) =>{
   }
   const setBranch = (data: Branch) => {
     setBranchState(data);
+    console.log(branch)
   };
 
   return (

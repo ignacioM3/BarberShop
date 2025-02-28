@@ -36,9 +36,6 @@ export function SelectBranchAppointment() {
     return day === 0 || day === 1 || date < today;
   };
 
-
-
-
   const { data, isLoading, isError } = useQuery({
     queryFn: getAllBranchsApi,
     queryKey: ['getAllBranchAppointment']
