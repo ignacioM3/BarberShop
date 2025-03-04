@@ -2,7 +2,7 @@ import { useNavigate, useParams } from "react-router-dom"
 import { PageContainer } from "../../components/styles/PageContainer"
 import { PageContent } from "../../components/styles/PageContent"
 import { PageTitle } from "../../components/styles/PageTitle"
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import { AppRoutes } from "../../routes";
 import { SelectService } from "../../components/appointment/SelectService";
@@ -10,16 +10,25 @@ import useAppointment from "../../hooks/useAppointment";
 
 
 export function SelectBarber() {
+  const { setAppointment, branch, appointment, appointments } = useAppointment()
+  const [selectedBarber, setSelectedBarber] = useState("")
   const navigate = useNavigate();
   const { id } = useParams()
   const branchId = id!
-  const { setAppointment, branch, appointment } = useAppointment()
 
+  useEffect(() => {
+    if (!branch || !appointment) {
+      navigate(AppRoutes.home.route(), { replace: true })
+      return
+    }
+  }, [branch, appointment])
+  const appointmentsFilter = appointments?.filter(appoint => appoint.timeSlot == appointment.time)
+  const barbersID = new Set(appointmentsFilter?.map(appoint => appoint.barberId))
+  const availableBarbers = branch?.barbers.filter(bar => !barbersID.has(bar._id));
 
-  const [selectedBarber, setSelectedBarber] = useState("")
-  const handleSelectBarber = ({id, name} : {id: string, name: string}) => {
+  const handleSelectBarber = ({ id, name }: { id: string, name: string }) => {
     setSelectedBarber(id)
-    setAppointment({barberId: id, barberName: name})
+    setAppointment({ barberId: id, barberName: name })
 
   }
   const handleNext = () => {
@@ -27,7 +36,7 @@ export function SelectBarber() {
       toast.error("Debe seleccionar un barbero")
       return
     }
-    if(!appointment.service){
+    if (!appointment.service) {
       toast.error("Debe seleccionar un servicio")
       return
     }
@@ -51,21 +60,23 @@ export function SelectBarber() {
             />
           </div>
           <h1 className="font-bold uppercase text-white">Disponible </h1>
-          {branch?.barbers.map(bar => (
-            <span
-              className={`bg-amber-600 p-3 rounded-md cursor-pointer font-bold text-white hover:bg-amber-700 transition-colors ${selectedBarber === bar._id && 'bg-amber-700'}`}
-              onClick={() => handleSelectBarber({
-                id: bar._id,
-                name: bar.name!
-              })}
-              key={bar._id}
-            >{bar.name}</span>
-          ))}
-          <h1 className="font-bold text-white uppercase">Reservados</h1>
-          <div className="flex gap-4">
-            <span className="bg-gray-400 p-3 rounded-md cursor-default font-bold text-white">Barbero 2</span>
-            <span className="bg-gray-400 p-3 rounded-md cursor-default font-bold text-white">Barbero 3</span>
-          </div>
+          {availableBarbers && availableBarbers.length > 0 ? (
+            availableBarbers.map(bar => (
+              <span
+                className={`bg-amber-600 p-3 rounded-md cursor-pointer font-bold text-white hover:bg-amber-700 transition-colors ${selectedBarber === bar._id && 'bg-amber-700'}`}
+                onClick={() => handleSelectBarber({
+                  id: bar._id,
+                  name: bar.name!
+                })}
+                key={bar._id}
+              >
+                {bar.name}
+              </span>
+            ))
+          ) : (
+            <h1 className="font-bold text-center text-red-500">No hay barberos disponibles</h1>
+          )}
+
           <hr className="w-[80%] border-orange-600" />
           <div className="flex items-center justify-center mt-4 gap-4">
             <button

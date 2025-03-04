@@ -3,10 +3,22 @@ import BlurText from "../components/bits/BlurText";
 import ShinyText from "../components/bits/ShinyText";
 import { useNavigate } from "react-router-dom";
 import { AppRoutes } from "../routes";
+import useAuth from "../hooks/useAuth";
+import { toast } from "react-toastify";
 
 export function Home() {
   const navigate = useNavigate();
+  const {currentUser} = useAuth()
 
+  const appointmentRoute = () => {
+    if(!currentUser){
+      toast.info("Debes iniciar sessión para sacar turno")
+      return
+    }
+    navigate(AppRoutes.selectBranchAppointment.route())
+  
+
+  }
   return (
     <>
       {/* Mobile */}
@@ -35,7 +47,7 @@ export function Home() {
           </h1>
           <div 
             className="flex items-center justify-center gap-2 bg-gray-400 w-fit p-4 rounded-md cursor-pointer mx-auto text-white font-bold shadow-md hover:bg-gray-600 transition-colors"
-            onClick={() => navigate(AppRoutes.selectBranchAppointment.route())}
+            onClick={() => appointmentRoute()}
             >
             <FaCalendarCheck />
             <button
@@ -64,7 +76,7 @@ export function Home() {
           </h1>
           <div 
             className="flex items-center justify-center gap-2 bg-gray-400 w-fit p-4 rounded-md cursor-pointer mx-auto text-white font-bold shadow-md hover:bg-gray-600 transition-colors"
-            onClick={() => navigate(AppRoutes.selectBranchAppointment.route())}
+            onClick={() => appointmentRoute()}
             >
             <FaCalendarCheck />
             <button>

@@ -26,14 +26,18 @@ export function SelectBranchAppointment() {
     setBranchIdState(data._id);  
   };
 
-
-  const today = new Date()
   const [value, onChange] = useState<Value>(null);
 
 
   const disableDays = ({ date }: { date: Date }) => {
+    const today = new Date();
+    today.setHours(0, 0, 0, 0); // Normaliza 'today' a medianoche
+  
     const day = date.getDay();
-    return day === 0 || day === 1 || date < today;
+    const checkDate = new Date(date);
+    checkDate.setHours(0, 0, 0, 0); // Normaliza 'date' también
+  
+    return day === 0 || day === 1 || checkDate < today;
   };
 
   const { data, isLoading, isError } = useQuery({

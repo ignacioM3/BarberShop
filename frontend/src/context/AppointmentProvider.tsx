@@ -1,7 +1,7 @@
 import { createContext, useState } from "react";
-import { Branch } from "../types";
+import { Appointment, Branch } from "../types";
 
-interface Appointment{
+interface AppointmentForm{
     barberId?: string;
     branchId?: string;
     barberName?: string;
@@ -12,9 +12,11 @@ interface Appointment{
 }
 
 interface AppointmentContextType {
-    appointment: Appointment;
+    appointment: AppointmentForm;
+    appointments?: Appointment[];
     branch?: Branch;
-    setAppointment: (appointment: Partial<Appointment>) => void;
+    setAppointments: (appointment: Appointment[]) => void
+    setAppointment: (appointment: Partial<AppointmentForm>) => void;
     clearAppointment: () => void;
     setBranch: (branch: Branch) => void;
   }
@@ -24,18 +26,24 @@ const AppointmentContext = createContext<AppointmentContextType>( {
   appointment: {},
   branch: undefined,
   setAppointment: () => {},
+  setAppointments: () => {},
+  appointments: [],
   clearAppointment: () => {},
   setBranch: () => {}
 })
 
 const AppointmentProvider = ({children}: {children: React.ReactNode}) =>{
-  const [appointment, setAppointmentState] = useState<Appointment>({})
+  const [appointment, setAppointmentState] = useState<AppointmentForm>({})
   const [branch, setBranchState] = useState<Branch | undefined>(undefined)
-
+  const [appointments, setAppointmentsState] = useState<Appointment []>([])
   const setAppointment = (data: Partial<Appointment>) => {
     setAppointmentState(prev => ({...prev, ...data}))
-    console.log(data)
   }
+
+  const setAppointments = (appointments: Appointment[]) =>{
+    setAppointmentsState(appointments)
+  }
+  
   const clearAppointment = () =>{
     setAppointmentState({})
   }
@@ -48,7 +56,9 @@ const AppointmentProvider = ({children}: {children: React.ReactNode}) =>{
     <AppointmentContext.Provider
     value={{
       appointment,
+      appointments,
       setAppointment,
+      setAppointments,
       clearAppointment,
       branch,
       setBranch
