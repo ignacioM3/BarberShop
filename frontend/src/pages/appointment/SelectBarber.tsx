@@ -7,6 +7,7 @@ import { toast } from "react-toastify";
 import { AppRoutes } from "../../routes";
 import { SelectService } from "../../components/appointment/SelectService";
 import useAppointment from "../../hooks/useAppointment";
+import { AppointmentStatus } from "../../types/appointment-status";
 
 
 export function SelectBarber() {
@@ -22,7 +23,7 @@ export function SelectBarber() {
       return
     }
   }, [branch, appointment])
-  const appointmentsFilter = appointments?.filter(appoint => appoint.timeSlot == appointment.time)
+  const appointmentsFilter = appointments?.filter(appoint => appoint.timeSlot == appointment.time && appoint.status !== AppointmentStatus.CANCELED)
   const barbersID = new Set(appointmentsFilter?.map(appoint => appoint.barberId))
   const availableBarbers = branch?.barbers.filter(bar => !barbersID.has(bar._id));
 

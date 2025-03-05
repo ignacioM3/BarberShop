@@ -6,7 +6,7 @@ import { PageContent } from "../../../components/styles/PageContent";
 import { generateTimeSlots } from "../../../utils/generateTime";
 import { Appointment, UserBarberListType } from "../../../types";
 import { AppointmentDetails } from "../../../components/modal/appointment/AppointmentDetails";
-import { AppointmentModal } from "../../../components/modal/appointment/AddAppointmentModal";
+import { AppointmentModal, Services } from "../../../components/modal/appointment/AddAppointmentModal";
 import { getFormattedDates } from "../../../utils/getFormatDay";
 
 export function AppointmentWeekDay() {
@@ -104,7 +104,10 @@ export function AppointmentWeekDay() {
 
         }
         {detailsAppointment && <AppointmentDetails />}
-        <AppointmentModal />
+        <AppointmentModal  services = {data.branch.prices.map((services: Services) => ({
+                   service: services.service,
+                   price: services.price
+                }))}/>
       </PageContent>
 
     )

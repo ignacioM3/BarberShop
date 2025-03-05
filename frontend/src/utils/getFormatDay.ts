@@ -12,10 +12,19 @@ export function getFormattedDates(day: string | null): {
 
   const targetDate = new Date(currentYear, currentMonth, parsedDay);
 
-  const formatForApi = format(targetDate, "yyyy-MM-dd");
-  const formattedDate = format(targetDate, "dd-MM");
+  if (targetDate.getMonth() !== currentMonth) {
+    // Si el mes calculado no es el actual, significa que está en el próximo mes
+    const nextMonthDate = new Date(currentYear, currentMonth + 1, parsedDay);
+    return {
+      formatForApi: format(nextMonthDate, "yyyy-MM-dd"),
+      formattedDate: format(nextMonthDate, "dd-MM")
+    };
+  }
 
-  return { formatForApi, formattedDate };
+  return {
+    formatForApi: format(targetDate, "yyyy-MM-dd"),
+    formattedDate: format(targetDate, "dd-MM")
+  };
 }
 
 

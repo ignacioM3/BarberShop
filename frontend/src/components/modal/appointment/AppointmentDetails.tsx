@@ -16,10 +16,9 @@ import { deleteAppointmentApiType } from "../../../types";
 export function AppointmentDetails() {
   const navigate = useNavigate()
   const location = useLocation();
-  const {id} = useParams()
-  const branchId = id!
+  const {id : branchId} = useParams()
   const queryParams = new URLSearchParams(location.search);
-  const AppointmentHours = queryParams.get('detailsAppointment')!
+  const AppointmentHours = queryParams.get('detailsAppointment') || "";
   const appointmentWeek = queryParams.get("appointmentWeek")
   const day = appointmentWeek ? appointmentWeek : new Date().getDate()
   const show = AppointmentHours ? true : false
@@ -35,13 +34,12 @@ export function AppointmentDetails() {
   };
 
   const { data, isLoading, isError } = useQuery({
-    queryKey: ['getTodayAppointment', branchId],
-    queryFn: () => getAppointmentByIdApi(AppointmentHours),
+    queryKey: ['AppointmentDetails', branchId, AppointmentHours],
+    queryFn: () => AppointmentHours ? getAppointmentByIdApi(AppointmentHours) : Promise.reject("No appointment ID"),
+    enabled: !!AppointmentHours, 
     retry: false
-  })
+  });
 
-
-  console.log(data)
 
   const {mutate} = useMutation({
     mutationFn: updateStatusAppointmentApi,
@@ -96,6 +94,7 @@ export function AppointmentDetails() {
           {data && (
             <>
               <h2 className="font-bold text-center mb-2">Detalles del turno</h2>
+              {data.status === AppointmentStatus.CANCELED && <h1 className="font-bold text-center text-orange-500">Turno Cancelado</h1>}
               <div className="flex flex-col">
                 <p className="flex justify-between font-bold">Nombre <span className="font-normal">{data.name}</span></p>
                 <p className="flex justify-between font-bold">Hora <span className="font-normal">{data.timeSlot}</span></p>

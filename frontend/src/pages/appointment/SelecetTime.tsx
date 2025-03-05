@@ -11,6 +11,8 @@ import { toast } from "react-toastify";
 import { AppRoutes } from "../../routes";
 import useAppointment from "../../hooks/useAppointment";
 import { formattedDateForApi } from "../../utils/getFormatDay";
+import { Appointment } from "../../types";
+import { AppointmentStatus } from "../../types/appointment-status";
 
 export function SelecetTime() {
   const { id } = useParams();
@@ -43,8 +45,7 @@ export function SelecetTime() {
       const generatedSlots = generateTimeSlots(data.branch.open, data.branch.close, 30)
 
       const updateSlots = generatedSlots.map(slot => {
-        const appointmentsInTime = data.appointments?.filter((appointment: any) => appointment.timeSlot === slot).length
-
+        const appointmentsInTime = data.appointments?.filter((appointment: Appointment) => appointment.timeSlot === slot &&  appointment.status !== AppointmentStatus.CANCELED).length
 
         return {
           time: slot,

@@ -10,43 +10,53 @@ import { AppointmentStatus } from "../../../types/appointment-status";
 import { getFormattedDates } from "../../../utils/getFormatDay";
 
 
+export interface Services {
+    service?: string;
+    price?: number
+}
+
+interface SelectServiceProps {
+    services?: Services[]
+}
 
 
-export function  AppointmentModal() {
+export function AppointmentModal({ services }: SelectServiceProps) {
     const navigate = useNavigate();
     const location = useLocation();
     const queryParams = new URLSearchParams(location.search);
     const time = queryParams.get('time')!
     const show = time ? true : false
-    const {id} = useParams()
+    const { id } = useParams()
+
     const day = queryParams.get("appointmentWeek");
     const barberId = queryParams.get('barberId')!
     const branchId = id!
     const queryClient = useQueryClient();
 
-     const { formatForApi } = getFormattedDates(day);
-
+    const { formatForApi } = getFormattedDates(day);
 
     const closeDetails = () => {
         queryParams.delete("time");
+        reset()
         if (!day) {
-          navigate(location.pathname, { replace: true });
+            navigate(location.pathname, { replace: true });
         } else {
-          navigate(`${location.pathname}?${queryParams.toString()}`, { replace: true });
+            navigate(`${location.pathname}?${queryParams.toString()}`, { replace: true });
         }
-      };
-    
+    };
 
-     const initialValues = {
+
+    const initialValues = {
         name: "",
         service: "",
         whatsapp: "",
         instagram: "",
-        details: ""
+        details: "",
+        price: 0
 
     }
 
-    const {mutate} = useMutation({
+    const { mutate } = useMutation({
         mutationFn: createAppointmentApi,
         onError: (error) => {
             toast.error(error.message)
@@ -54,31 +64,37 @@ export function  AppointmentModal() {
         onSuccess: (data) => {
             toast.success(data);
             closeDetails()
-            queryClient.invalidateQueries({queryKey: ["getTodayAppointment", branchId]})
-            if(day){
-                queryClient.invalidateQueries({queryKey: ["getAppointmentDayWeek", day]})
+            queryClient.invalidateQueries({ queryKey: ["getTodayAppointment", branchId] })
+            if (day) {
+                queryClient.invalidateQueries({ queryKey: ["getAppointmentDayWeek", day] })
             }
             reset()
         }
     })
 
-    const {register, handleSubmit, reset, formState: {errors}} = useForm({
+    const { register, handleSubmit, reset, formState: { errors }, setValue } = useForm({
         defaultValues: initialValues
     })
+    const handleServiceChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+        const selectedService = e.target.value;
 
+        const selectedServiceObj = services?.find(service => service.service === selectedService);
+      
+        setValue('service', selectedServiceObj?.service ?? "");
+        setValue('price', selectedServiceObj?.price ?? 0);
+      };
     const handleCreateAppointment = (formData: createAppointmentForm) => {
-        
+
         const data = {
             ...formData,
             branchId: branchId,
             day: day ? formatForApi : new Date().toISOString().split('T')[0],
             timeSlot: time,
-            price: 7000,
             barberId,
             manual: true,
             status: AppointmentStatus.BOOKED,
         }
-        mutate({branchId: branchId, formData: data})
+        mutate({ branchId: branchId, formData: data })
     }
 
     return (
@@ -98,7 +114,7 @@ export function  AppointmentModal() {
                             htmlFor="name"
                             className="uppercase text-gray-600 font-bold flex justify-between items-center"
                         >
-                            nombre 
+                            nombre
                             {
                                 errors.name && (
                                     <ErrorLabel>
@@ -116,7 +132,7 @@ export function  AppointmentModal() {
                             className="w-full mt-2 py-1 px-2 border rounded-md bg-gray-100"
                             placeholder="Ingresa el Nombre"
                         />
-                        
+
                     </div>
                     <div className="my-1">
                         <label
@@ -135,17 +151,22 @@ export function  AppointmentModal() {
                             {...register("service", {
                                 required: "Selecciona un servicio",
                             })}
+                            onChange={handleServiceChange}
                             id="service"
+
                             className="w-full mt-2 py-1 px-2 border rounded-md bg-gray-100 cursor-pointer"
                         >
                             <option value="">Selecciona un Servicio</option>
-                            <option value="corte">Corte</option>
-                            <option value="afeitado">Claritos</option>
-                            <option value="tinte">Global</option>
+                            {
+
+                                services?.map((ser, index) => (
+                                    <option value={ser.service} key={index} className="uppercase">{ser.service}</option>
+                                ))
+                            }
                         </select>
-                        
+
                     </div>
-                  
+
                     <div className="my-1">
                         <label
                             htmlFor="instagram"
@@ -160,9 +181,9 @@ export function  AppointmentModal() {
                             className="w-full mt-2 py-1 px-2 border rounded-md bg-gray-100"
                             placeholder="Ingresa el instagram"
                         />
-                        
+
                     </div>
-                    
+
                     <div className="my-1">
                         <label
                             htmlFor="whatsapp"
@@ -177,7 +198,7 @@ export function  AppointmentModal() {
                             className="w-full mt-2 py-1 px-2 border rounded-md bg-gray-100"
                             placeholder="Ingresa el Nombre"
                         />
-                        
+
                     </div>
                     <div className="my-1">
                         <label
@@ -193,7 +214,7 @@ export function  AppointmentModal() {
                             className="w-full mt-2 py-1 px-2 border rounded-md bg-gray-100"
                             placeholder="Ingresa el Nombre"
                         />
-                        
+
                     </div>
                     <div className="flex gap-4 mt-4">
 
@@ -203,7 +224,7 @@ export function  AppointmentModal() {
                             className="bg-red-500 w-full py-2 mb-2 text-sm text-gray-100 uppercase font-bold rounded cursor-pointer hover:bg-red-600 transition-colors"
                             onClick={closeDetails}
                         />
-                           <input
+                        <input
                             type="submit"
                             className="bg-green-500 w-full text-sm py-2 mb-2 text-gray-100 uppercase font-bold rounded cursor-pointer hover:bg-green-600 transition-colors"
                             value="Crear Turno"

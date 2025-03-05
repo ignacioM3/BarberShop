@@ -4,7 +4,7 @@ import { PageTitle } from "../../../components/styles/PageTitle";
 import { PageContent } from "../../../components/styles/PageContent";
 import { AppointmentDetails } from "../../../components/modal/appointment/AppointmentDetails";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
-import { AppointmentModal } from "../../../components/modal/appointment/AddAppointmentModal";
+import { AppointmentModal, Services } from "../../../components/modal/appointment/AddAppointmentModal";
 import { useQuery } from "@tanstack/react-query";
 import LoadingSpinner from "../../../components/styles/LoadingSpinner";
 import { getTodayAppointmentApi } from "../../../api/AppointmentApi";
@@ -25,6 +25,8 @@ export function AppointmentToday() {
     queryKey: ["getTodayAppointment", branchId],
     retry: false,
   });
+
+  console.log(data)
 
 
   if (isLoading) return <LoadingSpinner />;
@@ -99,7 +101,10 @@ export function AppointmentToday() {
         </PageContent>
         {detailsAppointment && <AppointmentDetails />}
 
-        <AppointmentModal />
+        <AppointmentModal services = {data.branch.prices.map((services: Services) => ({
+           service: services.service,
+           price: services.price
+        }))}/>
       </PageContainer>
     );
   }
