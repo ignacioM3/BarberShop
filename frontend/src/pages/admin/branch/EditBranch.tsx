@@ -17,7 +17,7 @@ import { formDataCreateBranch } from "../../../types";
 export function EditBranch() {
     const navigate = useNavigate();
     const queryClient = useQueryClient()
-      const [hasEdited, setHasEdited] = useState(false);
+    const [hasEdited, setHasEdited] = useState(false);
     const { id } = useParams();
     const branchId = id!;
     const { data, isLoading, isError } = useQuery({
@@ -26,7 +26,7 @@ export function EditBranch() {
         queryFn: () => getBranchById(branchId)
     });
 
-    const {mutate} = useMutation({
+    const { mutate } = useMutation({
         mutationFn: updateBranchApi,
         onError: (error) => {
             toast.error(error.message)
@@ -39,14 +39,14 @@ export function EditBranch() {
                 open: "",
                 close: "",
                 claritos: 0,
-                corte:  0,
-                global:  0,
+                corte: 0,
+                global: 0,
             })
             toast.success(data)
-            queryClient.invalidateQueries({queryKey: ['getBranchs']})
+            queryClient.invalidateQueries({ queryKey: ['getBranchs'] })
             setTimeout(() => {
                 navigate(AppRoutes.branchListAdmin.route());
-              }, 1500);
+            }, 1500);
         }
     })
 
@@ -56,9 +56,9 @@ export function EditBranch() {
         open: "",
         close: "",
         claritos: 0,
-        corte:  0,
-        global:  0,
-    } 
+        corte: 0,
+        global: 0,
+    }
 
 
     const { handleSubmit, register, formState: { errors }, reset } = useForm({
@@ -89,25 +89,25 @@ export function EditBranch() {
 
     const handleSubmitForm = (dataForm: formDataCreateBranch) => {
         const data = {
-            dataForm:   {
+            dataForm: {
                 name: dataForm.name,
                 address: dataForm.address,
                 open: dataForm.open,
                 close: dataForm.close,
                 prices: [
-                  { service: "claritos", price: dataForm.claritos },
-                  { service: "corte", price: dataForm.corte },
-                  { service: "global", price: dataForm.global }
+                    { service: "claritos", price: dataForm.claritos },
+                    { service: "corte", price: dataForm.corte },
+                    { service: "global", price: dataForm.global }
                 ]
-              },
-              branchId
+            },
+            branchId
         }
 
         mutate(data)
     };
 
 
-    if(isError) return <h1>falta implementar error</h1>
+    if (isError) return <h1>falta implementar error</h1>
     if (isLoading) return <LoadingSpinner />;
 
     return (
@@ -182,51 +182,60 @@ export function EditBranch() {
                             Corte
                             {errors.corte && <ErrorLabel>{errors.corte.message}</ErrorLabel>}
                         </label>
-                        <input
-                            className="w-full mt-2 p-2 border rounded-md bg-gray-100"
-                            type="number"
-                            id="corte"
-                            placeholder="$ Precio de corte"
-                            {...register('corte', {
-                                required: "Precio obligatorio",
-                                valueAsNumber: true,
-                                validate: value => value !== 0 || 'El valor no puede ser 0'
-                            })}
-                        />
+                        <div className="flex gap-1 items-center">
+                            <span className="font-bold text-gray-500 pt-2">$</span>
+                            <input
+                                className="w-full mt-2 p-2 border rounded-md bg-gray-100"
+                                type="number"
+                                id="corte"
+                                placeholder="$ Precio de corte"
+                                {...register('corte', {
+                                    required: "Precio obligatorio",
+                                    valueAsNumber: true,
+                                    validate: value => value !== 0 || 'El valor no puede ser 0'
+                                })}
+                            />
+                        </div>
                     </div>
                     <div className="my-2">
                         <label htmlFor="claritos" className="uppercase text-gray-600 font-bold flex items-center justify-between">
                             Claritos
                             {errors.claritos && <ErrorLabel>{errors.claritos.message}</ErrorLabel>}
                         </label>
-                        <input
-                            className="w-full mt-2 p-2 border rounded-md bg-gray-100"
-                            type="number"
-                            id="claritos"
-                            placeholder="$ Precio de claritos"
-                            {...register("claritos", {
-                                required: "Precio obligatorio",
-                                valueAsNumber: true,
-                                validate: value => value !== 0 || 'El valor no puede ser 0'
-                            })}
-                        />
+                        <div className="flex gap-1 items-center">
+                            <span className="font-bold text-gray-500 pt-2">$</span>
+                            <input
+                                className="w-full mt-2 p-2 border rounded-md bg-gray-100"
+                                type="number"
+                                id="claritos"
+                                placeholder="$ Precio de claritos"
+                                {...register("claritos", {
+                                    required: "Precio obligatorio",
+                                    valueAsNumber: true,
+                                    validate: value => value !== 0 || 'El valor no puede ser 0'
+                                })}
+                            />
+                        </div>
                     </div>
                     <div className="my-2">
                         <label htmlFor="global" className="uppercase text-gray-600 font-bold flex items-center justify-between">
                             Global
                             {errors.global && <ErrorLabel>{errors.global.message}</ErrorLabel>}
                         </label>
-                        <input
-                            className="w-full mt-2 p-2 border rounded-md bg-gray-100"
-                            type="number"
-                            id="global"
-                            placeholder="$ Precio de global"
-                            {...register('global', {
-                                required: "Precio obligatorio",
-                                valueAsNumber: true,
-                                validate: value => value !== 0 || 'El valor no puede ser 0'
-                            })}
-                        />
+                        <div className="flex gap-1 items-center">
+                            <span className="font-bold text-gray-500 pt-2">$</span>
+                            <input
+                                className="w-full mt-2 p-2 border rounded-md bg-gray-100"
+                                type="number"
+                                id="global"
+                                placeholder="$ Precio de global"
+                                {...register('global', {
+                                    required: "Precio obligatorio",
+                                    valueAsNumber: true,
+                                    validate: value => value !== 0 || 'El valor no puede ser 0'
+                                })}
+                            />
+                        </div>
                     </div>
                     <div className="flex gap-4 mt-4">
                         <input

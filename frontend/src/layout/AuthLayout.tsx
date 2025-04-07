@@ -11,7 +11,7 @@ export function AuthLayout({children}: PropsWithChildren) {
 
 
   return (
-    <div className="min-h-screen bg-cover flex flex-col " style={{ backgroundImage: "url('/bg-smoke.svg')" }}>
+    <div className="min-h-screen bg-cover flex flex-col bg-[#ae9961dd]" >
     <Header />
       <div className='mt-[70px] md:mt-[0px]'>
         {children}

@@ -133,11 +133,14 @@ export class BranchControllers {
   };
 
   static deleteBranch = async (req: Request, res: Response) => {
+    const { branchId } = req.params;
+
     if (req.user.role !== userRole.admin) {
       const error = new Error("Acción no valida");
       return res.status(404).json({ error: error.message });
     }
-
+    
+    await User.updateMany({ branch: branchId }, { $set: { branch: null } });
     await req.branch.deleteOne();
     res.send("Sucursal eliminada con exito");
   };
