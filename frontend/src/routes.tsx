@@ -168,6 +168,13 @@ export const AppRoutes = {
         allowedRoles: [UserRole.ADMIN],
         page: async () => (await import('./pages/admin/profit/ProfitPage')).ProfitPage,
         layout: adminLayoutImport
+    },
+    createUserAdmin: {
+        route: () => "/admin/user/create",
+        requiresAuth: true,
+        allowedRoles: [UserRole.ADMIN],
+        page: async () => (await import('./pages/admin/user/CreateUser')).CreateUser,
+        layout: adminLayoutImport   
     }
 
 } as const satisfies Record<string, RouterDefinition>;

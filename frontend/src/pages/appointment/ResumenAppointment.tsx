@@ -62,7 +62,7 @@ export function ResumenAppointment() {
                             onClick={() => handleNext()}
                         >
                             <TbBrandCashapp className="font-bold text-2xl" />
-                            Pagar
+                            Reservar
                         </button>
                         <button
                             className="bg-red-500 p-2 w-full max-w-[400px] rounded-md cursor-pointer text-white font-bold hover:bg-red-600 transition-colors flex items-center justify-center gap-2"

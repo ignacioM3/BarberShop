@@ -16,6 +16,7 @@ import { MdBlock } from "react-icons/md";
 import { Pagination } from "../../../components/styles/Pagination";
 import { BlockUserModal } from "../../../components/modal/user/BlockUserModal";
 import { getUserList } from "../../../api/UserApi";
+import { AppRoutes } from "../../../routes";
 
 
 export function UserList() {
@@ -58,7 +59,7 @@ export function UserList() {
                     Usuarios
                 </PageTitle>
                 <ListAddButton
-                    onClick={() => setOpen(true)}
+                   onClick={() => navigate(AppRoutes.createUserAdmin.route())}
                 >
                     Agregar Usuario
                 </ListAddButton>
