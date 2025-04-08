@@ -90,7 +90,7 @@ export function EditBarber() {
     return (
       <PageContainer>
         <PageHeader>
-          <PageTitle>Crear Barbero</PageTitle>
+          <PageTitle>Barbero</PageTitle>
         </PageHeader>
 
         <PageContent className="flex items-center justify-start">

@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { CreateUserListModal } from "../../../components/modal/user/CreateUserListModal";
 import { ListAddButton } from "../../../components/styles/LinkButton";
 import { PageContainer } from "../../../components/styles/PageContainer";
 import { PageContent } from "../../../components/styles/PageContent";
@@ -22,7 +21,6 @@ import { AppRoutes } from "../../../routes";
 export function UserList() {
     const columns = ['Nombre', 'Instagram', 'Número','Confirmado', 'Cortes'];
     const columnsMobile = ['Nombre', 'Confirmado']
-    const [open, setOpen] = useState(false)
     const [currentPage, setCurrentPage] = useState<number>(1);
     const userPerPage = 6;
     const [total, setTotal] = useState<number>(0)
@@ -98,10 +96,7 @@ export function UserList() {
                                             <td className="px-6 py-4 flex items-center gap-2 text-xl">
                                                 <button 
                                                     className="border border-gray-700 p-1 md:p-2 rounded hover:bg-gray-400 hover:text-white hover:border-gray-400 transition-colors"
-                                                    onClick={() => {
-                                                        navigate(location.pathname + `?editUser=${row._id}`)
-                                                        setOpen(true)
-                                                    }}
+                                                    onClick={() => navigate(AppRoutes.editUSerAdming.route(row._id))}
                                                     >
                                                     <MdOutlineEdit />
                                                 </button>
@@ -134,10 +129,6 @@ export function UserList() {
 
    
             </PageContent>
-            <CreateUserListModal
-                    open={open}
-                    setOpen={setOpen}
-                />
             <DeleteUserModal />
             <BlockUserModal />
         </PageContainer>

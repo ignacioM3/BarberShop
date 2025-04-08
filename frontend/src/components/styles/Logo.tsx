@@ -3,5 +3,5 @@ interface logoProps{
 }
 
 export default function Logo({className} : logoProps){
-    return <img className={`cursor-pointer ${className}`} src="/logo.jpg" alt="logo barber"  />
+    return <img className={`cursor-pointer ${className}`} src="/logo.webp" alt="logo barber"  />
 }
