@@ -6,6 +6,7 @@ import authRoutes from './routes/AuthRoutes'
 import userRoutes from './routes/UserRoutes'
 import branchRoutes from './routes/BranchRoutes'
 import profitRoutes from './routes/ProfitRoutes'
+import publicRoutes from './routes/PublicRoutes'
 import appointmentRoutes from './routes/AppointmentRoutes'
 import cors from 'cors'
 import { corsConfig } from './config/cors';
@@ -27,5 +28,6 @@ app.use('/api/users', userRoutes)
 app.use('/api/branch', branchRoutes)
 app.use('/api/appointment', appointmentRoutes)
 app.use('/api/profit', profitRoutes)
+app.use('/api/public', publicRoutes)
 
 export default app

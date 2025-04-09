@@ -1,5 +1,6 @@
 import { UserRole } from './types/use-role';
 import { RouterDefinition } from './routes/router-definition'
+import { AboutBranch } from './pages/home/AboutBranch';
 
 const appLayoutImport = async () =>
     (await import('./layout/AuthLayout')).AuthLayout
@@ -10,6 +11,21 @@ export const AppRoutes = {
     home: {
         route: () => "/",
         page: async () => (await import('./pages/Home')).Home,
+        layout: appLayoutImport
+    },
+    about: {
+        route: () => "/about",
+        page: async () => (await import('./pages/home/About')).About,
+        layout: appLayoutImport
+    },
+    aboutBranch: {
+        route: () => "/about-branch",
+        page: async () => (await import('./pages/home/AboutBranch')).AboutBranch,
+        layout: appLayoutImport
+    },
+    price: {
+        route: () => "/price",
+        page: async () => (await import('./pages/home/Price')).Price,
         layout: appLayoutImport
     },
     error: {

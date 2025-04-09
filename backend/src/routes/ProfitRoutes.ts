@@ -1,6 +1,6 @@
 import express from 'express'
 import { authenticate } from '../middleware/auth'
-import { body, query } from 'express-validator'
+import {  query } from 'express-validator'
 import { handleInputErrors } from '../middleware/validation'
 import { ProfitControllers } from '../controllers/ProfitControllers'
 

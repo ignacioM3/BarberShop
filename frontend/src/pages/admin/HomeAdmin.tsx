@@ -9,7 +9,7 @@ export function HomeAdmin() {
   return (
     <PageContainer>
       <PageHeader>
-        <PageTitle className="text-center">Bienvenido al Menu Admin - BarberLuk</PageTitle>
+        <PageTitle className="text-center">Bienvenido al Menu Admin - NicoBarber</PageTitle>
       </PageHeader>
       <PageContent>
         <div className="text-center my-4">

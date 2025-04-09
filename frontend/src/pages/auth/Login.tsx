@@ -38,7 +38,7 @@ export default function Login() {
   }
   return (
     <div className="my-5 mt-[100px]">
-      <h1 className="text-center text-4xl font-black text-white ">Iniciar Sesión</h1>
+      <h1 className="text-center text-4xl font-black text-white">Iniciar Sesión</h1>
       <p className="text-2xl font-light mt-5 text-center lg:text-xl lg:mt-2 text-white">
         Bienvenido a tu Barberia{" "}
         <span className="text-gray-200 font-bold">llenando el siguiente formulario</span>

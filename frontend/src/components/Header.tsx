@@ -31,13 +31,13 @@ export function Header() {
       <header className='flex h-[70px] md:h-auto justify-between p-3 lg:py-0 bg-[#ae9961dd] shadow-sm items-center fixed w-full z-[100] top-0 rounded-b-md'>
         <Burger clicked={clicked} handleClick={handleClick} className='burger-white' />
         <Link to={AppRoutes.home.route()}>
-          <img className='w-[70px] h-[60px] lg:w-[80px] bg-cover' src="/logo2.png" alt="" />
+          <img className='w-[70px] h-[70px] lg:w-[80px] bg-cover' src="/logo.webp" alt="Logo Barberia" />
         </Link>
         <div className='hidden md:flex gap-5 flex-grow items-center justify-center '>
           <Link to={AppRoutes.home.route()} className='font-bold hover:bg-amber-200 p-3 rounded-md text-gray-600 transition-colors'>Inicio</Link>
-          <Link to={AppRoutes.login.route()} className='font-bold hover:bg-amber-200 p-3 rounded-md text-gray-600 transition-colors'>Nosotros</Link>
-          <Link to={AppRoutes.login.route()} className='font-bold hover:bg-amber-200 p-3 rounded-md text-gray-600 transition-colors'>Sucursales</Link>
-          <Link to={AppRoutes.login.route()} className='font-bold hover:bg-amber-200 p-3 rounded-md text-gray-600 transition-colors'>Precios</Link>
+          <Link to={AppRoutes.about.route()} className='font-bold hover:bg-amber-200 p-3 rounded-md text-gray-600 transition-colors'>Nosotros</Link>
+          <Link to={AppRoutes.aboutBranch.route()} className='font-bold hover:bg-amber-200 p-3 rounded-md text-gray-600 transition-colors'>Sucursales</Link>
+          <Link to={AppRoutes.price.route()} className='font-bold hover:bg-amber-200 p-3 rounded-md text-gray-600 transition-colors'>Precios</Link>
         </div>
         {
           currentUser ?
@@ -50,7 +50,7 @@ export function Header() {
                 )
               }
               <span className='font-bold uppercase hidden md:block '>{currentUser.name}</span>
-              <FaUser className='text-3xl cursor-pointer' onClick={handlePerfil} />
+              <FaUser className='text-3xl cursor-pointer mx-2 md:mx-0' onClick={handlePerfil} />
               <button
                         className="items-center gap-2 p-3 h-full pr-4 rounded hover:bg-amber-200 transition-colors hidden md:flex"
                         onClick={logoutUser}
@@ -81,9 +81,9 @@ export function Header() {
       </header>
       <div className={`${clicked && "active"} bg flex flex-col md:hidden`}>
         <Link to={AppRoutes.home.route()} className='flex items-center gap-2 p-2 hover:bg-gray-500 hover:text-white text-gray-100 font-bold'><FaHome />Inicio</Link>
-        <Link to={AppRoutes.login.route()} className='flex items-center gap-2 p-2 hover:bg-gray-500 hover:text-white text-gray-100 font-bold'><FaUserGroup />Nosotros</Link>
-        <Link to={AppRoutes.login.route()} className='flex items-center gap-2 p-2 hover:bg-gray-500 hover:text-white text-gray-100 font-bold'><IoIosBusiness />Sucursales</Link>
-        <Link to={AppRoutes.login.route()} className='flex items-center gap-2 p-2 hover:bg-gray-500 hover:text-white text-gray-100 font-bold'><FaDollarSign />Precios</Link>
+        <Link to={AppRoutes.about.route()} className='flex items-center gap-2 p-2 hover:bg-gray-500 hover:text-white text-gray-100 font-bold'><FaUserGroup />Nosotros</Link>
+        <Link to={AppRoutes.aboutBranch.route()} className='flex items-center gap-2 p-2 hover:bg-gray-500 hover:text-white text-gray-100 font-bold'><IoIosBusiness />Sucursales</Link>
+        <Link to={AppRoutes.price.route()} className='flex items-center gap-2 p-2 hover:bg-gray-500 hover:text-white text-gray-100 font-bold'><FaDollarSign />Precios</Link>
        
 
       </div>

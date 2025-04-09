@@ -218,3 +218,7 @@ export type profitAppointment = Omit<Appointment, "barberId" | 'timeSlot' | 'ins
 type ValuePiece = Date | null;
 
 export type Value = ValuePiece | [ValuePiece, ValuePiece];
+
+/* public type */
+
+export type BranchPublicPrice = Pick<Branch, '_id' | 'name' | 'address' | 'prices' >
