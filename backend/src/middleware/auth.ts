@@ -22,6 +22,9 @@ export const authenticate = async (req: Request, res: Response, next: NextFuncti
         const decoded = jwt.verify(token, process.env.JWT_SECRET);
         if(typeof decoded === "object" && decoded.id){
             const user = await User.findById(decoded.id).select('_id name email role');
+            if(user.blocked === true){
+                return res.status(401).json({error: 'Usuario Bloqueado'})
+            }
             if(user){
                 req.user = user
                 next();

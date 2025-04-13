@@ -5,7 +5,7 @@ import { appointmentStatus } from "../models/AppointmentStatus";
 import { userRole } from "../models/RoleUser";
 
 export class AppointmentControllers{
-    static createAppointmentBarber = async (req: Request, res: Response) => {
+    static createAppointment = async (req: Request, res: Response) => {
         const {branchId} = req.params;
         try {
             const branch = await Branch.findById(branchId).populate('barbers');
@@ -26,7 +26,6 @@ export class AppointmentControllers{
             }
             const appointment = new Appointment(req.body);
             appointment.branchId = branch.id;
-            appointment.manual = true;
             appointment.barberId = req.body.barberId;
             appointment.status = "booked";
             

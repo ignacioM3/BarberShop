@@ -157,7 +157,7 @@ export function EditUser() {
                     <div className="flex gap-4 mt-8">
                         <input
                             type="button"
-                            onClick={() => navigate(AppRoutes.barberListAdmin.route())}
+                            onClick={() => navigate(AppRoutes.userListAdmin.route())}
                             value="Cancelar"
                             className="bg-red-500 w-full py-2 mb-2 text-sm text-gray-100 uppercase font-bold rounded cursor-pointer hover:bg-red-600 transition-colors"
                         />

@@ -49,7 +49,6 @@ export function Header() {
                   </Link>
                 )
               }
-              <span className='font-bold uppercase hidden md:block '>{currentUser.name}</span>
               <FaUser className='text-3xl cursor-pointer mx-2 md:mx-0' onClick={handlePerfil} />
               <button
                         className="items-center gap-2 p-3 h-full pr-4 rounded hover:bg-amber-200 transition-colors hidden md:flex"

@@ -4,7 +4,6 @@ import { body, param } from 'express-validator';
 import { handleInputErrors } from '../middleware/validation';
 import { authenticate } from '../middleware/auth';
 import { appointmentStatus } from '../models/AppointmentStatus';
-import { ProfitControllers } from '../controllers/ProfitControllers';
 
 const router = express.Router();
 router.use(authenticate)
@@ -18,8 +17,11 @@ router.post("/:branchId/create-appointment",
     body("service").notEmpty().withMessage("Debe ingresar el servicio"),
     body("price").notEmpty().withMessage("Debe ingresar el precio"),
     handleInputErrors,
-    AppointmentControllers.createAppointmentBarber
+    AppointmentControllers.createAppointment
 )
+
+
+
 router.get("/:branchId/today",
     param("branchId").isMongoId().withMessage("ID no válido"),
     handleInputErrors,

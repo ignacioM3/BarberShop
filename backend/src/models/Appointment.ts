@@ -25,6 +25,7 @@ export const appointmentSchema: Schema = new Schema({
     }, 
     manual: {
         type: Boolean,
+        default: true,
     },
     name: {
         type: String,
