@@ -1,6 +1,5 @@
 import { UserRole } from './types/use-role';
 import { RouterDefinition } from './routes/router-definition'
-import { AboutBranch } from './pages/home/AboutBranch';
 
 const appLayoutImport = async () =>
     (await import('./layout/AuthLayout')).AuthLayout
