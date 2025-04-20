@@ -1,16 +1,24 @@
 
 import { PinInput, PinInputField } from "@chakra-ui/react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { AppRoutes } from "../../routes";
 import { toast } from "react-toastify";
 import { useMutation } from "@tanstack/react-query";
 import { confirmAccountApi } from "../../api/AuthApi";
 import { ConfirmToken } from "../../types";
+import useAuth from "../../hooks/useAuth";
 
 export function ConfirmAccount() {
     const [token, setToken] = useState<ConfirmToken['token']>('')
     const navigate = useNavigate()
+
+    const {currentUser} = useAuth()
+    useEffect(() => {
+        if(currentUser) {
+            navigate(AppRoutes.home.route())
+        }
+    }, [currentUser]);
 
     
     const {mutate} = useMutation({
@@ -20,7 +28,9 @@ export function ConfirmAccount() {
         },
         onSuccess: (data) => {
             toast.success(data)
-            navigate(AppRoutes.home.route())
+            setTimeout(() => {
+                navigate(AppRoutes.login.route()) 
+            }, 2000)
             setToken("")
         }
     })
@@ -31,7 +41,7 @@ export function ConfirmAccount() {
     const handleComplete = (token: ConfirmToken['token']) =>{
         mutate({token})
     }
-    return (
+    if(!currentUser) return (
         <div className="my-5 md:mt-[100px] mt-[100px]">
             <h1 className="text-center text-4xl font-black lg:text-2xl">Confirma tu Cuenta</h1>
             <p className="text-2xl font-light mt-5 text-center lg:text-xl lg:mt-2">Ingresa el codigo que recibiste {' '}
@@ -53,15 +63,15 @@ export function ConfirmAccount() {
             <nav className="mt-10 flex flex-col space-y-4">
                 <Link
                     to={AppRoutes.requestConfirmationCode.route()}
-                    className="text-center text-gray-400 font-normal hover:text-gray-500 transition-colors"
+                    className="text-center text-gray-700 font-normal hover:text-gray-500 transition-colors"
                 >
                     Solicitar un nuevo Código
                 </Link>
                 <Link
-                    className="text-center text-gray-400 font-normal hover:text-gray-500 transition-colors"
+                    className="text-center text-gray-700 font-normal hover:text-gray-500 transition-colors"
                     to={AppRoutes.forgotPassword.route()}
                     >
-                    ¿Olvidaste tu contraseña? <span className="text-gray-500 font-bold">Reestablecer</span>
+                    ¿Olvidaste tu contraseña? <span className="font-bold hover:font-gray-400">Reestablecer</span>
                 </Link>
             </nav>
         </div>

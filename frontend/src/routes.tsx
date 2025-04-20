@@ -12,6 +12,12 @@ export const AppRoutes = {
         page: async () => (await import('./pages/Home')).Home,
         layout: appLayoutImport
     },
+    profile: {
+        route: () => "/profile",
+        page: async () => (await import('./pages/home/Profile')).Profile,
+        requiresAuth: true,
+        layout: appLayoutImport
+    },
     about: {
         route: () => "/about",
         page: async () => (await import('./pages/home/About')).About,

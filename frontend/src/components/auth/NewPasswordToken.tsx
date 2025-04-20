@@ -52,7 +52,7 @@ export function NewPasswordToken({token, setToken, setValidToken}: NewPasswordTo
         <nav className="mt-10 flex flex-col space-y-4">
                 <Link
                     to={AppRoutes.forgotPassword.route()}
-                    className="text-center text-gray-400 font-normal hover:text-gray-600 transition-colors"
+                    className="text-center text-gray-700 hover:text-gray-800 font-bold transition-colors"
                 >
                     Solicitar un nuevo Código
                 </Link>
