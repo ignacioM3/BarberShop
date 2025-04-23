@@ -6,6 +6,7 @@ export interface IUser extends Document{
     email: string,
     password: string,
     name: string,
+    address?: string,
     confirmed: boolean,
     role: UserRole,
     haircuts: number,
@@ -29,6 +30,10 @@ const userSchema: Schema = new Schema({
     name: {
         type: String,
         required: true
+    },
+    address: {
+        type: String,
+        required: false
     },
     dni: {
         type: String,

@@ -16,6 +16,7 @@ export const AppRoutes = {
         route: () => "/profile",
         page: async () => (await import('./pages/home/Profile')).Profile,
         requiresAuth: true,
+        allowedRoles: [UserRole.ADMIN, UserRole.BARBER, UserRole.CLIENT],
         layout: appLayoutImport
     },
     about: {

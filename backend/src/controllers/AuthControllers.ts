@@ -179,4 +179,29 @@ export class AuthControllers {
     return res.json(req.user)
   }
 
+  static updateUser = async (req: Request, res: Response) => {
+    try {
+      const { id } = req.params;
+      const user = await User.findById(id);
+      if(!user) {
+        const error = new Error("Usuario no encontrado");
+        return res.status(404).json({ error: error.message });
+      }
+      if(req.user.id !== user.id) {
+        const error = new Error("No autorizado");
+        return res.status(401).json({ error: error.message });
+      }
+      const {  instagram, number, address } = req.body;
+      if (instagram) user.instagram = instagram;
+      if (number) user.number = number;
+      if (address) user.address = address;
+      await user.save();
+      
+      return res.send("Perfil actualizado correctamente")
+
+    } catch (error) {
+      res.status(500).json({ error: "Hubo un error en el servidor" });
+    }
+  }
+
 }

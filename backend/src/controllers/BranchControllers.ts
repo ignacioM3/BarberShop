@@ -6,10 +6,10 @@ import User from "../models/User";
 export class BranchControllers {
   static createBranch = async (req: Request, res: Response) => {
     const { address, name } = req.body;
-    const findAdress = await Branch.findOne({ address });
+    const findAddress = await Branch.findOne({ address });
     const findName = await Branch.findOne({ name });
 
-    if (findAdress || findName) {
+    if (findAddress || findName) {
       const error = new Error("Local ya registrado");
       return res.status(400).json({ error: error.message });
     }

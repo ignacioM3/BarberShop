@@ -75,4 +75,9 @@ router.post(
   AuthControllers.updatePasswordWithToken
 );
 router.get('/user/perfil',authenticate ,AuthControllers.user)
+router.post('/user/update/:id', 
+  authenticate,
+  param("id").isMongoId().withMessage("Id no valido"),
+  handleInputErrors,
+  AuthControllers.updateUser)
 export default router;
