@@ -1,78 +1,85 @@
-import { createContext } from "react";
-import { useNavigate } from "react-router-dom";
-import { useQuery } from "@tanstack/react-query";
-import api from "../lib/axios";
-import { AppRoutes } from "../routes";
+import { createContext, useEffect, useState } from "react";
 import { UserLogged } from "../types";
+import api from "../lib/axios";
+import { useNavigate } from "react-router-dom";
+import { AppRoutes } from "../routes";
 
-// 1. Tipo del contexto
-interface AuthContextType {
-    currentUser?: UserLogged;
-    loading: boolean;
-    refetchUser: () => void;
+
+interface AuthContextType{
+    currentUser?: UserLogged ;
+    setCurrentUser: React.Dispatch<React.SetStateAction<UserLogged | undefined>>
+    loading: boolean
+    setLoading: React.Dispatch<React.SetStateAction<boolean>>
     logoutUser: () => void;
+    
 }
 
-// 2. Contexto inicial
 const AuthContext = createContext<AuthContextType>({
     currentUser: undefined,
+    setCurrentUser: () => {},
     loading: true,
-    refetchUser: () => {},
+    setLoading: () => {},
     logoutUser: () => {}
 });
 
-// 3. Función que busca el perfil del usuario
-const fetchCurrentUser = async (): Promise<UserLogged> => {
-    const token = localStorage.getItem('AUTH_TOKEN');
-    if (!token) throw new Error("No token");
+const AuthProvider =({children}: {children: React.ReactNode}) => {
+    const [currentUser, setCurrentUser] = useState<UserLogged | undefined>(undefined)
+    const [loading, setLoading] = useState<boolean>(true);
 
-    const { data } = await api.get<UserLogged>('/auth/user/perfil', {
-        headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`
+    const navigate = useNavigate()
+
+    useEffect(() => {
+        const authenticateUser = async () => {
+            const token = localStorage.getItem('AUTH_TOKEN')
+            if(!token){
+                setLoading(false)
+                return
+            }
+
+            const config = {
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${token}`
+                }
+            }
+            try {
+                const {data} = await api.get<UserLogged>('/auth/user/perfil', config);
+                setCurrentUser(data)
+
+            } catch (error) {
+                setCurrentUser(undefined)
+            }
+
+            setLoading(false)
         }
-    });
 
-    return data;
-};
-
-// 4. Provider
-const AuthProvider = ({ children }: { children: React.ReactNode }) => {
-    const navigate = useNavigate();
-
-    const {
-        data: currentUser,
-        isLoading: loading,
-        refetch: refetchUser
-    } = useQuery({
-        queryKey: ['currentUser'],
-        queryFn: fetchCurrentUser,
-        enabled: !!localStorage.getItem('AUTH_TOKEN'),
-        retry: false, // evita reintentar si no hay token
-    });
+        authenticateUser()
+    }, [])
 
     const logoutUser = () => {
+        setCurrentUser(undefined)
         localStorage.removeItem("AUTH_TOKEN");
-        refetchUser(); // opcional: limpia cache
-        navigate(AppRoutes.home.route());
-    };
+        navigate(AppRoutes.home.route())
+    }
 
     return (
-        <AuthContext.Provider
+        <AuthContext.Provider 
             value={{
                 currentUser,
+                setCurrentUser,
                 loading,
-                refetchUser,
+                setLoading,
                 logoutUser
             }}
         >
+
             {children}
         </AuthContext.Provider>
-    );
-};
+    )
+}
 
 export {
     AuthProvider
-};
+}
 
-export default AuthContext;
+export default AuthContext 

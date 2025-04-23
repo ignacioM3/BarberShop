@@ -1,6 +1,6 @@
 
 import { FaUser } from 'react-icons/fa'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import useAuth from '../hooks/useAuth'
 import 'react-toastify/dist/ReactToastify.css'
 import { FaHome } from "react-icons/fa";
@@ -20,6 +20,7 @@ import { CiCalendarDate } from "react-icons/ci";
 
 export function Header() {
   const { currentUser, logoutUser } = useAuth()
+  const navigate = useNavigate()
 
   const [clicked, setClicked] = useState(false)
   const [clicked2, setClicked2] = useState(false)
@@ -51,7 +52,10 @@ export function Header() {
                   </Link>
                 )
               }
-              <FaUser className='text-3xl cursor-pointer mx-2 md:mx-0' onClick={handlePerfil} />
+                 <Link to={AppRoutes.home.route()} className='hidden md:block font-bold mr-3 py-2 px-3 text-green-100 shadow-md hover:bg-gray-400 transition-colors border rounded-md'>
+                    Turnos
+                  </Link>
+              <FaUser className='text-3xl cursor-pointer mx-2 md:mx-0' onClick={() => navigate(AppRoutes.profile.route())} />
               <button
                         className="items-center gap-2 p-3 h-full pr-4 rounded hover:bg-amber-200 transition-colors hidden md:flex"
                         onClick={logoutUser}

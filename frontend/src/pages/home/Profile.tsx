@@ -10,7 +10,7 @@ export function Profile() {
     const location = useLocation();
 
   return (
-    <div className="mt-[25px]">
+    <div className="mt-[25px] md:mt-[100px]">
         <h2 className="font-mono text-center text-2xl font-bold">Perfil</h2>
         <p className="text-center capitalize flex items-center justify-center gap-2">
             {currentUser?.name}

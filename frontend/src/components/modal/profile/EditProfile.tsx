@@ -4,6 +4,7 @@ import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 import { useMutation } from "@tanstack/react-query";
 import { updateProfileUserApi } from "../../../api/UserApi";
+import { useEffect, useState } from "react";
 
 interface formType {
     instagram: string,
@@ -15,14 +16,21 @@ export default function EditProfile() {
     const location = useLocation();
     const navigate = useNavigate();
     const queryParams = new URLSearchParams(location.search);
-    const show = queryParams.get("editUser") === 'true' ? true : false
-    const { currentUser, refetchUser } = useAuth();
+    const show = queryParams.get("editUser") === 'true' ? true : false;
+    const [newInfo, setNewInfo] = useState<formType>();
+    const { currentUser, setCurrentUser } = useAuth();
 
     const { mutate } = useMutation({
         mutationFn: updateProfileUserApi,
         onSuccess: (data) => {
-            toast.success(data)
             closeDetails();
+            toast.success(data)
+            setCurrentUser({
+                ...currentUser!,
+                instagram: newInfo?.instagram ?? "",
+                number: newInfo?.number ?? undefined,
+                address: newInfo?.address ?? ""
+            });
         },
         onError: (error) => {
             toast.error(error.message)
@@ -30,18 +38,27 @@ export default function EditProfile() {
 
     })
 
-    const initailValues = {
-        address: currentUser?.address || "",
-        number: currentUser?.number || undefined,
-        instagram: currentUser?.instagram || "",
-    }
+
     const { register, handleSubmit, reset } = useForm({
-        defaultValues: initailValues
+        defaultValues:  {
+            address: currentUser?.address || "",
+            number: currentUser?.number || undefined,
+            instagram: currentUser?.instagram || "",
+        }
     })
+
+    useEffect(() => {
+        if (currentUser) {
+            reset({
+                address: currentUser.address || "",
+                number: currentUser.number || undefined,
+                instagram: currentUser.instagram || ""
+            });
+        }
+    }, [currentUser, reset]);
 
     const closeDetails = () => {
         navigate(location.pathname, { replace: true })
-        reset()
     }
 
     const handleEditProfile = (formData: formType) => {
@@ -50,9 +67,12 @@ export default function EditProfile() {
             _id: currentUser?._id!,
             number: Number(formData.number)
         }
-        mutate(data)    
-        refetchUser()
-        reset()
+        setNewInfo({
+            instagram: formData.instagram,
+            number: Number(formData.number),
+            address: formData.address
+        })
+        mutate(data)
     }
 
     return (
@@ -66,7 +86,7 @@ export default function EditProfile() {
                     onClick={(e) => e.stopPropagation()}
                     className="bg-[#ae9961] w-[350px]  md:w-[400px] shadow-md rounded-md px-7 py-4 mt-8 mx-4 md:mt-4"
                 >
-                    <h1 className="text-center font-mono font-bold text-gray-700 border-b border-b-gray-700">Mi Información</h1>
+                    <h1 className="text-center md:text-2xl font-mono font-bold text-gray-700 border-b border-b-gray-700">Mi Información</h1>
                     <div className="my-2">
                         <label
                             htmlFor="instagram"
@@ -96,7 +116,7 @@ export default function EditProfile() {
                     <div className="my-2">
                         <label
                             htmlFor="address"
-                        
+
                             className="uppercase text-gray-600 font-bold flex justify-between items-center"
                         >Dirreción</label>
                         <input
