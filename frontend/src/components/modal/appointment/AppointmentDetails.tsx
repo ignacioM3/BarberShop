@@ -1,6 +1,5 @@
 import { useLocation, useNavigate, useParams } from "react-router-dom"
 import { MdDelete } from "react-icons/md";
-import { FaRegEdit } from "react-icons/fa";
 import { FaWhatsapp } from "react-icons/fa";
 import { FaCheckSquare } from "react-icons/fa";
 import { FaInstagram } from "react-icons/fa6";
@@ -11,6 +10,8 @@ import { MdCancelPresentation } from "react-icons/md";
 import { toast } from "react-toastify";
 import { AppointmentStatus } from "../../../types/appointment-status";
 import { deleteAppointmentApiType } from "../../../types";
+import { AppRoutes } from "../../../routes";
+import { IoClose } from "react-icons/io5";
 
 
 export function AppointmentDetails() {
@@ -78,7 +79,7 @@ export function AppointmentDetails() {
 
 
 
-  if (isError) return <h1>Falta implementar error</h1>
+  if (isError) return navigate(AppRoutes.Appointment.route())
 
   if (isLoading || data) return (
     <div
@@ -87,9 +88,15 @@ export function AppointmentDetails() {
     >
       <div className="w-full h-full flex items-center justify-center mt-5 md:mt-0">
         <form
-          className="bg-white w-full mx-5 max-w-[300px] rounded-md shadow-sm p-5"
+          className="bg-white w-full mx-5 max-w-[300px] rounded-md shadow-sm p-5 relative"
           onClick={(e) => e.stopPropagation()}
         >
+          <button>
+            <IoClose
+              className="absolute top-2 right-2 text-gray-500 hover:text-gray-700 cursor-pointer text-2xl"
+              onClick={closeDetails}
+            />
+          </button>
           {isLoading && <LoadingSpinner />}
           {data && (
             <>
@@ -120,11 +127,7 @@ export function AppointmentDetails() {
                     >
                     <MdCancelPresentation />
                   </div>
-                  <div 
-                    className="bg-blue-500 p-2 rounded-md cursor-pointer text-white hover:bg-blue-700 transition-colors"
-                    >
-                    <FaRegEdit />
-                  </div>
+                 
                   <div 
                     className="bg-green-500 p-2 rounded-md cursor-pointer text-white hover:bg-green-700 transition-colors"
                     onClick={() => handleUpdateStatus(AppointmentStatus.COMPLETED)}

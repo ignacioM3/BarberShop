@@ -29,6 +29,8 @@ export function ResumenAppointment() {
             service: appointment.service!,
             timeSlot: appointment.time!,
             name: currentUser?.name!,
+            whatsapp: currentUser?.number != null ? String(currentUser.number) : undefined,
+            instagram: currentUser?.instagram,
             barberId: appointment.barberId!,
             status: AppointmentStatus.BOOKED,
             price: appointment.price!,

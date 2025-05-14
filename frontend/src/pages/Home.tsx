@@ -4,36 +4,40 @@ import ShinyText from "../components/bits/ShinyText";
 import { useNavigate } from "react-router-dom";
 import { AppRoutes } from "../routes";
 import useAuth from "../hooks/useAuth";
+import { IoCutOutline } from "react-icons/io5";
+import { GiRazor } from "react-icons/gi";
+import { MdContentCut } from "react-icons/md";
+import { LuPaintbrush } from "react-icons/lu";
 import { toast } from "react-toastify";
 
 export function Home() {
   const navigate = useNavigate();
-  const {currentUser} = useAuth()
+  const { currentUser } = useAuth()
 
   const appointmentRoute = () => {
-    if(!currentUser){
+    if (!currentUser) {
       toast.info("Debes iniciar sessión para sacar turno")
       return
     }
     navigate(AppRoutes.selectBranchAppointment.route())
-  
+
 
   }
   return (
     <>
       {/* Mobile */}
       <div
-        className="min-h-screen bg-cover bg-center relative md:hidden"
+        className="min-h-[80vh] bg-cover bg-center relative md:hidden"
         style={{ backgroundImage: "url('/1.jpg')" }}
       >
         {/* Título */}
         <div className="bg-[#a98729b5] text-center rounded-md py-14 w-[300px] absolute top-[150px] left-1/2 transform -translate-x-1/2">
-          <BlurText 
-          text="Veni cambia tu estulo con nostros"
-          delay={125}
-          animateBy="words"
-          direction="top"
-        className="text-4xl font-india text-white font-bold uppercase"
+          <BlurText
+            text="Veni cambia tu estulo con nostros"
+            delay={125}
+            animateBy="words"
+            direction="top"
+            className="text-4xl font-india text-white font-bold uppercase"
           />
 
         </div>
@@ -45,14 +49,14 @@ export function Home() {
           <h1 className="text-center text-2xl font-bold text-gray-300">
             Turno Online:
           </h1>
-          <div 
+          <div
             className="flex items-center justify-center gap-2 bg-gray-400 w-fit p-4 rounded-md cursor-pointer mx-auto text-white font-bold shadow-md hover:bg-gray-600 transition-colors"
             onClick={() => appointmentRoute()}
-            >
+          >
             <FaCalendarCheck />
             <button
             >
-              <ShinyText text="Reservar Turno" disabled={false} speed={3}/>
+              <ShinyText text="Reservar Turno" disabled={false} speed={3} />
             </button>
           </div>
         </div>
@@ -74,23 +78,23 @@ export function Home() {
           <h1 className="text-center text-2xl font-bold text-gray-300">
             Turno Online:
           </h1>
-          <div 
+          <div
             className="flex items-center justify-center gap-2 bg-gray-400 w-fit p-4 rounded-md cursor-pointer mx-auto text-white font-bold shadow-md hover:bg-gray-600 transition-colors"
             onClick={() => appointmentRoute()}
-            >
+          >
             <FaCalendarCheck />
             <button>
-            <ShinyText text="Reservar Turno"/>
+              <ShinyText text="Reservar Turno" />
             </button>
           </div>
         </div>
         <div className="bg-[#a98729b5] text-center rounded-lg py-14 w-[300px] ">
-          <BlurText 
-          text="Veni cambia tu estulo con nostros"
-          delay={125}
-          animateBy="words"
-          direction="top"
-        className="text-4xl font-india text-white font-bold uppercase"
+          <BlurText
+            text="Veni cambia tu estulo con nostros"
+            delay={125}
+            animateBy="words"
+            direction="top"
+            className="text-4xl font-india text-white font-bold uppercase"
           />
         </div>
 
@@ -101,59 +105,56 @@ export function Home() {
       {/* Contenido */}
 
 
-      <div className="mt-20 mb-10">
+      <div className="mt-20 md:mt-10 mb-10">
         {/* Nuestros trabajos */}
         <div className="mt-4">
-          <h2 className="font-bold uppercase text-gray-300 flex text-xl gap-1 p-3 items-center justify-center md:my-4">
-            Nuestros Trabajos
-          </h2>
-          <div className="flex justify-center flex-col md:flex-row">
-
-            <div className="relative flex justify-center">
-
-              <img src="corte1.jpeg" alt="" className="object-cover filter brightness-50 blur-[2px] w-[250px] mx-8 h-[250px]" />
-
-
-              <div className="absolute inset-0 flex items-center justify-center text-white">
-                <div className="text-center">
-                  <h3 className="text-xl mb-4">Cortes de Pelo</h3>
-                  <button className="px-6 py-2 bg-gray-400 text-white font-semibold rounded hover:bg-gray-500 transition-colors ">
-                    Ver Cortes
-                  </button>
-                </div>
-              </div>
+          <div className="flex flex-col items-center mb-10">
+            <h2 className="font-bold uppercase text-gray-300 flex text-xl gap-1 p-3 items-center justify-center md:my-4">
+              Nuestros Trabajos
+            </h2>
+            <div className="flex items-center">
+              <div className="border w-[100px]"></div>
+              <IoCutOutline className="mx-5 text-2xl" />
+              <div className="border w-[100px]"></div>
             </div>
 
-            <div className="relative flex justify-center mt-6 md:mt-0">
+          </div>
+          <div className="flex justify-center flex-col md:flex-row gap-10">
 
-              <img src="clarito1.jpeg" alt="" className="object-cover filter brightness-50 blur-[2px]  w-[250px] mx-8 h-[250px]" />
+            <div className="relative flex justify-center ">
+
+              <img src="img-1.jpeg" alt="" className="w-[250px] h-[250px] object-cover object-bottom shadow-2xl" />
 
 
-              <div className="absolute inset-0 flex items-center justify-center text-white">
-                <div className="text-center">
-                  <h3 className="text-xl mb-4">Claritos</h3>
-                  <button className="px-6 py-2 bg-gray-400 text-white font-semibold rounded hover:bg-gray-500 transition-colors ">
-                    Ver Claritos
-                  </button>
-                </div>
-              </div>
+              <button className="flex gap-2 w-[120px] shadow-2xl hover:bg-gray-100 transition-colors items-center justify-center bg-white p-2 absolute bottom-[-20px] left-1/2 translate-x-[-50%] text-[#a98729d4]">
+                Cortes
+                <MdContentCut className="text-xl " />
+              </button>
             </div>
 
-            <div className="relative flex justify-center mt-6 md:mt-0">
+            <div className="relative flex justify-center ">
 
-              <img src="tintes1.jpeg" alt="" className="object-cover filter brightness-50 blur-[2px]  w-[250px] mx-8 h-[250px]" />
+              <img src="img-2.jpeg" alt="" className="w-[250px] h-[250px] object-cover object-bottom shadow-2xl" />
 
 
-              <div className="absolute inset-0 flex items-center justify-center text-white">
-                <div className="text-center">
-                  <h3 className="text-xl mb-4">Tintes</h3>
-                  <button className="px-6 py-2 bg-gray-400 text-white font-semibold rounded hover:bg-gray-500 transition-colors ">
-                    Ver Tintes
-                  </button>
-                </div>
-              </div>
-
+              <button className="flex gap-2 w-[120px] shadow-2xl hover:bg-gray-100 transition-colors items-center justify-center bg-white p-2 absolute bottom-[-20px] left-1/2 translate-x-[-50%] text-[#a98729d4]">
+                Claritos
+                <GiRazor className="text-xl " />
+              </button>
             </div>
+
+            <div className="relative flex justify-center ">
+
+              <img src="img-3.jpeg" alt="" className="w-[250px] h-[250px] object-cover object-bottom shadow-2xl" />
+
+
+              <button className="flex gap-2 w-[120px] shadow-2xl hover:bg-gray-100 transition-colors items-center justify-center bg-white p-2 absolute bottom-[-20px] left-1/2 translate-x-[-50%] text-[#a98729d4]">
+                Global
+                <LuPaintbrush className="text-xl " />
+              </button>
+            </div>
+
+
           </div>
         </div>
       </div>

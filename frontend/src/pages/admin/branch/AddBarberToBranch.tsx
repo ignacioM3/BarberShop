@@ -8,16 +8,14 @@ import LoadingSpinner from '../../../components/styles/LoadingSpinner';
 import { PageContent } from '../../../components/styles/PageContent';
 import { FaRegTrashCan } from "react-icons/fa6";
 import { IoMdPersonAdd } from "react-icons/io";
-import {Branch, ListBarberInBranch, UserBarberListType} from '../../../types/index'
+import { ListBarberInBranch} from '../../../types/index'
 import { toast } from 'react-toastify';
-import { useState } from 'react';
 
 export function AddBarberToBranch() {
   const { id } = useParams()
   const branchId = id!
   const queryClient = useQueryClient()
-  const [loadingBarber, setLoadingBarber] = useState<string | null>(null)
-console.log(loadingBarber)
+
 
   const { data, isLoading, isError } = useQuery({
     queryFn: () => getBranchById(branchId),
@@ -40,21 +38,6 @@ console.log(loadingBarber)
   const {mutate: addBarber} = useMutation({
     mutationFn: addBarberToBranch,
     retry: false,
-    onMutate: async (variables) => {
-      await queryClient.cancelQueries({queryKey: ['getBranchById', branchId]});
-
-      const previousData = queryClient.getQueryData(['getBranchById', branchId]);
-      
-      const selectedBarber = barbers?.find((barber: UserBarberListType) => barber._id === variables.barberId);
-
-      queryClient.setQueryData(['getBranchById', branchId], (old: Branch) => ({
-        ...old,
-        barbers: [...old.barbers, { _id: variables.barberId, name: selectedBarber?.name }],
-      }));
-  
-      return { previousData };
-
-    },
     onError: (error) => {
       toast.error(error.message)
     },
@@ -65,26 +48,15 @@ console.log(loadingBarber)
     }
   })
 
-  const handleSubmit = (id: string) => {
-    setLoadingBarber(id);
-    removeBarber({ barberId: id, branchId }, {
-      onSettled: () => setLoadingBarber(null),
-    });
-  }
-  const handleAddSubmit = (id: string) => {
-    setLoadingBarber(id);
-
-    addBarber({ barberId: id, branchId }, {
-      onSettled: () => setLoadingBarber(null),
-    });
-    
-  }
+  const handleSubmit = (id: string) => removeBarber({barberId: id, branchId})
+  const handleAddSubmit = (id: string) => addBarber({barberId: id, branchId})
 
   const { data: barbers, isLoading: isLoadingBarber } = useQuery({
     queryKey: ['getBarbersOutBranch'],
     queryFn: getBarbersOutBranch,
     retry: false
   })
+
 
 
   if (isLoading || isLoadingBarber) return <LoadingSpinner />

@@ -247,7 +247,7 @@ export function EditBranch() {
                         <input
                             type="submit"
                             className="bg-green-500 w-full text-sm py-2 mb-2 text-gray-100 uppercase font-bold rounded cursor-pointer hover:bg-green-600 transition-colors"
-                            value="Guardar Cambios"
+                            value="Guardar"
                         />
                     </div>
                 </form>

@@ -57,8 +57,8 @@ export function Header() {
                 Turnos
               </Link>
               <div className='flex items-center' onClick={() => navigate(AppRoutes.profile.route())}>
-                <FaUser className='text-3xl cursor-pointer mx-2 md:mx-0 hidden md:block'  />
-                <IoMdArrowDropdown />
+                <FaUser className='text-3xl cursor-pointer mx-2 md:mx-0 hidden md:block' />
+                <IoMdArrowDropdown className='hidden md:block' />
               </div>
               <FaUser className='text-3xl cursor-pointer md:hidden' onClick={handlePerfil} />
               <button
