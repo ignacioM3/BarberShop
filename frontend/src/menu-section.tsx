@@ -64,7 +64,7 @@ export const menuSection: MenuSection[] = [
                 label: "Productos",
                 icon: <MdOutlineProductionQuantityLimits />,
                 to: "",
-                role: [UserRole.ADMIN, UserRole.BARBER]
+                role: [UserRole.ADMIN]
             }
         ]
     },

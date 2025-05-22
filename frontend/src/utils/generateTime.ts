@@ -7,7 +7,7 @@ export const generateTimeSlots = (start: string, end: string, interval: number) 
     let current = startHour * 60 + startMinute;
     const close = endHour * 60 + endMinute;
 
-    while (current < close) {
+    while (current <= close) {
       const hours = Math.floor(current / 60);
       const minutes = current % 60;
       const time = `${hours.toString().padStart(2, "0")}:${minutes

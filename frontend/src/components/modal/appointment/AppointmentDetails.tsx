@@ -10,7 +10,6 @@ import { MdCancelPresentation } from "react-icons/md";
 import { toast } from "react-toastify";
 import { AppointmentStatus } from "../../../types/appointment-status";
 import { deleteAppointmentApiType } from "../../../types";
-import { AppRoutes } from "../../../routes";
 import { IoClose } from "react-icons/io5";
 
 
@@ -79,7 +78,7 @@ export function AppointmentDetails() {
 
 
 
-  if (isError) return navigate(AppRoutes.Appointment.route())
+  if (isError) return <h1>Falta implementar Error</h1>
 
   if (isLoading || data) return (
     <div

@@ -9,6 +9,12 @@ import { GiRazor } from "react-icons/gi";
 import { MdContentCut } from "react-icons/md";
 import { LuPaintbrush } from "react-icons/lu";
 import { toast } from "react-toastify";
+import { TbMapSearch } from "react-icons/tb";
+import { SiGooglemaps } from "react-icons/si";
+import { useQuery } from "@tanstack/react-query";
+import { getAllBranchPublicApi } from "../api/PublicApi";
+import LoadingSpinner from "../components/styles/LoadingSpinner";
+
 
 export function Home() {
   const navigate = useNavigate();
@@ -20,9 +26,15 @@ export function Home() {
       return
     }
     navigate(AppRoutes.selectBranchAppointment.route())
-
-
   }
+
+  const { data, isLoading, isError } = useQuery({
+    queryFn: getAllBranchPublicApi,
+    queryKey: ['getAllBranchsPublic']
+  })
+
+  if (isError) return <h1>falta implementar error</h1>
+
   return (
     <>
       {/* Mobile */}
@@ -97,8 +109,6 @@ export function Home() {
             className="text-4xl font-india text-white font-bold uppercase"
           />
         </div>
-
-
       </div>
 
 
@@ -109,7 +119,7 @@ export function Home() {
         {/* Nuestros trabajos */}
         <div className="mt-4">
           <div className="flex flex-col items-center mb-10">
-            <h2 className="font-bold uppercase text-gray-300 flex text-xl gap-1 p-3 items-center justify-center md:my-4">
+            <h2 className="font-bold uppercase text-white flex text-xl gap-1 p-3 items-center justify-center md:my-4">
               Nuestros Trabajos
             </h2>
             <div className="flex items-center">
@@ -156,6 +166,50 @@ export function Home() {
 
 
           </div>
+        </div>
+      </div>
+      <div className="mt-20 md:mt-10 mb-10">
+        <div className="flex flex-col items-center mb-10">
+          <h2 className="font-bold uppercase text-white flex text-xl gap-1 p-3 items-center justify-center md:my-4">
+            Ubicación
+          </h2>
+          <div className="flex items-center mb-10">
+            <div className="border w-[100px]"></div>
+            <TbMapSearch className="mx-5 text-2xl" />
+            <div className="border w-[100px]"></div>
+          </div>
+          {isLoading ? (
+            <div className="flex justify-center items-center h-[200px]">
+              <LoadingSpinner />
+            </div>
+          ) : (
+            <div className="flex justify-center flex-col md:flex-row gap-10 items-center">
+              <img
+                src="maps.webp"
+                alt=""
+                className="w-[95%] md:w-full max-w-[450px] object-cover  shadow-xl rounded-md cursor-pointer mx-auto"
+              />
+              <div className="flex flex-col gap-2">
+                <h1 className="text-center text-white font-bold text-xl border-b pb-2">
+                  Nico Barberia
+                </h1>
+                <p className="text-center text-white font-bold">
+                  Estamos ubicados en la calle {data[0].address}, Vicente Lopez.
+                </p>
+                <p className="text-center text-white font-bold">
+                  Horario: Martes a Sábado de {data[0].open} a {data[0].close}
+                </p>
+                <a
+                  target="_blank"
+                  href="https://maps.app.goo.gl/MSSNFa1xZapzzeqQ8"
+                  className="w-[200px] mt-2 mx-auto flex items-center gap-2 justify-center bg-gray-500 text-white p-2 rounded-md hover:bg-gray-400 transition-colors hover:text-gary-200"
+                >
+                  <SiGooglemaps />
+                  Abrir Maps
+                </a>
+              </div>
+            </div>
+          )}
         </div>
       </div>
     </>
